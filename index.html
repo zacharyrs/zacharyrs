@@ -23,18 +23,15 @@
             setTimeout(function() {
                 setInterval(function(){
                     logo.play();
-                    console.log('Playing')
                     setTimeout(function() {
                         logorev.finish();
                         logo.reset();
-                        console.log('Swapping')
                         setTimeout(function() {
                             logorev.play(-1);
-                            console.log('Reversing')
                         }, 10);
                     }, 2800);
                 }, 7100);
-            }, 200)
+            }, 100)
         </script>
     </body>
 </html>
