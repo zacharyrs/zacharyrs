@@ -29,17 +29,21 @@
             var logo = new Vivus('logo', {type: 'delayed', duration: 200, delay: 20, pathTimingFunction: Vivus.EASE_OUT, start: 'manual'});
             var logorev = new Vivus('logorev', {type: 'delayed', duration: 200, delay: 20, pathTimingFunction: Vivus.EASE_OUT, start: 'manual'});
 
+            function run() {
+                logo.play();
+                setTimeout(function() {
+                    logorev.finish();
+                    logo.reset();
+                    setTimeout(function() {
+                        logorev.play(-1);
+                    }, 10);
+                }, 2800);
+            };
 
             setTimeout(function() {
+                run();
                 setInterval(function(){
-                    logo.play();
-                    setTimeout(function() {
-                        logorev.finish();
-                        logo.reset();
-                        setTimeout(function() {
-                            logorev.play(-1);
-                        }, 10);
-                    }, 2800);
+                    run();
                 }, 7100);
             }, 100)
         </script>
