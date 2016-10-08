@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>digigrab</title>
+        <meta charset="utf-8"/>
+        <meta viewport="width=device-width, initial-scale=1.0"/>
+        <script src="/dist/js/vivus.min.js"></script>
+        <link rel="stylesheet" href="/dist/css/typography.min.css"/>
+        <link rel="stylesheet" href="/dist/css/loading.css"/>
+    </head>
+    <body>
+        <div class="background"></div>
+        <div class="loadingcontainer">
+            <object id="logo" type="image/svg+xml" data="/dist/img/svg/logo.svg"></object>
+            <object id="logorev" type="image/svg+xml" data="/dist/img/svg/logorev.svg"></object>
+        </div>
+        <h1 class="title">zacharyrs</h1>
+        <script type="text/javascript">
+            var logo = new Vivus('logo', {type: 'delayed', duration: 200, delay: 20, pathTimingFunction: Vivus.EASE_OUT, start: 'manual'});
+            var logorev = new Vivus('logorev', {type: 'delayed', duration: 200, delay: 20, pathTimingFunction: Vivus.EASE_OUT, start: 'manual'});
+
+
+            setTimeout(function() {
+                setInterval(function(){
+                    logo.play();
+                    console.log('Playing')
+                    setTimeout(function() {
+                        logorev.finish();
+                        logo.reset();
+                        console.log('Swapping')
+                        setTimeout(function() {
+                            logorev.play(-1);
+                            console.log('Reversing')
+                        }, 10);
+                    }, 2800);
+                }, 7100);
+            }, 200)
+        </script>
+    </body>
+</html>
