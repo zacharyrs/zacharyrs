@@ -1,0 +1,32 @@
+{
+  "name": "material-typography",
+  "description": "Typography based on Google's Material Design Standard",
+  "main": "package.json",
+  "authors": [
+    "juliancoleman <julcol03@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "typography",
+    "material",
+    "google"
+  ],
+  "homepage": "https://github.com/juliancoleman/material-typography",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "1.0.12",
+  "_release": "1.0.12",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.12",
+    "commit": "2ac582a738c60b4f46327e6790b6c9904c4be564"
+  },
+  "_source": "git://github.com/juliancoleman/material-typography.git",
+  "_target": "*",
+  "_originalSource": "juliancoleman/material-typography"
+}

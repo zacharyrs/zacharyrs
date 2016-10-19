@@ -1,0 +1,32 @@
+{
+  "name": "zacharyrs.me",
+  "version": "0.1.0",
+  "main": "index.html",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zacharyrs/zacharyrs.github.io.git"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-if": "^2.0.1",
+    "gulp-jslint": "^1.0.5",
+    "gulp-minify": "0.0.14",
+    "gulp-newer": "^1.3.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.1.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-stylus": "^2.5.0",
+    "gulp-surge": "^0.1.0",
+    "gulp-typescript": "^3.0.2",
+    "gulp-util": "^3.0.7",
+    "nib": "*",
+    "pug": "2.0.0-alpha6",
+    "stylus": "*",
+    "typescript": "^2.0.3"
+  }
+}

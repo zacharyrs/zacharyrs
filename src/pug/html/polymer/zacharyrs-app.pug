@@ -1,0 +1,35 @@
+link(rel="import", href="../bower/polymer/polymer.html")
+link(rel="import", href="../bower/app-layout/app-header/app-header.html")
+link(rel="import", href="../bower/app-layout/app-scroll-effects/app-scroll-effects.html")
+link(rel="import", href="../bower/app-layout/app-toolbar/app-toolbar.html")
+link(rel="import", href="../bower/paper-tabs/paper-tabs.html")
+link(rel="import", href="../bower/iron-pages/iron-pages.html")
+
+link(rel="import" href="styles/zacharyrs-app.html")
+
+dom-module#zacharyrs-app
+  template
+    style(is="custom-style" include="shared-styles")
+    app-header
+      app-toolbar
+        h2.logo.
+          zacharyrs
+      paper-tabs(attr-for-selected="name", selected="{{selected}}", noink="")
+        paper-tab(name="tab1").
+          TAB 1
+        paper-tab(name="tab2").
+          TAB 2
+        paper-tab(name="tab3").
+          TAB 3
+    iron-pages(selected="{{selected}}", attr-for-selected="name", selected-attribute="visible")
+      div(name="tab1").
+        Page 1
+      div(name="tab2").
+        Page 2
+      div(name="tab3").
+        Page 3
+  script(type="text/javascript").
+      Polymer({
+          is: "zacharyrs-app",
+          properties: {},
+      });

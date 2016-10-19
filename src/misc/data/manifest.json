@@ -1,0 +1,7 @@
+{
+  "name": "digigrab",
+  "short_name": "digigrab",
+  "description": "Web frontend for my anime, cartoon, and drama downloader.",
+  "start_url": "/",
+  "display": "standalone"
+}
