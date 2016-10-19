@@ -19,7 +19,8 @@ var compress = true;
 
 gulp.task('default', [
   'all',
-  'watch'
+  'watch',
+  'serve'
 ])
 
 gulp.task('all', [
@@ -39,7 +40,7 @@ gulp.task('copy:bower', function () {
 gulp.task('copy:misc', function () {
   gulp.src(['src/misc/**/*'], {base: 'src/misc/'})
     .pipe(newer('dist/'))
-    .pipe(gulp.dest('dist/assets/'));
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('compile:pug', function () {
@@ -94,7 +95,7 @@ gulp.task('clean', function () {
   del(['dist/**/*']);
 });
 
-gulp.task('deploy:main', function () {
+gulp.task('deploy:publish', function () {
   surge({
     project: 'dist',
     domain: 'zacharyrs.me'
@@ -102,8 +103,11 @@ gulp.task('deploy:main', function () {
 });
 
 gulp.task('deploy:live', function () {
-  gulp.src('dist/**/*')
+  return gulp.src('dist/**/*')
     .pipe(ghpages());
+});
+
+gulp.task('serve', function () {
 });
 
 gulp.task('watch', function () {

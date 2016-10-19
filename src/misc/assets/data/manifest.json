@@ -1,0 +1,7 @@
+{
+  "name": "zacharyrs",
+  "short_name": "zacharyrs",
+  "description": "My blog, portfolio, and miscellaneous site.",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -15,19 +15,23 @@ dom-module#zacharyrs-app
         h2.logo.
           zacharyrs
       paper-tabs(attr-for-selected="name", selected="{{selected}}", noink="")
-        paper-tab(name="tab1").
-          TAB 1
-        paper-tab(name="tab2").
-          TAB 2
-        paper-tab(name="tab3").
-          TAB 3
+        paper-tab(name="blog").
+          blog
+        paper-tab(name="portfolio").
+          portfolio
+        paper-tab(name="about").
+          about me
+        paper-tab(name="contact").
+          contact me
     iron-pages(selected="{{selected}}", attr-for-selected="name", selected-attribute="visible")
-      div(name="tab1").
-        Page 1
-      div(name="tab2").
-        Page 2
-      div(name="tab3").
-        Page 3
+      div(name="blog").
+        BLOG APP HERE
+      div(name="portfolio").
+        PORTFOLIO APP HERE
+      div(name="about").
+        ABOUT ME APP HERE
+      div(name="contact").
+        CONTACT ME APP HERE
   script(type="text/javascript").
       Polymer({
           is: "zacharyrs-app",
