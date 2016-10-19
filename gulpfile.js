@@ -101,7 +101,7 @@ gulp.task('deploy:main', function () {
   })
 });
 
-gulp.task('deploy:beta', function () {
+gulp.task('deploy:live', function () {
   gulp.src('dist/**/*')
     .pipe(ghpages());
 });

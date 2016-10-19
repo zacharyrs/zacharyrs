@@ -6,7 +6,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/zacharyrs/zacharyrs.github.io.git"
+    "url": "https://github.com/zacharyrs/zacharyrs.me.git"
   },
   "devDependencies": {
     "del": "^2.2.2",
