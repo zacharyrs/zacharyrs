@@ -3,26 +3,46 @@ html
     title="zacharyrs"
     meta(charset="utf-8")
     meta(viewport="width=device-width, initial-scale=1.0")
-    link(rel="manifest" href="assets/data/manifest.json")
+
+    script(src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js")
+    script(src="https://www.gstatic.com/firebasejs/3.5.0/firebase-app.js")
+    script(src="https://www.gstatic.com/firebasejs/3.5.0/firebase-auth.js")
+    script(src="https://www.gstatic.com/firebasejs/3.5.0/firebase-database.js")
+    script(src="https://www.gstatic.com/firebasejs/3.5.0/firebase-messaging.js")
+    script(src="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.js")
+    script.
+      var config = {
+          apiKey: "AIzaSyCXJ2wFGr9hjKBbeGltrfuSQ8XoL06U8Tc",
+          authDomain: "zacharyrs-me.firebaseapp.com",
+          databaseURL: "https://zacharyrs-me.firebaseio.com",
+          storageBucket: "",   
+          messagingSenderId: "591464613003"
+      };
+      firebase.initializeApp(config);
+
+    //- Data
+    link(rel="manifest", href="assets/data/manifest.json")
+
+    //- Firebase CSS
+    link(type="text/css", rel="stylesheet", href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css")
 
     //- Fonts
-    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand")
 
     //- Bower imports
-    link(rel="stylesheet" href="html/bower/material-typography/css/typography.min.css")
-    script(type="text/javascript" src="html/bower/vivus/dist/vivus.min.js")
+    link(rel="stylesheet", href="html/bower/material-typography/css/typography.min.css")
 
     //- Icons
     link(rel="apple-touch-icon", sizes="180x180", href="assets/icons/apple-touch-icon.png")
     link(rel="icon", type="image/png", href="assets/icons/favicon-32x32.png", sizes="32x32")
     link(rel="icon", type="image/png", href="assets/icons/favicon-16x16.png", sizes="16x16")
-    link(rel="mask-icon", href="assets/icons/safari-pinned-tab.svg", color="#48CFAD")
+    link(rel="mask-icon", href="assets/icons/safari-pinned-tab.svg", color="#3D6698")
     link(rel="shortcut icon", href="assets/icons/favicon.ico")
     meta(name="apple-mobile-web-app-title", content="zacharyrs")
     meta(name="application-name", content="zacharyrs")
-    meta(name="theme-color", content="#48CFAD")
+    meta(name="theme-color", content="#3D6698")
 
     //- My assets
-    link(rel="import" href="html/polymer/zacharyrs-app.html")
+    link(rel="import", href="html/polymer/zacharyrs-app.html")
   body
     zacharyrs-app

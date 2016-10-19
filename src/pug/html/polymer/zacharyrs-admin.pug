@@ -1,0 +1,23 @@
+link(rel="import", href="../bower/polymer/polymer.html")
+
+dom-module#zacharyrs-admin
+  template
+    script.
+      // FirebaseUI config.
+      var uiConfig = {
+          'signInOptions': [
+              firebase.auth.GithubAuthProvider.PROVIDER_ID
+          ]
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#login', uiConfig);
+
+    div#login
+  script(type="text/javascript").
+      Polymer({
+          is: "zacharyrs-admin",
+          properties: {},
+      });

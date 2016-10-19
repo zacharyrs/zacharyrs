@@ -1,0 +1,145 @@
+link(rel="import", href="../bower/polymer/polymer.html")
+link(rel="import", href="../bower/iron-menu-behavior/iron-menubar-behavior.html")
+
+link(rel="import" href="styles/zacharyrs-app.html")
+
+dom-module#zacharyrs-mobile-menu
+  template
+    style(is="custom-style" include="shared-styles").
+      :host {
+        position: fixed;
+        z-index: 100;
+        bottom: 0;
+        right: 0;
+        overflow: hidden;
+        outline: none;
+      }
+      .material-menu-wrapper {
+        height: 200px;
+        width:  200px;
+        text-align: center;
+      }
+      .material-btn {
+        will-change: transform;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: absolute;
+        z-index: 1;
+        bottom: 20px;
+        right: 20px;
+        width: 150px;
+        height: 150px;
+        background: transparent;
+        cursor: pointer;
+      }
+      .material-btn:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 150px;
+        height: 150px;
+        background: var(--theme-light);
+        border-radius: 50%;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        transform-origin: center 70%;
+        transform: scale(1);
+        transition: all 0.35s ease-out;
+      }
+      .material-menu-wrapper:hover, .material-menu-wrapper.active, .material-menu-wrapper.full{
+        height: 100vh;
+        width: 56vw;
+      }
+      .material-menu-wrapper.active .material-btn:before {
+        transform: scale(25);
+      }
+      .material-hamburger {
+        transition: all .3s ease-out;
+        cursor: pointer;
+      }
+      .material-patty {
+        will-change: transform, opacity;
+        width: 62px;
+        height: 6px;
+        margin: 0 0 12px 0;
+        background: var(--theme-grey-light);
+        opacity: 1;
+        transform: translate(0) rotate(0deg);
+        transition: all .2s ease-out;
+      }
+      .material-patty:last-child {
+        margin-bottom: 0;
+      }
+      .material-menu-wrapper.active .material-hamburger {
+        transform: rotate(-180deg);
+      }
+      .material-menu-wrapper.active .material-hamburger .material-patty:nth-child(1) {
+        transform: translate(-10px, 4px) rotate(-45deg) scale(0.5, 1);
+      }
+      .material-menu-wrapper.active .material-hamburger .material-patty:nth-child(3) {
+        transform: translate(-10px, -4px) rotate(45deg) scale(0.5, 1);
+      }
+      .menu-items {
+        position: relative;
+        top: 1.6cm;
+        font-size: 2cm;
+        text-align: right;
+        z-index: 2;
+        color: var(--theme-grey-light);
+        display:  none;
+      }
+      .material-menu-wrapper.active .menu-items {
+        display: inline-block;
+      }
+      .menu-items ::content div {
+        margin-top: 1.6cm;
+        outline: none;
+        cursor: pointer;
+      }
+      .menu-items ::content > .iron-selected {
+        font-weight: bold !important;
+      }
+
+    div.material-menu-wrapper
+      div.material-menu
+        div.material-btn
+          div.material-hamburger
+            div.material-patty
+            div.material-patty
+            div.material-patty
+      div.menu-items
+        content
+
+    script.
+      var wrapper = document.querySelector('.material-menu-wrapper');
+      var ham = document.querySelector('.material-hamburger');
+
+      function openMenu(event) {
+        wrapper.classList.toggle('active');
+        wrapper.classList.add('full');
+        setTimeout(function () {
+          wrapper.classList.remove('full');
+        }, 500);
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
+
+      ham.addEventListener('click', openMenu, false);
+
+  script(type="text/javascript").
+      Polymer({
+          is: "zacharyrs-mobile-menu",
+          properties: {
+            selected: String
+          },
+          behaviors: [
+            Polymer.IronMenubarBehavior
+          ],
+      });
+
+
+
+zacharyrs-mobile-menu

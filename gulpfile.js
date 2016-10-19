@@ -1,19 +1,23 @@
+var del = require('del');
 var gulp = require('gulp');
-var shell = require('gulp-shell');
+var nib = require('nib');
+
+var gulpif = require('gulp-if');
+var gutil = require('gulp-util');
+var newer = require('gulp-newer');
+var plumber = require('gulp-plumber');
+
+var cleancss = require('gulp-clean-css');
+var jslint = require('gulp-jslint');
+var minify = require('gulp-minify');
 var pug = require('gulp-pug');
 var stylus = require('gulp-stylus');
-var nib = require('nib');
 var ts = require('gulp-typescript');
-var minify = require('gulp-minify');
-var cleancss = require('gulp-clean-css');
-var del = require('del');
-var newer = require('gulp-newer');
-var gulpif = require('gulp-if');
-var plumber = require('gulp-plumber');
-var jslint = require('gulp-jslint');
-var gutil = require('gulp-util');
-var surge = require('gulp-surge');
+
 var ghpages = require('gulp-gh-pages');
+var gls = require('gulp-live-server');
+var opn = require('opn');
+var surge = require('gulp-surge');
 
 var compress = true;
 
@@ -108,6 +112,14 @@ gulp.task('deploy:live', function () {
 });
 
 gulp.task('serve', function () {
+  var server = gls.static('dist', 5000);
+  server.start();
+
+  gulp.watch(['dist/**/*'], function (file) {
+    server.notify.apply(server, [file]);
+  });
+
+  opn('http://localhost:5000');
 });
 
 gulp.task('watch', function () {
