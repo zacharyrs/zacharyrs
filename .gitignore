@@ -60,4 +60,4 @@ jspm_packages
 
 # Dist and Bower
 dist
-bower
+bower_components
