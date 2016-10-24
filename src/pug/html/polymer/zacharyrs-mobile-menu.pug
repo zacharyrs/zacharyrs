@@ -1,4 +1,3 @@
-link(rel="import", href="../bower/polymer/polymer.html")
 link(rel="import", href="../bower/iron-menu-behavior/iron-menubar-behavior.html")
 
 link(rel="import" href="styles/zacharyrs-app.html")
@@ -14,12 +13,28 @@ dom-module#zacharyrs-mobile-menu
         overflow: hidden;
         outline: none;
       }
-      .material-menu-wrapper {
-        height: 200px;
-        width:  200px;
-        text-align: center;
+
+      .menu-blocker {
+        position: relative;
+        will-change: transform;
+        transform: translate(-100vw, 0);
+        transition: all 0.2s ease-in;
+        height: 100vh;
+        width: 100vw;
+        background: rgba(0, 0, 0, 0.1);
       }
-      .material-btn {
+
+      .menu-wrapper {
+        height: 18vh;
+        width:  18vh;
+        text-align: center;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+
+      .menu-btn {
         will-change: transform;
         display: flex;
         align-items: center;
@@ -27,98 +42,119 @@ dom-module#zacharyrs-mobile-menu
         flex-wrap: wrap;
         position: absolute;
         z-index: 1;
-        bottom: 20px;
-        right: 20px;
-        width: 150px;
-        height: 150px;
+        bottom: 4vh;
+        right: 4vh;
+        width: 12vh;
+        height: 12vh;
         background: transparent;
         cursor: pointer;
       }
-      .material-btn:before {
+
+      .menu-btn:before {
+        will-change: scale;
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         z-index: -1;
-        width: 150px;
-        height: 150px;
+        width: 12vh;
+        height: 12vh;
         background: var(--theme-light);
-        border-radius: 50%;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         transform-origin: center 70%;
         transform: scale(1);
+        border-radius: 50%;
         transition: all 0.35s ease-out;
       }
-      .material-menu-wrapper:hover, .material-menu-wrapper.active, .material-menu-wrapper.full{
+
+      .menu-wrapper:hover, .menu-wrapper.active, .menu-wrapper.full{
         height: 100vh;
         width: 56vw;
+        transition: all 0.5s ease-in;
       }
-      .material-menu-wrapper.active .material-btn:before {
-        transform: scale(25);
+
+      .menu-blocker.active {
+        transform: translate(0, 0);
+        transition: all 0.2s ease-out;
       }
-      .material-hamburger {
+
+      .menu-wrapper.active .menu-btn:before {
+        transform: scale(26);
+      }
+
+      .hamburger {
         transition: all .3s ease-out;
         cursor: pointer;
       }
-      .material-patty {
-        will-change: transform, opacity;
-        width: 62px;
-        height: 6px;
-        margin: 0 0 12px 0;
+
+      .patty {
+        will-change: transform;
+        width: 5vh;
+        height: 3px;
+        margin: 0 0 0.8vh 0;
         background: var(--theme-grey-light);
-        opacity: 1;
         transform: translate(0) rotate(0deg);
         transition: all .2s ease-out;
       }
-      .material-patty:last-child {
+
+      .patty:last-child {
         margin-bottom: 0;
       }
-      .material-menu-wrapper.active .material-hamburger {
+
+      .menu-wrapper.active .hamburger {
         transform: rotate(-180deg);
       }
-      .material-menu-wrapper.active .material-hamburger .material-patty:nth-child(1) {
-        transform: translate(-10px, 4px) rotate(-45deg) scale(0.5, 1);
+
+      .menu-wrapper.active .hamburger .patty:nth-child(1) {
+        transform: translate(-1.5vh, 0.51vh) rotate(-45deg) scale(0.56, 1);
       }
-      .material-menu-wrapper.active .material-hamburger .material-patty:nth-child(3) {
-        transform: translate(-10px, -4px) rotate(45deg) scale(0.5, 1);
+
+      .menu-wrapper.active .hamburger .patty:nth-child(3) {
+        transform: translate(-1.5vh, -0.51vh) rotate(45deg) scale(0.56, 1);
       }
+
       .menu-items {
         position: relative;
-        top: 1.6cm;
-        font-size: 2cm;
+        top: 4vh;
+        font-size: 8vw;
         text-align: right;
         z-index: 2;
         color: var(--theme-grey-light);
         display:  none;
       }
-      .material-menu-wrapper.active .menu-items {
+
+      .menu-wrapper.active .menu-items {
         display: inline-block;
       }
+
       .menu-items ::content div {
-        margin-top: 1.6cm;
+        margin-top: 6vh;
         outline: none;
         cursor: pointer;
       }
+
       .menu-items ::content > .iron-selected {
         font-weight: bold !important;
       }
 
-    div.material-menu-wrapper
-      div.material-menu
-        div.material-btn
-          div.material-hamburger
-            div.material-patty
-            div.material-patty
-            div.material-patty
+    div.menu-blocker
+    div.menu-wrapper
+      div.menu-btn
+        div.hamburger
+          div.patty
+          div.patty
+          div.patty
       div.menu-items
         content
 
     script.
-      var wrapper = document.querySelector('.material-menu-wrapper');
-      var ham = document.querySelector('.material-hamburger');
+      var wrapper = document.querySelector('.menu-wrapper');
+      var blocker = document.querySelector('.menu-blocker');
+      var ham = document.querySelector('.hamburger');
 
       function openMenu(event) {
         wrapper.classList.toggle('active');
+        blocker.classList.toggle('active');
         wrapper.classList.add('full');
         setTimeout(function () {
           wrapper.classList.remove('full');
@@ -128,18 +164,12 @@ dom-module#zacharyrs-mobile-menu
       }
 
       ham.addEventListener('click', openMenu, false);
+      blocker.addEventListener('click', openMenu, false);
 
   script(type="text/javascript").
       Polymer({
           is: "zacharyrs-mobile-menu",
-          properties: {
-            selected: String
-          },
           behaviors: [
             Polymer.IronMenubarBehavior
           ],
       });
-
-
-
-zacharyrs-mobile-menu

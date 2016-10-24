@@ -1,14 +1,14 @@
-link(rel="import", href="../bower/polymer/polymer.html")
 link(rel="import", href="../bower/app-layout/app-header/app-header.html")
-link(rel="import", href="../bower/app-layout/app-scroll-effects/app-scroll-effects.html")
 link(rel="import", href="../bower/app-layout/app-toolbar/app-toolbar.html")
 link(rel="import", href="../bower/paper-tabs/paper-tabs.html")
 link(rel="import", href="../bower/iron-pages/iron-pages.html")
 link(rel="import" href="../bower/app-route/app-location.html")
 link(rel="import" href="../bower/app-route/app-route.html")
+link(rel="import" href="../bower/polymerfire/firebase-app.html")
 
 link(rel="import" href="zacharyrs-admin.html")
 link(rel="import" href="zacharyrs-mobile-menu.html")
+link(rel="import" href="zacharyrs-contactme.html")
 
 link(rel="import" href="styles/zacharyrs-app.html")
 
@@ -16,7 +16,7 @@ dom-module#zacharyrs-app
   template
     style(is="custom-style" include="shared-styles").
       app-header {
-        width: 100%;
+        width: 100vw;
         height: 132px;
         color: #fff;
         transform: none !important;
@@ -33,7 +33,7 @@ dom-module#zacharyrs-app
       paper-tabs {
         color: #656D78;
         --paper-tabs-selection-bar-color: var(--theme-light);
-        margin: 0 20% 0 20%;
+        margin: 0 20vw 0 20vw;
       }
 
       paper-tab {
@@ -50,14 +50,36 @@ dom-module#zacharyrs-app
         position: absolute;
         padding-top: 142px;
         height:  calc(100vh - 142px);
-        width: 100%;
+        width: 100vw;
       }
 
       app-toolbar {
         margin-bottom: 20px;
       }
 
-    app-location(route="{{route}}", use-hash-as-path)
+      @media screen and (max-width: 1080px) {
+        app-header {
+          height: 82px;
+        }
+
+        iron-pages {
+          padding-top: 92px;
+          height:  calc(100vh - 92px);
+        }
+
+        app-toolbar {
+          margin-bottom: 8px;
+        }
+      }
+
+    firebase-app(
+      auth-domain="zacharyrs-me.firebaseapp.com",
+      database-url="https://zacharyrs-me.firebaseio.com",
+      api-key="AIzaSyCXJ2wFGr9hjKBbeGltrfuSQ8XoL06U8Tc",
+      messaging-sender-id="591464613003"
+    )
+
+    app-location(route="{{route}}")
     app-route(
       route="{{route}}"
       pattern="/:page"
@@ -106,8 +128,7 @@ dom-module#zacharyrs-app
         PORTFOLIO APP HERE
       div(name="about").
         ABOUT ME APP HERE
-      div(name="contact").
-        CONTACT ME APP HERE
+      zacharyrs-contactme(name="contact")
       div(name="not-found").
         404 PAGE HERE
       zacharyrs-admin(name="admin")
@@ -126,7 +147,7 @@ dom-module#zacharyrs-app
 
 
           _onRoutePathChanged: function(path) {
-              if (!path) {
+              if (!path || path == '/') {
                 this.set('route.path', '/blog');
               };
           },

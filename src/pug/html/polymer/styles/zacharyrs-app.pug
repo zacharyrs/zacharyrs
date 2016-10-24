@@ -3,6 +3,7 @@ dom-module#shared-styles
     style.
       :host {
         font-family: 'quicksand';
+        font-size: 0.5cm;
         --theme-light: #5386C5;
         --theme-medium: #4A76AE;
         --theme-dark: #3F6697;
@@ -17,7 +18,7 @@ dom-module#shared-styles
       .logo {
         color: var(--theme-dark);
         text-align: center;
-        width:  100%;
+        width:  100vw;
         padding-top: 20px;
       }
 
@@ -30,10 +31,5 @@ dom-module#shared-styles
       @media screen and (max-width: 1080px) {
         paper-tabs {
           display: none;
-        }
-
-        .logo {
-          padding-top: 80px;
-          font-size: 4cm !important;
         }
       }
