@@ -61,14 +61,22 @@ dom-module#zacharyrs-app
         margin-bottom: 20px;
       }
 
+      app-toolbar.mobile {
+        display: none;
+      }
+
       .wrapper {
         position: absolute;
         width: 100vw;
         height: 100vh;
       }
 
-      .scrollbar-track {
-        z-index: 2 !important;
+      .scrollbar-track:hover {
+        background: var(--theme-grey-light);
+      }
+
+      .scrollbar-thumb {
+        background: var(--theme-dark);
       }
 
       @media handheld, only screen and (max-width: 1080px) {
@@ -77,12 +85,20 @@ dom-module#zacharyrs-app
         }
 
         iron-pages {
-          padding-top: 92px;
-          height:  calc(100vh - 92px);
+          padding-top: 0;
+          height:  100vh;
         }
 
         app-toolbar {
           margin-bottom: 8px;
+        }
+
+        app-toolbar {
+          display: none;
+        }
+
+        app-toolbar.mobile {
+          display: initial;
         }
       }
 
@@ -132,6 +148,9 @@ dom-module#zacharyrs-app
       div(name="contact").
         contact me
     div.wrapper(data-scrollbar)
+      app-toolbar.mobile
+        h2.logo.
+          zacharyrs
       iron-pages(
         selected="[[data.page]]",
         attr-for-selected="name",
@@ -150,11 +169,6 @@ dom-module#zacharyrs-app
           name="admin",
           signed-in="[[signedIn]]"
         )
-    script(
-        type="text/javascript",
-        src="../bower/smooth-scrollbar/dist/smooth-scrollbar.js",
-        onload="Scrollbar.initAll({'speed':0.8, 'overscrollEffect':'bounce', 'overscrollDamping':0.2});"
-    )
   script(type="text/javascript").
       'use strict';
 
@@ -178,7 +192,12 @@ dom-module#zacharyrs-app
               };
           }
           created() {}
-          ready() {}
+          ready() {
+              const scrollbar = Scrollbar.initAll({'speed':0.8, 'overscrollEffect':'bounce', 'overscrollDamping':0.2});
+              for (let i of document.querySelectorAll('.scrollbar-track, .scrollbar-thumb, .scrollbar-content')) {
+                  i.classList.add('zacharyrs-app');
+              }
+          }
           attached() {}
           detached() {}
           attributeChanged() {}

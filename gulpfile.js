@@ -17,6 +17,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var cleancss = require('gulp-clean-css');
 var jslint = require('gulp-byo-jslint');
 var minify = require('gulp-minify');
+var htmlmin = require('gulp-htmlmin');
 var pug = require('gulp-pug');
 var stylus = require('gulp-stylus');
 var crisper = require('gulp-crisper');
@@ -70,7 +71,10 @@ gulp.task('compile:pug', function () {
       onlySplit: false
     }))
     .pipe(gulpif('*.js', babel({
-       presets: ['es2015']
+      presets: ['es2015']
+    })))
+    .pipe(gulpif('*.html', htmlmin({
+      collapseWhitespace: true
     })))
     .pipe(plumber.stop())
     // .pipe(gulpif('*.js', jslint({
@@ -126,6 +130,15 @@ gulp.task('vulcanize', ['all'], function () {
   ])
     .pipe(gulp.dest('dist/vulcanized/assets/'))
   return gulp.src(['dist/index.html'])
+    .pipe(plumber({
+      errorHandler: function(error) {
+        gutil.log(
+          gutil.colors.cyan('Plumber') + gutil.colors.red(' found unhandled error:\n'),
+          error.toString()
+        );
+        this.emit('end');
+      }
+    }))
     .pipe(vulcanize({
       abspath: '',
       excludes: [],
@@ -137,6 +150,12 @@ gulp.task('vulcanize', ['all'], function () {
       scriptInHead: false,
       onlySplit: false
     }))
+    .pipe(gulpif('*.html', htmlmin({
+      collapseWhitespace: true,
+      minifyCSS: true,
+      removeComments: true
+    })))
+    .pipe(plumber.stop())
     .pipe(gulp.dest('dist/vulcanized/'));
 });
 

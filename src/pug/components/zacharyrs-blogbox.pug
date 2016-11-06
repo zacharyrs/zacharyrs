@@ -1,6 +1,7 @@
 link(rel="import", href="styles/zacharyrs-app.html")
 
-dom-module#zacharyrs-blogpost
+
+dom-module#zacharyrs-blogbox
   template
     style(is="custom-style", include="shared-styles").
       :host {
@@ -22,11 +23,13 @@ dom-module#zacharyrs-blogpost
       .titlebox {
         display: flex;
         justify-content: center;
-        background: blue;
+        background: url("/assets/img/crystal.png") right bottom no-repeat;
+        background-size: calc(var(--height) * 0.5 * 0.90) calc(var(--height) * 1 * 0.90);
         position: absolute;
         left: 0;
         width: calc(var(--width) * 0.2 * 0.90);
         height: calc(var(--height) * 1.0 * 0.90);
+        cursor: pointer;
       }
 
       .title {
@@ -47,47 +50,70 @@ dom-module#zacharyrs-blogpost
       }
 
       .datebox {
-        background: lightblue;
+        box-sizing: border-box;
         position: absolute;
         left: 0;
         right: 0;
         top: 0;
+        text-align: right;
+        color: var(--theme-dark);
         height: calc(var(--width) * 0.2 * 0.90);
+        padding: calc(var(--width) * 0.04 * 0.90) calc(var(--width) * 0.04 * 0.90) 0 0;
+        overflow: none;
+      }
+
+      .datebox:before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        background: url("/assets/img/hexagon.png") right bottom no-repeat;
+        background-size: calc(var(--width) * 2 * 0.90) calc(var(--width) * 2 * 0.90);
+        opacity: 0.3;
+      }
+
+      .datebox .year {
+        font-size: calc(var(--width) * 0.08 * 0.90);
+      }
+
+      .datebox .day {
+        font-size: calc(var(--width) * 0.06* 0.90);
       }
 
       .contentbox {
-        background: pink;
+        box-sizing: border-box;
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
         top: calc(var(--width) * 0.2 * 0.90);
+        padding: calc(var(--width) * 0.03 * 0.90);
       }
     div.wrapper
       div.titlebox
-        div.title.
-          [[_split(title)]]
+        div.title(on-click="_viewPost").
+          [[_split(post.title)]]
       div.mainbox
         div.datebox
+          div.day.
+            [[post.day]]
+          div.year.
+            [[post.year]]
         div.contentbox.
-          [[content]]
+          [[post.content]]
   script(type="text/javascript").
       'use strict';
 
-      class BlogPost {
+      class BlogBox {
           beforeRegister() {
-              this.is = 'zacharyrs-blogpost';
+              this.is = 'zacharyrs-blogbox';
               this.properties = {
-                  time: Date,
-                  title: {
-                      type: String,
-                      reflectToAttribute: true,
-                      value: "Hey World"
-                  },
-                  content: {
-                      type: String,
-                      reflectToAttribute: true,
-                      value: "Content Here"
+                  post: {
+                      type: Object,
+                      reflectToAttribute: true
                   }
               };
           }
@@ -100,6 +126,10 @@ dom-module#zacharyrs-blogpost
           _split(title) {
               return title.toLowerCase().split('').join('\n');
           }
+
+          _viewPost() {
+              this.fire('view-post', {id: this.post.id}, { bubbles: false });
+          }
       }
 
-      Polymer(BlogPost);
+      Polymer(BlogBox);

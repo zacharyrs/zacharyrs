@@ -1,7 +1,8 @@
 link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html")
+link(rel="import", href="../bower/iron-ajax/iron-ajax.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
-link(rel="import", href="zacharyrs-blogpost.html")
+link(rel="import", href="zacharyrs-blogbox.html")
 
 dom-module#zacharyrs-blog
   template
@@ -9,51 +10,38 @@ dom-module#zacharyrs-blog
       .container {
         @apply(--layout-horizontal);
         @apply(--layout-wrap);
+        margin: 0 2vw 0 2vw;
       }
 
-      zacharyrs-blogpost {
-        --width: calc(100vw / 3);
-        --height: calc(100vw / 3);
+      zacharyrs-blogbox {
+        --width: calc(96vw / 3);
+        --height: calc(96vw / 3);
       }
 
       @media handheld, only screen and (max-width: 1080px) {
-        zacharyrs-blogpost {
-          --width: calc(100vw / 2);
-          --height: calc(100vw / 2);
+        zacharyrs-blogbox {
+          --width: calc(96vw / 2);
+          --height: calc(96vw / 2);
         }
       }
 
       @media handheld, only screen and (max-width: 640px) {
-        zacharyrs-blogpost {
-          --width: calc(100vw / 1);
-          --height: calc(100vw / 1);
+        zacharyrs-blogbox {
+          --width: calc(96vw / 1);
+          --height: calc(96vw / 1);
         }
       }
     section.container
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
-      zacharyrs-blogpost
+      iron-ajax#blogdata(
+        auto
+        url="/assets/data/blogfill.json",
+        method="GET",
+        content-type="application/json",
+        handle-as="json",
+        last-response="{{blog-data}}"
+      )
+      template(is="dom-repeat", items="{{blog-data}}")
+        zacharyrs-blogbox(post="{{item}}", on-view-post="_viewPost")
   script(type="text/javascript").
       'use strict';
 
@@ -67,6 +55,10 @@ dom-module#zacharyrs-blog
           attached() {}
           detached() {}
           attributeChanged() {}
+
+          _viewPost(e) {
+              console.log(e.detail.id);
+          }
       }
 
       Polymer(BlogPage);

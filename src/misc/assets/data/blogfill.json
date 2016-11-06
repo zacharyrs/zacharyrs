@@ -1,0 +1,30 @@
+[
+  {
+    "id": 0,
+    "title": "Hey World",
+    "day": "04/03",
+    "year": "1999",
+    "content": "I was born blah blah......."
+  },
+  {
+    "id": 1,
+    "title": "More Filler",
+    "day": "14/04",
+    "year": "2013",
+    "content": "Don't you just love filler content? It's really quite amazing."
+  },
+  {
+    "id": 2,
+    "title": "Studying",
+    "day": "06/11",
+    "year": "2016",
+    "content": "I really shouldn't be messing with this right now... I have exams..."
+  },
+  {
+    "id": 3,
+    "title": "Spooky",
+    "day": "12/03",
+    "year": "2052",
+    "content": "OOooooooh! I am from the future."
+  }
+]
