@@ -1,0 +1,105 @@
+link(rel="import", href="styles/zacharyrs-app.html")
+
+dom-module#zacharyrs-blogpost
+  template
+    style(is="custom-style", include="shared-styles").
+      :host {
+        box-sizing: border-box;
+        width: calc(var(--width) * 0.90);
+        height: calc(var(--height) * 0.90);
+        margin: calc(var(--height) * 0.05) calc(var(--width) * 0.05) calc(var(--height) * 0.05) calc(var(--width) * 0.05);
+      }
+
+      .wrapper {
+        position: relative;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        border-radius: 8px;
+        overflow: hidden;
+        width: calc(var(--width) * 0.90);
+        height: calc(var(--height) * 0.90);
+      }
+
+      .titlebox {
+        display: flex;
+        justify-content: center;
+        background: blue;
+        position: absolute;
+        left: 0;
+        width: calc(var(--width) * 0.2 * 0.90);
+        height: calc(var(--height) * 1.0 * 0.90);
+      }
+
+      .title {
+        font-size: calc(var(--height) * 0.90 * 0.08) !important;
+        color: white;
+        align-self: center;
+        text-align: center;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+      }
+
+      .mainbox {
+        background: var(--theme-grey-light);
+        position: absolute;
+        right: 0;
+        width: calc(var(--width) * 0.8 * 0.90);
+        height: calc(var(--height) * 1.0 * 0.90);
+      }
+
+      .datebox {
+        background: lightblue;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: calc(var(--width) * 0.2 * 0.90);
+      }
+
+      .contentbox {
+        background: pink;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: calc(var(--width) * 0.2 * 0.90);
+      }
+    div.wrapper
+      div.titlebox
+        div.title.
+          [[_split(title)]]
+      div.mainbox
+        div.datebox
+        div.contentbox.
+          [[content]]
+  script(type="text/javascript").
+      'use strict';
+
+      class BlogPost {
+          beforeRegister() {
+              this.is = 'zacharyrs-blogpost';
+              this.properties = {
+                  time: Date,
+                  title: {
+                      type: String,
+                      reflectToAttribute: true,
+                      value: "Hey World"
+                  },
+                  content: {
+                      type: String,
+                      reflectToAttribute: true,
+                      value: "Content Here"
+                  }
+              };
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+
+          _split(title) {
+              return title.toLowerCase().split('').join('\n');
+          }
+      }
+
+      Polymer(BlogPost);

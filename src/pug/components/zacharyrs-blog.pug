@@ -1,0 +1,72 @@
+link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html")
+
+link(rel="import", href="styles/zacharyrs-app.html")
+link(rel="import", href="zacharyrs-blogpost.html")
+
+dom-module#zacharyrs-blog
+  template
+    style(is="custom-style", include="shared-styles iron-flex").
+      .container {
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+      }
+
+      zacharyrs-blogpost {
+        --width: calc(100vw / 3);
+        --height: calc(100vw / 3);
+      }
+
+      @media handheld, only screen and (max-width: 1080px) {
+        zacharyrs-blogpost {
+          --width: calc(100vw / 2);
+          --height: calc(100vw / 2);
+        }
+      }
+
+      @media handheld, only screen and (max-width: 640px) {
+        zacharyrs-blogpost {
+          --width: calc(100vw / 1);
+          --height: calc(100vw / 1);
+        }
+      }
+    section.container
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+      zacharyrs-blogpost
+  script(type="text/javascript").
+      'use strict';
+
+      class BlogPage {
+          beforeRegister() {
+              this.is = 'zacharyrs-blog';
+              this.properties = {};
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+      }
+
+      Polymer(BlogPage);

@@ -10,17 +10,19 @@ var gutil = require('gulp-util');
 var newer = require('gulp-newer');
 var plumber = require('gulp-plumber');
 var replace = require('gulp-replace');
-var rename = require("gulp-rename");
+var rename = require('gulp-rename');
+var merge = require('merge-stream')
 
+var sourcemaps = require('gulp-sourcemaps');
 var cleancss = require('gulp-clean-css');
 var jslint = require('gulp-byo-jslint');
 var minify = require('gulp-minify');
 var pug = require('gulp-pug');
 var stylus = require('gulp-stylus');
-var ts = require('gulp-typescript');
+var crisper = require('gulp-crisper');
+var babel = require('gulp-babel');
 var vulcanize = require('gulp-vulcanize');
 
-var ghpages = require('gulp-gh-pages');
 var surge = require('gulp-surge');
 
 var compress = true;
@@ -28,7 +30,7 @@ var compress = true;
 gulp.task('default', [
   'all',
   'watch',
-  'serve:polymer'
+  'serve:firebase'
 ])
 
 gulp.task('all', [
@@ -36,13 +38,13 @@ gulp.task('all', [
   'copy:misc',
   'compile:pug',
   'compile:stylus',
-  'compile:typescript'
+  'compile:babel'
 ]);
 
 gulp.task('copy:bower', function () {
-  return gulp.src(['bower_components/**/*'], {base: 'bower_components/'})
-    .pipe(newer('dist/html/bower/'))
-    .pipe(gulp.dest('dist/html/bower/'));
+  return gulp.src(['src/bower/**/*'], {base: 'src/bower/'})
+    .pipe(newer('dist/bower/'))
+    .pipe(gulp.dest('dist/bower/'));
 });
 
 gulp.task('copy:misc', function () {
@@ -63,7 +65,17 @@ gulp.task('compile:pug', function () {
       }
     }))
     .pipe(pug({pretty: true}))
+    .pipe(crisper({
+      scriptInHead: false,
+      onlySplit: false
+    }))
+    .pipe(gulpif('*.js', babel({
+       presets: ['es2015']
+    })))
     .pipe(plumber.stop())
+    // .pipe(gulpif('*.js', jslint({
+    //   jslint: './submodules/JSLint/jslint.js'
+    // })))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -84,24 +96,26 @@ gulp.task('compile:stylus', function () {
     .pipe(gulp.dest('dist/assets/css/'));
 });
 
-gulp.task('compile:typescript', function () {
-  return gulp.src(['src/typescript/**/*.ts'], {base: 'src/typescript/'})
+gulp.task('compile:babel', function () {
+  return gulp.src(['src/babel/**/*.js'], {base: 'src/babel/'})
     .pipe(plumber({
       errorHandler: function() {
         this.emit('end');
       }
     }))
-    .pipe(ts())
-    .pipe(plumber.stop())
-    .pipe(jslint({
-      jslint: './submodules/JSLint/jslint.js'
+    .pipe(babel({
+      presets: ['es2015']
     }))
+    .pipe(plumber.stop())
+    // .pipe(jslint({
+    //   jslint: './submodules/JSLint/jslint.js'
+    // }))
     .pipe(gulpif(compress, minify()))
-    .pipe(gulp.dest('dist/assets/js/'));
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('clean', function () {
-  return del(['dist/**/*']);
+  return del(['dist/**/*', '.publish/**/*']);
 });
 
 gulp.task('vulcanize', ['all'], function () {
@@ -119,10 +133,14 @@ gulp.task('vulcanize', ['all'], function () {
       inlineCss: true,
       inlineScripts: true
     }))
+    .pipe(crisper({
+      scriptInHead: false,
+      onlySplit: false
+    }))
     .pipe(gulp.dest('dist/vulcanized/'));
 });
 
-gulp.task('deploy:publish', ['vulcanize'], function () {
+gulp.task('deploy:final', ['vulcanize'], function () {
   gulp.src(['dist/vulcanized/index.html'])
     .pipe(rename('200.html'))
     .pipe(gulp.dest('dist/vulcanized/'));
@@ -132,34 +150,35 @@ gulp.task('deploy:publish', ['vulcanize'], function () {
   })
 });
 
-gulp.task('deploy:live', ['all'], function () {
-  return gulp.src(['dist/**/*', '!dist/vulcanized/**/*'])
-    .pipe(replace(
-      '"></app-location>',
-      '" use-hash-as-path></app-location>'
-    ))
-    .pipe(ghpages());
+gulp.task('deploy:beta', ['all'], function () {
+  gulp.src(['dist/index.html'])
+    .pipe(rename('200.html'))
+    .pipe(gulp.dest('dist/'));
+  surge({
+    project: 'dist/',
+    domain: 'beta.zacharyrs.me'
+  })
 });
 
-gulp.task('serve:polymer', ['serve:bs'], shell.task([
-  'polymer serve dist/'
+gulp.task('serve:firebase', ['serve:bs'], shell.task([
+  'firebase serve'
 ]));
 
 gulp.task('serve:bs', ['all'], function () {
   browsersync({
-    port: 5000,
+    port: 8080,
     notify: true,
     logPrefix: 'bs:',
-    proxy: 'localhost:8080',
+    proxy: 'localhost:5000',
     files: ['dist/**/*', '!/dist/vulcanized'],
     reloadOnRestart: true
   });
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['bower_components/**/*'], ['copy:bower']);
+  gulp.watch(['src/bower/**/*'], ['copy:bower']);
   gulp.watch(['src/misc/**/*'], ['copy:misc']);
   gulp.watch(['src/pug/**/*.pug'], ['compile:pug']);
   gulp.watch(['src/stylus/**/*.styl'], ['compile:stylus']);
-  gulp.watch(['src/typescript/**/*.ts'], ['compile:typescript']);
+  gulp.watch(['src/babel/**/*.js'], ['compile:babel']);
 });

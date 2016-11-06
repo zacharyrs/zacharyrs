@@ -1,0 +1,23 @@
+link(rel="import", href="styles/zacharyrs-app.html")
+
+dom-module#zacharyrs-contactme
+  template
+    style(is="custom-style", include="shared-styles")
+    div.
+        This will be my contact me page.
+  script(type="text/javascript").
+      'use strict';
+
+      class ContactPage {
+          beforeRegister() {
+              this.is = 'zacharyrs-contactme';
+              this.properties = {};
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+      }
+
+      Polymer(ContactPage);

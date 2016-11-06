@@ -1,27 +1,33 @@
 link(rel="import", href="../bower/iron-menu-behavior/iron-menubar-behavior.html")
 
-link(rel="import" href="styles/zacharyrs-app.html")
+link(rel="import", href="styles/zacharyrs-app.html")
 
 dom-module#zacharyrs-mobile-menu
   template
-    style(is="custom-style" include="shared-styles").
+    style(is="custom-style", include="shared-styles").
       :host {
         position: fixed;
         z-index: 100;
         bottom: 0;
         right: 0;
+        min-height: 24vh;
+        min-width: 24vw;
         overflow: hidden;
         outline: none;
       }
 
       .menu-blocker {
-        position: relative;
+        position: fixed;
         will-change: transform;
-        transform: translate(-100vw, 0);
+        transform: translate3d(-100vw, 0, 0);
         transition: all 0.2s ease-in;
+        top: 0;
+        bottom: 0;
+        left: 0;
         height: 100vh;
         width: 100vw;
         background: rgba(0, 0, 0, 0.1);
+        transition-delay: 0.55s;
       }
 
       .menu-wrapper {
@@ -65,40 +71,47 @@ dom-module#zacharyrs-mobile-menu
         transform: scale(1);
         border-radius: 50%;
         transition: all 0.35s ease-out;
+        transition-delay: 0.2s;
       }
 
       .menu-wrapper:hover, .menu-wrapper.active, .menu-wrapper.full{
         height: 100vh;
         width: 56vw;
-        transition: all 0.5s ease-in;
       }
 
       .menu-blocker.active {
-        transform: translate(0, 0);
+        transform: translate3d(0, 0, 0);
         transition: all 0.2s ease-out;
+        transition-delay: 0s;
       }
 
       .menu-wrapper.active .menu-btn:before {
         transform: scale(26);
+        transition-delay: 0.2s;
       }
 
       .hamburger {
-        transition: all .3s ease-out;
+        transition: all 0.3s ease-out;
         cursor: pointer;
       }
 
       .patty {
-        will-change: transform;
+        will-change: transform rotate;
         width: 5vh;
         height: 3px;
         margin: 0 0 0.8vh 0;
         background: var(--theme-grey-light);
-        transform: translate(0) rotate(0deg);
-        transition: all .2s ease-out;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+        transition: all 0.2s ease-out;
       }
 
       .patty:last-child {
         margin-bottom: 0;
+      }
+
+      :host.active {
+        min-height: 100vh;
+        min-width: 100vw;
       }
 
       .menu-wrapper.active .hamburger {
@@ -106,25 +119,30 @@ dom-module#zacharyrs-mobile-menu
       }
 
       .menu-wrapper.active .hamburger .patty:nth-child(1) {
-        transform: translate(-1.5vh, 0.51vh) rotate(-45deg) scale(0.56, 1);
+        transform: translate3d(-1.5vh, 0.51vh, 0) rotate(-45deg) scale(0.56, 1);
       }
 
       .menu-wrapper.active .hamburger .patty:nth-child(3) {
-        transform: translate(-1.5vh, -0.51vh) rotate(45deg) scale(0.56, 1);
+        transform: translate3d(-1.5vh, -0.51vh, 0) rotate(45deg) scale(0.56, 1);
       }
 
       .menu-items {
         position: relative;
+        display: inline-block;
         top: 4vh;
         font-size: 8vw;
         text-align: right;
         z-index: 2;
         color: var(--theme-grey-light);
-        display:  none;
+        transform: translate3d(56vw, 0, 0);
+        transition: all 0.2s ease-out;
+        transition-delay: 0s;
+        will-change: transform;
       }
 
       .menu-wrapper.active .menu-items {
-        display: inline-block;
+        transform: translate3d(0, 0, 0);
+        transition-delay: 0.4s;
       }
 
       .menu-items ::content div {
@@ -137,39 +155,56 @@ dom-module#zacharyrs-mobile-menu
         font-weight: bold !important;
       }
 
-    div.menu-blocker
+    div.menu-blocker(on-click="_toggleMenu")
     div.menu-wrapper
-      div.menu-btn
+      div.menu-btn(on-click="_toggleMenu")
         div.hamburger
           div.patty
           div.patty
           div.patty
       div.menu-items
         content
+  script(type="text/javascript").
+      'use strict';
 
-    script.
-      var wrapper = document.querySelector('.menu-wrapper');
-      var blocker = document.querySelector('.menu-blocker');
-      var ham = document.querySelector('.hamburger');
+      class MobileMenu {
+          get behaviors() {
+              return [Polymer.IronMenubarBehavior];
+          }
 
-      function openMenu(event) {
-        wrapper.classList.toggle('active');
-        blocker.classList.toggle('active');
-        wrapper.classList.add('full');
-        setTimeout(function () {
-          wrapper.classList.remove('full');
-        }, 500);
-        event.preventDefault();
-        event.stopImmediatePropagation();
+          beforeRegister() {
+              this.is = 'zacharyrs-mobile-menu';
+              this.properties = {};
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+
+          _toggleMenu(event) {
+              let wrapper = document.querySelector('.menu-wrapper'),
+                  blocker = document.querySelector('.menu-blocker'),
+                  ham = document.querySelector('.hamburger');
+              if(this.classList.contains('active')){
+                  var thing = this
+                  setTimeout(function () {
+                      thing.classList.remove('active');
+                      Polymer.updateStyles();
+                  }, 700)
+              } else {
+                  this.classList.add('active');
+                  Polymer.updateStyles();
+              }
+              wrapper.classList.toggle('active');
+              blocker.classList.toggle('active');
+              wrapper.classList.add('full');
+              setTimeout(function () {
+                  wrapper.classList.remove('full');
+              }, 500);
+              event.preventDefault();
+              event.stopImmediatePropagation();
+          }
       }
 
-      ham.addEventListener('click', openMenu, false);
-      blocker.addEventListener('click', openMenu, false);
-
-  script(type="text/javascript").
-      Polymer({
-          is: "zacharyrs-mobile-menu",
-          behaviors: [
-            Polymer.IronMenubarBehavior
-          ],
-      });
+      Polymer(MobileMenu);
