@@ -23,18 +23,25 @@ dom-module#zacharyrs-blogbox
       .titlebox {
         display: flex;
         justify-content: center;
-        background: url("/assets/img/crystal.png") right bottom no-repeat;
+        background: url("/assets/img/crystal.png") top right no-repeat;
         background-size: calc(var(--height) * 0.5 * 0.90) calc(var(--height) * 1 * 0.90);
         position: absolute;
         left: 0;
         width: calc(var(--width) * 0.2 * 0.90);
         height: calc(var(--height) * 1.0 * 0.90);
+        color: white;
+        transition: all 0.2s ease;
+      }
+
+      :host.mini .wrapper a .titlebox:hover {
+        background: url("/assets/img/crystal-white.png") top right no-repeat;
+        background-size: calc(var(--height) * 0.5 * 0.90) calc(var(--height) * 1 * 0.90);
+        color: var(--theme-dark);
         cursor: pointer;
       }
 
       .title {
         font-size: calc(var(--height) * 0.90 * 0.08) !important;
-        color: white;
         align-self: center;
         text-align: center;
         word-wrap: break-word;
@@ -93,9 +100,10 @@ dom-module#zacharyrs-blogbox
         padding: calc(var(--width) * 0.03 * 0.90);
       }
     div.wrapper
-      div.titlebox
-        div.title(on-click="_viewPost").
-          [[_split(post.title)]]
+      a(href="/post/[[post.id]]/[[_linkify(post.title)]]")
+          div.titlebox
+            div.title.
+              [[_split(post.title)]]
       div.mainbox
         div.datebox
           div.day.
@@ -110,12 +118,7 @@ dom-module#zacharyrs-blogbox
       class BlogBox {
           beforeRegister() {
               this.is = 'zacharyrs-blogbox';
-              this.properties = {
-                  post: {
-                      type: Object,
-                      reflectToAttribute: true
-                  }
-              };
+              this.properties = {};
           }
           created() {}
           ready() {}
@@ -127,8 +130,8 @@ dom-module#zacharyrs-blogbox
               return title.toLowerCase().split('').join('\n');
           }
 
-          _viewPost() {
-              this.fire('view-post', {id: this.post.id}, { bubbles: false });
+          _linkify(title) {
+              return title.toLowerCase().replace(' ', '-');
           }
       }
 

@@ -12,6 +12,7 @@ link(rel="import", href="zacharyrs-admin.html")
 link(rel="import", href="zacharyrs-mobile-menu.html")
 link(rel="import", href="zacharyrs-contactme.html")
 link(rel="import", href="zacharyrs-blog.html")
+link(rel="import", href="zacharyrs-blogpost.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
 link(rel="stylesheet", type="text/css", href="../bower/smooth-scrollbar/dist/smooth-scrollbar.css")
@@ -112,10 +113,14 @@ dom-module#zacharyrs-app
 
     app-location(route="{{route}}")
     app-route(
-      route="{{route}}"
-      pattern="/:page"
+      route="{{route}}",
+      pattern="/:page",
       data="{{data}}"
-      tail="{{tail}}"
+    )
+    app-route(
+      route="{{route}}",
+      pattern="/post",
+      tail="{{postRoute}}"
     )
 
     app-header
@@ -158,6 +163,7 @@ dom-module#zacharyrs-app
         fallback-selection="not-found"
       )
         zacharyrs-blog(name="blog")
+        zacharyrs-blogpost(name="post", route="{{postRoute}}")
         div(name="portfolio").
           PORTFOLIO APP HERE
         div(name="about").
@@ -179,11 +185,7 @@ dom-module#zacharyrs-app
 
           beforeRegister() {
               this.is = 'zacharyrs-app';
-              this.properties = {
-                  data: {
-                      type: Object
-                  },
-              };
+              this.properties = {};
               this.observers = [
                   '_onRoutePathChanged(route.path)'
               ];
@@ -208,7 +210,7 @@ dom-module#zacharyrs-app
 
           _onRoutePathChanged(path) {
               if (!path || path == '/') {
-                this.set('route.path', '/blog');
+                  this.set('route.path', '/blog');
               };
           };
       }
