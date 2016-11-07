@@ -159,12 +159,22 @@ gulp.task('vulcanize', ['all'], function () {
     .pipe(gulp.dest('dist/vulcanized/'));
 });
 
-gulp.task('deploy:final', ['vulcanize'], function () {
-  gulp.src(['dist/vulcanized/index.html'])
+// gulp.task('deploy:final', ['vulcanize'], function () {
+//   gulp.src(['dist/vulcanized/index.html'])
+//     .pipe(rename('200.html'))
+//     .pipe(gulp.dest('dist/vulcanized/'));
+//   surge({
+//     project: 'dist/vulcanized/',
+//     domain: 'zacharyrs.me'
+//   })
+// });
+
+gulp.task('deploy:final', ['all'], function () {
+  gulp.src(['dist/index.html'])
     .pipe(rename('200.html'))
-    .pipe(gulp.dest('dist/vulcanized/'));
+    .pipe(gulp.dest('dist/'));
   surge({
-    project: 'dist/vulcanized/',
+    project: 'dist/',
     domain: 'zacharyrs.me'
   })
 });

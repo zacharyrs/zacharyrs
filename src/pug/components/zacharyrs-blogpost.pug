@@ -23,7 +23,7 @@ dom-module#zacharyrs-blogpost
       pattern="/:postId/:postName",
       data="{{data}}"
     )
-    iron-ajax(
+    iron-ajax#blog-data(
       auto
       url="/assets/data/blogfill.json",
       method="GET",
@@ -42,6 +42,9 @@ dom-module#zacharyrs-blogpost
           beforeRegister() {
               this.is = 'zacharyrs-blogpost';
               this.properties = {};
+              this.observers = [
+                  '_onRoutePathChanged(route.path)'
+              ];
           }
           created() {}
           ready() {}
@@ -52,6 +55,10 @@ dom-module#zacharyrs-blogpost
           _checkPostId(post) {
               return this.data.postId === post.id;
           }
+
+          _onRoutePathChanged(path) {
+              document.getElementById('blog-data').generateRequest();
+          };
       }
 
       Polymer(BlogPost);
