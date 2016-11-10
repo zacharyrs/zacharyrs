@@ -1,0 +1,23 @@
+link(rel="import", href="styles/zacharyrs-app.html")
+
+dom-module#zacharyrs-404
+  template
+    style(is="custom-style", include="shared-styles")
+    div.
+        This will be my 404 page.
+  script(type="text/javascript").
+      'use strict';
+
+      class NotFoundPage {
+          beforeRegister() {
+              this.is = 'zacharyrs-404';
+              this.properties = {};
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+      }
+
+      Polymer(NotFoundPage);

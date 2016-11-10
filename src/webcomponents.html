@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    (function() {
+        if ('registerElement' in document
+            && 'import' in document.createElement('link')
+            && 'content' in document.createElement('template')) {
+            console.log('Components are supported!');
+            loadApp();
+        } else {
+            var e = document.createElement('script');
+            e.src = '/assets/bower/webcomponentsjs/webcomponents-lite.min.js';
+            document.head.appendChild(e);
+            console.log('Webcomponents initialized!');
+            e.onload = loadApp();
+        }
+
+        function loadApp() {
+            var loadedApp = function() {
+                var loadScreen = document.getElementById('splash');
+                loadScreen.addEventListener('transitionend', loadScreen.remove);
+                document.body.classList.remove('loading');
+            };
+
+            if (document.readyState === 'complete') {
+                loadedApp();
+            } else {
+                window.onload = loadedApp;
+            }
+        }
+    })();
+</script>

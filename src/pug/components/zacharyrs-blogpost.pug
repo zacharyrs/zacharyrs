@@ -1,8 +1,10 @@
 link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html")
 link(rel="import", href="../bower/iron-ajax/iron-ajax.html")
 link(rel="import", href="../bower/app-route/app-route.html")
+link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
+
 link(rel="import", href="zacharyrs-blogbox.html")
 
 dom-module#zacharyrs-blogpost
@@ -20,31 +22,32 @@ dom-module#zacharyrs-blogpost
       }
     app-route(
       route="{{route}}",
-      pattern="/:postId/:postName",
+      pattern="/:postId",
       data="{{data}}"
     )
-    iron-ajax#blog-data(
-      auto
-      url="/assets/data/blogfill.json",
-      method="GET",
-      content-type="application/json",
-      handle-as="json",
-      last-response="{{blog-data}}"
+    firebase-query(
+      id="postQuery",
+      app-name="zacharyrs",
+      path="/blog/[[data.postId]]",
+      data="{{blog-data}}"
     )
     section.container
-      template(is="dom-repeat", items="{{blog-data}}")
-        template(is="dom-if", if="[[_checkPostId(item)]]")
-          zacharyrs-blogbox(post="[[item]]")
+      template(is="dom-repeat", items="[[blog-data]]", as="post")
+        zacharyrs-blogbox(post="[[post]]")
   script(type="text/javascript").
       'use strict';
 
       class BlogPost {
           beforeRegister() {
               this.is = 'zacharyrs-blogpost';
-              this.properties = {};
+              this.properties = {
+                  data: {
+                      type: Object,
+                  }
+              };
               this.observers = [
-                  '_onRoutePathChanged(route.path)'
-              ];
+                  '_changedPage(data.postId)'
+              ]
           }
           created() {}
           ready() {}
@@ -52,13 +55,10 @@ dom-module#zacharyrs-blogpost
           detached() {}
           attributeChanged() {}
 
-          _checkPostId(post) {
-              return this.data.postId === post.id;
+          _changedPage(postId) {
+              this.$.postQuery.path = null;
+              this.$.postQuery.path = '/blog/' + this.data.postId;
           }
-
-          _onRoutePathChanged(path) {
-              document.getElementById('blog-data').generateRequest();
-          };
       }
 
       Polymer(BlogPost);

@@ -1,11 +1,12 @@
 link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html")
 link(rel="import", href="../bower/iron-ajax/iron-ajax.html")
+link(rel="import", href="../bower/app-route/app-route.html")
 link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
 link(rel="import", href="zacharyrs-blogbox.html")
 
-dom-module#zacharyrs-blog
+dom-module#zacharyrs-user
   template
     style(is="custom-style", include="shared-styles iron-flex").
       .container {
@@ -38,10 +39,15 @@ dom-module#zacharyrs-blog
         --height: calc(96vw);
       }
 
+    app-route(
+      route="{{route}}",
+      pattern="/:userId",
+      data="{{data}}"
+    )
     firebase-query(
-      id="blogQuery",
+      id="postQuery",
       app-name="zacharyrs",
-      path="/blog",
+      path="/users/[[data.userId]]/posts",
       data="{{blog-data}}"
     )
     section.container
@@ -51,16 +57,28 @@ dom-module#zacharyrs-blog
   script(type="text/javascript").
       'use strict';
 
-      class BlogPage {
+      class UserPage {
           beforeRegister() {
-              this.is = 'zacharyrs-blog';
-              this.properties = {};
+              this.is = 'zacharyrs-user';
+              this.properties = {
+                  data: {
+                      type: Object,
+                  }
+              };
+              this.observers = [
+                  '_changedPage(data.userId)'
+              ]
           }
           created() {}
           ready() {}
           attached() {}
           detached() {}
           attributeChanged() {}
+
+          _changedPage(userId) {
+              this.$.postQuery.path = null;
+              this.$.postQuery.path = '/users/' + this.data.userId + '/posts';
+          }
       }
 
-      Polymer(BlogPage);
+      Polymer(UserPage);

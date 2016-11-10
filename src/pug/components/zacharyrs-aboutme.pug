@@ -1,0 +1,23 @@
+link(rel="import", href="styles/zacharyrs-app.html")
+
+dom-module#zacharyrs-aboutme
+  template
+    style(is="custom-style", include="shared-styles")
+    div.
+        This will be my about me page.
+  script(type="text/javascript").
+      'use strict';
+
+      class AboutPage {
+          beforeRegister() {
+              this.is = 'zacharyrs-aboutme';
+              this.properties = {};
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+      }
+
+      Polymer(AboutPage);

@@ -1,34 +1,103 @@
-[
-  {
-    "id": "0",
-    "title": "Hey World",
-    "day": "04/03",
-    "year": "1999",
-    "content": "I was born blah blah.......",
-    "show": true
+{
+  "blog": {
+    "asdf" : {
+      "content": {
+        "id": "asdf",
+        "title": "Hey World",
+        "day": "04/03",
+        "year": "1999",
+        "body": "I was born blah blah.......",
+        "userId": "Zach",
+        "show": true
+      }
+    },
+    "ghjk" : {
+      "content": {
+        "id": "ghjk",
+        "title": "More Filler",
+        "day": "14/04",
+        "year": "2013",
+        "body": "Don't you just love filler content? It's really quite amazing.",
+        "userId": "Zach",
+        "show": true
+      }
+    },
+    "lzxc" : {
+      "content": {
+        "id": "lzxc",
+        "title": "Studying",
+        "day": "06/11",
+        "year": "2016",
+        "body": "I really shouldn't be messing with this right now... I have exams...",
+        "userId": "Zach",
+        "show": true
+      }
+    },
+    "vbnm" : {
+      "content": {
+        "id": "vbnm",
+        "title": "Spooky",
+        "day": "12/03",
+        "year": "2052",
+        "body": "OOooooooh! I am from the future.",
+        "userId": "FutureGuy",
+        "show": true
+      }
+    }
   },
-  {
-    "id": "1",
-    "title": "More Filler",
-    "day": "14/04",
-    "year": "2013",
-    "content": "Don't you just love filler content? It's really quite amazing.",
-    "show": true
+  "users": {
+    "Zach": {
+      "posts": {
+        "asdf" : {
+          "content": {
+            "id": "asdf",
+            "title": "Hey World",
+            "day": "04/03",
+            "year": "1999",
+            "body": "I was born blah blah.......",
+            "userId": "Zach",
+            "show": true
+          }
+        },
+        "ghjk" : {
+          "content": {
+            "id": "ghjk",
+            "title": "More Filler",
+            "day": "14/04",
+            "year": "2013",
+            "body": "Don't you just love filler content? It's really quite amazing.",
+            "userId": "Zach",
+            "show": true
+          }
+        },
+        "lzxc" : {
+          "content": {
+            "id": "lzxc",
+            "title": "Studying",
+            "day": "06/11",
+            "year": "2016",
+            "body": "I really shouldn't be messing with this right now... I have exams...",
+            "userId": "Zach",
+            "show": true
+          }
+        }
+      }
+    },
+    "FutureGuy": {
+      "posts": {
+        "vbnm" : {
+          "content": {
+            "id": "vbnm",
+            "title": "Spooky",
+            "day": "12/03",
+            "year": "2052",
+            "body": "OOooooooh! I am from the future.",
+            "userId": "FutureGuy",
+            "show": true
+          }
+        }
+      }
+    }
   },
-  {
-    "id": "2",
-    "title": "Studying",
-    "day": "06/11",
-    "year": "2016",
-    "content": "I really shouldn't be messing with this right now... I have exams...",
-    "show": true
-  },
-  {
-    "id": "3",
-    "title": "Spooky",
-    "day": "12/03",
-    "year": "2052",
-    "content": "OOooooooh! I am from the future.",
-    "show": true
-  }
-]
+  "notification": ""
+}

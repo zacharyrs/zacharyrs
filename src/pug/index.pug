@@ -5,6 +5,49 @@ html
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
 
+    style.
+        #splash {
+          display: block;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: url('/assets/img/crystal.jpg');
+          background-size: cover;
+          transition: transform 0.4s ease-in;
+          transition-delay: 0.3s;
+          will-change: opacity;
+          z-index: 10;
+          transform: translate3d(0, -100vh, 0);
+        }
+        #splash:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: url('/assets/img/svg/logo.svg') 50% 30% no-repeat;
+          background-size: 40%;
+        }
+        #splash h2 {
+          font-family: 'quicksand';
+          color: white;
+          text-align: center;
+          width:  100vw;
+          position: absolute;
+          bottom: 20%;
+        }
+        body.loading #splash {
+          transform: translate3d(0, 0, 0);
+        }
+        @media handheld, only screen and (max-width: 1080px) {
+          #splash:before {
+            background-size: 80%;
+          }
+        }
+
     //- Data
     link(rel="manifest", href="/assets/data/manifest.json")
 
@@ -12,11 +55,12 @@ html
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand", media="none", onload="if(media!='all')media='all'")
 
     //- Bower imports
-    link(rel="stylesheet", href="/bower/material-typography/css/typography.min.css")
-    link(rel="stylesheet", type="text/css", href="/bower/smooth-scrollbar/dist/smooth-scrollbar.css")
-    script(type="text/javascript", src="/bower/webcomponentsjs/webcomponents.js")
-    script(type="text/javascript", src="/bower/smooth-scrollbar/dist/smooth-scrollbar.js")
-    link(rel="import", href="/bower/polymer/polymer.html")
+    link(rel="stylesheet", type="text/css", href="bower/material-typography/css/typography.min.css")
+    link(rel="stylesheet", type="text/css", href="bower/smooth-scrollbar/dist/smooth-scrollbar.css")
+    <!-- webcomponents:html -->
+    <!-- endinject -->
+    script(type="text/javascript", src="bower/smooth-scrollbar/dist/smooth-scrollbar.js")
+    link(rel="import", href="bower/polymer/polymer.html")
 
     //- Icons
     link(rel="shortcut icon", href="/assets/icons/favicon.ico")
@@ -24,6 +68,12 @@ html
     link(rel="icon", type="image/png", href="/assets/icons/favicon-16x16.png", sizes="16x16")
 
     //- My assets
-    link(rel="import", href="/components/zacharyrs-app.html")
-  body
+    link(rel="import", id="app" href="components/zacharyrs-app.html")
+    link(rel="prefetch", href="/assets/img/crystal.jpg")
+    link(rel="prefetch", href="/assets/img/crystal-white.jpg")
+    link(rel="prefetch", href="/assets/img/hexagon.jpg")
+  body.loading
+    div#splash
+      h2.
+        zacharyrs
     zacharyrs-app

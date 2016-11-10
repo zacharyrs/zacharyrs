@@ -6,13 +6,16 @@ link(rel="import", href="../bower/iron-pages/iron-pages.html")
 link(rel="import", href="../bower/app-route/app-location.html")
 link(rel="import", href="../bower/app-route/app-route.html")
 link(rel="import", href="../bower/polymerfire/polymerfire.html")
-link(rel="import", href="../bower/polymerfire/firebase-auth.html")
+link(rel="import", href="../bower/polymerfire/firebase-document.html")
 
 link(rel="import", href="zacharyrs-admin.html")
 link(rel="import", href="zacharyrs-mobile-menu.html")
 link(rel="import", href="zacharyrs-contactme.html")
+link(rel="import", href="zacharyrs-aboutme.html")
+link(rel="import", href="zacharyrs-404.html")
 link(rel="import", href="zacharyrs-blog.html")
 link(rel="import", href="zacharyrs-blogpost.html")
+link(rel="import", href="zacharyrs-user.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
 
@@ -50,9 +53,31 @@ dom-module#zacharyrs-app
         position: relative;
       }
 
+      div#notice {
+        box-sizing: border-box;
+        max-height: 0;
+        width: calc(96vw - 2 * 96vw / 3 * 0.05);
+        margin: auto;
+        margin-top: calc(142px + 96vw / 3 * 0.05);
+        border-radius: 8px;
+        background: url('/assets/img/crystal.png');
+        background-size: cover;
+        transition: max-height 0.3s;
+        overflow: hidden;
+        will-change: max-height;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+      }
+
+      div#notice p {
+        padding: 8px;
+        text-align: center;
+        color: var(--theme-grey-light);
+        font-weight: bold !important;
+        font-size: 20px !important;
+      }
+
       iron-pages {
         position: absolute;
-        padding-top: 142px;
         min-height:  calc(100vh - 142px);
         width: 100vw;
       }
@@ -65,7 +90,7 @@ dom-module#zacharyrs-app
         display: none;
       }
 
-      .wrapper {
+      #wrapper {
         position: absolute;
         width: 100vw;
         height: 100vh;
@@ -100,6 +125,18 @@ dom-module#zacharyrs-app
         app-toolbar.mobile {
           display: initial;
         }
+
+        div#notice {
+          margin-top: calc(0px + 96vw / 2 * 0.05);
+          width: calc(96vw - 2 * 96vw / 2 * 0.05);
+        }
+      }
+
+      @media handheld, only screen and (max-width: 640px) {
+        div#notice {
+          margin-top: calc(0px + 96vw / 1 * 0.05);
+          width: calc(96vw - 2 * 96vw / 1 * 0.05);
+        }
       }
 
     firebase-app(
@@ -121,6 +158,18 @@ dom-module#zacharyrs-app
       pattern="/post",
       tail="{{postRoute}}"
     )
+    app-route(
+      route="{{route}}",
+      pattern="/user",
+      tail="{{userRoute}}"
+    )
+
+    firebase-document(
+      id="query",
+      app-name="zacharyrs",
+      path="/notification",
+      data="{{notification}}"
+    )
 
     app-header
       app-toolbar
@@ -133,8 +182,8 @@ dom-module#zacharyrs-app
       )
         paper-tab(name="blog").
           blog
-        paper-tab(name="portfolio").
-          portfolio
+        //- paper-tab(name="portfolio").
+        //-   portfolio
         paper-tab(name="about").
           about me
         paper-tab(name="contact").
@@ -145,16 +194,19 @@ dom-module#zacharyrs-app
     )
       div(name="blog").
         blog
-      div(name="portfolio").
-        portfolio
+      //- div(name="portfolio").
+      //-   portfolio
       div(name="about").
         about me
       div(name="contact").
         contact me
-    div.wrapper(data-scrollbar)
+    div#wrapper(data-scrollbar)
       app-toolbar.mobile
         h2.logo.
           zacharyrs
+      div#notice
+        p.
+          [[notification]]
       iron-pages(
         selected="[[data.page]]",
         attr-for-selected="name",
@@ -163,17 +215,13 @@ dom-module#zacharyrs-app
       )
         zacharyrs-blog(name="blog")
         zacharyrs-blogpost(name="post", route="{{postRoute}}")
-        div(name="portfolio").
-          PORTFOLIO APP HERE
-        div(name="about").
-          ABOUT ME APP HERE
+        zacharyrs-user(name="user", route="{{userRoute}}")
+        //- div(name="portfolio").
+        //-   PORTFOLIO APP HERE
+        zacharyrs-aboutme(name="about")
         zacharyrs-contactme(name="contact")
-        div(name="not-found").
-          404 PAGE HERE
-        zacharyrs-admin(
-          name="admin",
-          signed-in="[[signedIn]]"
-        )
+        zacharyrs-404(name="not-found")
+        zacharyrs-admin(name="admin", signed-in="[[signedIn]]")
   script(type="text/javascript").
       'use strict';
 
@@ -186,7 +234,8 @@ dom-module#zacharyrs-app
               this.is = 'zacharyrs-app';
               this.properties = {};
               this.observers = [
-                  '_onRoutePathChanged(route.path)'
+                  '_onRoutePathChanged(route.path)',
+                  '_showNotification(notification)'
               ];
               this.listeners = {
                   'iron-resize': '_reRender'
@@ -194,10 +243,13 @@ dom-module#zacharyrs-app
           }
           created() {}
           ready() {
-              const scrollbar = Scrollbar.initAll({'speed':0.8, 'overscrollEffect':'bounce', 'overscrollDamping':0.2});
+              const scrollbar = Scrollbar.init(document.getElementById('wrapper'), {'speed':0.8, 'overscrollEffect':'bounce', 'overscrollDamping':0.2});
               for (let i of document.querySelectorAll('.scrollbar-track, .scrollbar-thumb, .scrollbar-content')) {
                   i.classList.add('zacharyrs-app');
               }
+              scrollbar.addListener((status) => {
+                  console.log(status.direction.y, status.offset.y === 0, status.offset.y === status.limit.y); //- Set up to add and remove header classes
+              })
           }
           attached() {}
           detached() {}
@@ -212,6 +264,14 @@ dom-module#zacharyrs-app
                   this.set('route.path', '/blog');
               };
           };
+
+          _showNotification(notification) {
+              if((typeof notification === 'string' || notification instanceof String) && notification != "") {
+                  this.$.notice.style.maxHeight = '400px';
+              } else {
+                  this.$.notice.style.maxHeight = '0px';
+              }
+          }
       }
 
       Polymer(HomePage);

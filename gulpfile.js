@@ -11,6 +11,7 @@ var newer = require('gulp-newer');
 var plumber = require('gulp-plumber');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
+var inject = require('gulp-inject');
 var merge = require('merge-stream')
 
 var sourcemaps = require('gulp-sourcemaps');
@@ -18,6 +19,7 @@ var cleancss = require('gulp-clean-css');
 var jslint = require('gulp-byo-jslint');
 var minify = require('gulp-minify');
 var htmlmin = require('gulp-htmlmin');
+var imagemin = require('gulp-imagemin');
 var pug = require('gulp-pug');
 var stylus = require('gulp-stylus');
 var crisper = require('gulp-crisper');
@@ -27,6 +29,7 @@ var vulcanize = require('gulp-vulcanize');
 var surge = require('gulp-surge');
 
 var compress = true;
+var unvalc = ['src/bower/webcomponentsjs/webcomponents-lite.min.js'];
 
 gulp.task('default', [
   'all',
@@ -51,6 +54,11 @@ gulp.task('copy:bower', function () {
 gulp.task('copy:misc', function () {
   return gulp.src(['src/misc/**/*'], {base: 'src/misc/'})
     .pipe(newer('dist/'))
+    .pipe(gulpif(['*.png'], imagemin({
+        optimizationLevel: 5,
+        progressive: true,
+        interlaced: true
+    })))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -74,7 +82,8 @@ gulp.task('compile:pug', function () {
       presets: ['es2015']
     })))
     .pipe(gulpif('*.html', htmlmin({
-      collapseWhitespace: true
+      collapseWhitespace: true,
+      conservativeCollapse: true
     })))
     .pipe(plumber.stop())
     // .pipe(gulpif('*.js', jslint({
@@ -129,6 +138,8 @@ gulp.task('vulcanize', ['all'], function () {
     '!dist/assets/js/**/*'
   ])
     .pipe(gulp.dest('dist/vulcanized/assets/'))
+  gulp.src(unvalc, {base: 'src/bower/'})
+    .pipe(gulp.dest('dist/vulcanized/assets/bower/'))
   return gulp.src(['dist/index.html'])
     .pipe(plumber({
       errorHandler: function(error) {
@@ -150,31 +161,26 @@ gulp.task('vulcanize', ['all'], function () {
       scriptInHead: false,
       onlySplit: false
     }))
+    .pipe(inject(gulp.src('src/webcomponents.html'), {name: 'webcomponents', transform: function (filePath, file) {
+      return file.contents.toString('utf8')
+    }}))
     .pipe(gulpif('*.html', htmlmin({
       collapseWhitespace: true,
+      conservativeCollapse: true,
       minifyCSS: true,
       removeComments: true
     })))
+    .pipe(gulpif('*.html', replace('script src="index.js"></script><', 'script id="app" src="/index.js"></script><')))
     .pipe(plumber.stop())
     .pipe(gulp.dest('dist/vulcanized/'));
 });
 
-// gulp.task('deploy:final', ['vulcanize'], function () {
-//   gulp.src(['dist/vulcanized/index.html'])
-//     .pipe(rename('200.html'))
-//     .pipe(gulp.dest('dist/vulcanized/'));
-//   surge({
-//     project: 'dist/vulcanized/',
-//     domain: 'zacharyrs.me'
-//   })
-// });
-
-gulp.task('deploy:final', ['all'], function () {
-  gulp.src(['dist/index.html'])
+gulp.task('deploy:final', ['vulcanize'], function () {
+  gulp.src(['dist/vulcanized/index.html'])
     .pipe(rename('200.html'))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('dist/vulcanized/'));
   surge({
-    project: 'dist/',
+    project: 'dist/vulcanized/',
     domain: 'zacharyrs.me'
   })
 });

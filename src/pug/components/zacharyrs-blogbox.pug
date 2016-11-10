@@ -23,7 +23,7 @@ dom-module#zacharyrs-blogbox
       .titlebox {
         display: flex;
         justify-content: center;
-        background: url("/assets/img/crystal.png") top right no-repeat;
+        background: url("/assets/img/crystal.jpg") top right no-repeat;
         background-size: calc(var(--height) * 0.5 * 0.90) calc(var(--height) * 1 * 0.90);
         position: absolute;
         left: 0;
@@ -34,7 +34,7 @@ dom-module#zacharyrs-blogbox
       }
 
       :host.mini .wrapper a .titlebox:hover {
-        background: url("/assets/img/crystal-white.png") top right no-repeat;
+        background: url("/assets/img/crystal-white.jpg") top right no-repeat;
         background-size: calc(var(--height) * 0.5 * 0.90) calc(var(--height) * 1 * 0.90);
         color: var(--theme-dark);
         cursor: pointer;
@@ -99,6 +99,10 @@ dom-module#zacharyrs-blogbox
         top: calc(var(--width) * 0.2 * 0.90);
         padding: calc(var(--width) * 0.03 * 0.90);
       }
+
+      p {
+        font-size: 0.5cm !important;
+      }
     div.wrapper
       a(href="/post/[[post.id]]/[[_linkify(post.title)]]")
           div.titlebox
@@ -110,8 +114,10 @@ dom-module#zacharyrs-blogbox
             [[post.day]]
           div.year.
             [[post.year]]
-        div.contentbox.
-          [[post.content]]
+        div.contentbox 
+          p [[post.body]]
+          a(href="/user/[[post.userId]]").
+            [[post.userId]]
   script(type="text/javascript").
       'use strict';
 
