@@ -1,3 +1,5 @@
+link(rel="import", href="../bower/marked-element/marked-element.html")
+
 link(rel="import", href="styles/zacharyrs-app.html")
 
 
@@ -69,7 +71,7 @@ dom-module#zacharyrs-blogbox
         overflow: none;
       }
 
-      .datebox:before {
+      .datebox::before {
         content: '';
         display: block;
         position: absolute;
@@ -98,10 +100,22 @@ dom-module#zacharyrs-blogbox
         bottom: 0;
         top: calc(var(--width) * 0.2 * 0.90);
         padding: calc(var(--width) * 0.03 * 0.90);
+        overflow: hidden;
       }
 
-      p {
-        font-size: 0.5cm !important;
+      .contentbox p {
+        text-align: justify;
+      }
+
+      .contentbox::after {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: calc(var(--width) * 0.03 * 0.90 * 5);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--theme-grey-light) 80%, var(--theme-grey-light)) 100%;
       }
     div.wrapper
       a(href="/post/[[post.id]]/[[_linkify(post.title)]]")
@@ -114,8 +128,9 @@ dom-module#zacharyrs-blogbox
             [[post.day]]
           div.year.
             [[post.year]]
-        div.contentbox 
-          p [[post.body]]
+        div.contentbox
+          marked-element(markdown="[[_bodify(post.body)]]")
+            div.markdown-html
           a(href="/user/[[post.userId]]").
             [[post.userId]]
   script(type="text/javascript").
@@ -136,8 +151,12 @@ dom-module#zacharyrs-blogbox
               return title.toLowerCase().split('').join('\n');
           }
 
+          _bodify(body) {
+              return body.split('\n').join('\n\n');
+          }
+
           _linkify(title) {
-              return title.toLowerCase().replace(' ', '-');
+              return title.toLowerCase().split(' ').join('-');
           }
       }
 

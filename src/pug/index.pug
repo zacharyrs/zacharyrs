@@ -4,6 +4,10 @@ html
         zacharyrs
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(property="og:url", content="https://zacharyrs.me/")
+    meta(property="og:type", content="website")
+    meta(property="og:title", content="zacharyrs")
+    meta(property="og:image", content="https://zacharyrs.me/assets/img/ogimage.jpg")
 
     style.
         #splash {
@@ -21,7 +25,7 @@ html
           z-index: 10;
           transform: translate3d(0, -100vh, 0);
         }
-        #splash:before {
+        #splash::before {
           content: '';
           position: absolute;
           top: 0;
@@ -43,7 +47,7 @@ html
           transform: translate3d(0, 0, 0);
         }
         @media handheld, only screen and (max-width: 1080px) {
-          #splash:before {
+          #splash::before {
             background-size: 80%;
           }
         }
@@ -71,7 +75,7 @@ html
     link(rel="import", id="app" href="components/zacharyrs-app.html")
     link(rel="prefetch", href="/assets/img/crystal.jpg")
     link(rel="prefetch", href="/assets/img/crystal-white.jpg")
-    link(rel="prefetch", href="/assets/img/hexagon.jpg")
+    link(rel="prefetch", href="/assets/img/hexagon.png")
   body.loading
     div#splash
       h2.

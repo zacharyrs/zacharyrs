@@ -56,7 +56,7 @@ dom-module#zacharyrs-mobile-menu
         cursor: pointer;
       }
 
-      .menu-btn:before {
+      .menu-btn::before {
         will-change: scale;
         content: "";
         position: absolute;
@@ -85,7 +85,7 @@ dom-module#zacharyrs-mobile-menu
         transition-delay: 0s;
       }
 
-      .menu-wrapper.active .menu-btn:before {
+      .menu-wrapper.active .menu-btn::before {
         transform: scale(26);
         transition-delay: 0.2s;
       }
