@@ -10,6 +10,31 @@ html
     meta(property="og:image", content="https://zacharyrs.me/assets/img/ogimage.jpg")
 
     style.
+        html, body {
+            min-height: 100% !important;
+            line-height: 1;
+            -webkit-text-size-adjust: 100% !important;
+            -ms-text-size-adjust: 100% !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+            -webkit-touch-callout: none !important;
+        }
+        * {
+          border: 0;
+          margin: 0;
+          padding: 0;
+          font-size: 100%;
+          vertical-align: baseline;
+        }
+        body.loading {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          overflow: hidden;
+        }
         #splash {
           display: block;
           position: absolute;
@@ -33,15 +58,19 @@ html
           left: 0;
           right: 0;
           background: url('/assets/img/svg/logo.svg') 50% 30% no-repeat;
-          background-size: 40%;
+          background-size: 80vh;
         }
-        #splash h2 {
+        #splash h1 {
           font-family: 'quicksand';
           color: white;
           text-align: center;
           width:  100vw;
           position: absolute;
-          bottom: 20%;
+          bottom: 20vh;
+          font-size: 10vh;
+          font-weight: 400;
+          letter-spacing: -0.005em;
+          line-height: 56px;
         }
         body.loading #splash {
           transform: translate3d(0, 0, 0);
@@ -56,13 +85,13 @@ html
     link(rel="manifest", href="/assets/data/manifest.json")
 
     //- Fonts
-    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand", media="none", onload="if(media!='all')media='all'")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700|EB+Garamond", media="none", onload="if(media!='all')media='all'")
 
     //- Bower imports
-    link(rel="stylesheet", type="text/css", href="bower/material-typography/css/typography.min.css")
     link(rel="stylesheet", type="text/css", href="bower/smooth-scrollbar/dist/smooth-scrollbar.css")
     <!-- webcomponents:html -->
     <!-- endinject -->
+    script(type="text/javascript", src="bower/clientjs/dist/client.min.js")
     script(type="text/javascript", src="bower/smooth-scrollbar/dist/smooth-scrollbar.js")
     link(rel="import", href="bower/polymer/polymer.html")
 
@@ -76,8 +105,8 @@ html
     link(rel="prefetch", href="/assets/img/crystal.jpg")
     link(rel="prefetch", href="/assets/img/crystal-white.jpg")
     link(rel="prefetch", href="/assets/img/hexagon.png")
-  body.loading
+  body.noloading
     div#splash
-      h2.
+      h1.
         zacharyrs
     zacharyrs-app

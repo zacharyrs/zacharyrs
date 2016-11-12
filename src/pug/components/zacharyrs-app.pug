@@ -38,15 +38,23 @@ dom-module#zacharyrs-app
       }
 
       paper-tabs {
-        color: #656D78;
-        --paper-tabs-selection-bar-color: var(--theme-light);
         margin: 0 20vw 0 20vw;
       }
 
       paper-tab {
         margin: 0 30px;
         width: 20vw;
-        font-size: 0.6cm;
+        font-size: 24px;
+        --paper-tab-content-unselected: {
+          opacity: 0.54 !important;
+          font-weight: 400 !important;
+        };
+      }
+
+      paper-tab:focus {
+        --paper-tab-content: {
+          font-weight: 400 !important;
+        };
       }
 
       :host {
@@ -82,8 +90,13 @@ dom-module#zacharyrs-app
         width: 100vw;
       }
 
+      div#footer-pad {
+        display: block;
+        height: calc(calc(142px + 96vw / 3 * 0.05) / 2);
+        width: 100vw;
+      }
+
       iron-pages {
-        position: absolute;
         min-height:  calc(100vh - 142px);
         width: 100vw;
       }
@@ -100,14 +113,6 @@ dom-module#zacharyrs-app
         position: absolute;
         width: 100vw;
         height: 100vh;
-      }
-
-      .scrollbar-track:hover {
-        background: var(--theme-grey-light);
-      }
-
-      .scrollbar-thumb {
-        background: var(--theme-dark);
       }
 
       @media handheld, only screen and (max-width: 1080px) {
@@ -136,6 +141,10 @@ dom-module#zacharyrs-app
           height: calc(0px + 96vw / 2 * 0.05);
         }
 
+        div#footer-pad {
+          height: calc(calc(0px + 96vw / 2 * 0.05) / 2);
+        }
+
         div#notice {
           width: calc(96vw - 2 * 96vw / 2 * 0.05);
         }
@@ -145,6 +154,11 @@ dom-module#zacharyrs-app
         div#header-pad {
           height: calc(0px + 96vw / 1 * 0.05);
         }
+
+        div#footer-pad {
+          height: calc(calc(0px + 96vw / 1 * 0.05) / 2);
+        }
+
         div#notice {
           width: calc(96vw - 2 * 96vw / 1 * 0.05);
         }
@@ -184,7 +198,7 @@ dom-module#zacharyrs-app
 
     app-header
       app-toolbar
-        h2.logo.
+        h1.logo.
           zacharyrs
       paper-tabs(
         attr-for-selected="name",
@@ -213,7 +227,7 @@ dom-module#zacharyrs-app
         contact me
     div#wrapper(data-scrollbar)
       app-toolbar.mobile
-        h2.logo.
+        h1.logo.
           zacharyrs
       div#header-pad
       div#notice
@@ -234,6 +248,7 @@ dom-module#zacharyrs-app
         zacharyrs-contactme(name="contact")
         zacharyrs-404(name="not-found")
         zacharyrs-admin(name="admin", signed-in="[[signedIn]]")
+      div#footer-pad
   script(type="text/javascript").
       'use strict';
 
@@ -255,13 +270,16 @@ dom-module#zacharyrs-app
           }
           created() {}
           ready() {
-              const scrollbar = Scrollbar.init(document.getElementById('wrapper'), {'speed':0.8, 'overscrollEffect':'bounce', 'overscrollDamping':0.2});
-              for (let i of document.querySelectorAll('.scrollbar-track, .scrollbar-thumb, .scrollbar-content')) {
-                  i.classList.add('zacharyrs-app');
+              const client = new ClientJS();
+              if(!client.isMobile()) {
+                  const scrollbar = Scrollbar.init(document.getElementById('wrapper'), {'speed':0.8, 'overscrollEffect':'bounce', 'overscrollDamping':0.2});
+                  for (let i of document.querySelectorAll('.scrollbar-track, .scrollbar-thumb, .scrollbar-content')) {
+                      i.classList.add('zacharyrs-app');
+                  }
+                  scrollbar.addListener((status) => {
+                      console.log(status.direction.y, status.offset.y === 0, status.offset.y === status.limit.y); //- Set up to add and remove header classes
+                  })
               }
-              scrollbar.addListener((status) => {
-                  console.log(status.direction.y, status.offset.y === 0, status.offset.y === status.limit.y); //- Set up to add and remove header classes
-              })
           }
           attached() {}
           detached() {}
