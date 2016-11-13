@@ -1,4 +1,4 @@
-link(rel="import", href="../bower/marked-element/marked-element.html")
+link(rel="import", href="../bower/showdown-element/showdown-element.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
 
@@ -133,10 +133,10 @@ dom-module#zacharyrs-blogbox
           div.year.
             [[post.year]]
         div.contentbox
-          marked-element(markdown="[[_bodify(post.body)]]")
+          showdown-element(markdown="[[post.body]]", supportextra, highlightjs, fontawesome)
             div.markdown-html
-          a(href="/user/[[post.userId]]").
-            [[post.userId]]
+          //- a(href="/user/[[post.userId]]").
+          //-   [[post.userId]]
   script(type="text/javascript").
       'use strict';
 
@@ -153,10 +153,6 @@ dom-module#zacharyrs-blogbox
 
           _split(title) {
               return title.toLowerCase().split('').join('\n');
-          }
-
-          _bodify(body) {
-              return body.split('\n').join('\n\n');
           }
 
           _linkify(title) {

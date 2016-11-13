@@ -23,8 +23,6 @@ html
         * {
           border: 0;
           margin: 0;
-          padding: 0;
-          font-size: 100%;
           vertical-align: baseline;
         }
         body.loading {
@@ -86,13 +84,16 @@ html
 
     //- Fonts
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700|EB+Garamond", media="none", onload="if(media!='all')media='all'")
+    link(rel="stylesheet", href="https://use.fontawesome.com/719774c3f8.css", media="none", onload="if(media!='all')media='all'")
 
     //- Bower imports
     link(rel="stylesheet", type="text/css", href="bower/smooth-scrollbar/dist/smooth-scrollbar.css")
+    link(rel="stylesheet", type="text/css", href="bower/highlightjs/styles/dracula.css")
     <!-- webcomponents:html -->
     <!-- endinject -->
     script(type="text/javascript", src="bower/clientjs/dist/client.min.js")
     script(type="text/javascript", src="bower/smooth-scrollbar/dist/smooth-scrollbar.js")
+    script(type="text/javascript", src="bower/highlightjs/highlight.pack.js")
     link(rel="import", href="bower/polymer/polymer.html")
 
     //- Icons
@@ -105,7 +106,7 @@ html
     link(rel="prefetch", href="/assets/img/crystal.jpg")
     link(rel="prefetch", href="/assets/img/crystal-white.jpg")
     link(rel="prefetch", href="/assets/img/hexagon.png")
-  body.noloading
+  body.loading
     div#splash
       h1.
         zacharyrs

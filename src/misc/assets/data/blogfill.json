@@ -1,110 +1,133 @@
 {
+  "notification": "",
   "blog": {
-    "asdf" : {
+    "lzxc": {
       "content": {
-        "id": "asdf",
-        "title": "Hey World",
-        "day": "04/03",
-        "year": "1999",
-        "body": "I was born blah blah.......",
         "userId": "Zach",
-        "show": true
-      }
-    },
-    "ghjk" : {
-      "content": {
-        "id": "ghjk",
-        "title": "More Filler",
-        "day": "14/04",
-        "year": "2013",
-        "body": "Don't you just love filler content? It's really quite amazing.",
-        "userId": "Zach",
-        "show": true
-      }
-    },
-    "lzxc" : {
-      "content": {
         "id": "lzxc",
-        "title": "Studying",
         "day": "06/11",
+        "title": "Studying",
+        "show": true,
         "year": "2016",
-        "body": "I really shouldn't be messing with this right now... I have exams...",
-        "userId": "Zach",
-        "show": true
+        "body": "I really shouldn't be messing with this right now...\n\nI have exams..."
       }
     },
-    "vbnm" : {
+    "asdf": {
       "content": {
-        "id": "vbnm",
-        "title": "Spooky",
-        "day": "12/03",
-        "year": "2052",
-        "body": "OOooooooh! I am from the future.",
-        "userId": "FutureGuy",
-        "show": true
+        "userId": "Zach",
+        "id": "asdf",
+        "day": "04/03",
+        "title": "Hey World",
+        "show": true,
+        "year": "1999",
+        "body": "I was **born** blah blah......."
+      }
+    },
+    "tyui": {
+      "content": {
+        "userId": "Zach",
+        "id": "tyui",
+        "day": "12/11",
+        "title": "Todo",
+        "show": true,
+        "year": "2016",
+        "body": "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [ ] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords\n\n"
       }
     },
     "qwer": {
       "content": {
-        "id": "qwer",
-        "title": "A Long Post",
-        "day": "11/11",
-        "year": "2016",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac odio ac mauris pretium sagittis. Donec sit amet nisl blandit mi consectetur ultricies porttitor a eros. Quisque id lorem odio. In fermentum lorem a orci rhoncus rhoncus. Nulla sed sem feugiat, tempus nisl at, sodales erat. Proin varius nibh libero, et aliquam nulla porta pulvinar. Ut malesuada sit amet lorem nec suscipit. Aliquam scelerisque pulvinar erat quis consequat. Aliquam a pulvinar neque, non dictum magna. Nam congue diam magna, ac tempus elit tempus quis. Fusce varius tortor nec tellus porttitor, sed iaculis nibh commodo. Nam a risus sem. Ut sagittis elementum sapien. Praesent odio felis, tempor et elit eu, aliquam tristique metus. Pellentesque a commodo mauris, nec congue ante. Vestibulum nec urna orci.\nMorbi auctor nec orci a porttitor. Curabitur nisi sapien, tempor sit amet libero at, aliquet ultricies erat. Phasellus nisi dui, commodo eget tellus non, pharetra fringilla quam. Duis quis vestibulum nisi. Ut non enim sem. Nulla sit amet eleifend tortor. Nam maximus lectus quam, eu posuere libero placerat in. Ut vitae nisl vel enim faucibus cursus vitae et enim.\nDonec cursus euismod accumsan. Donec tincidunt tortor vel tortor venenatis, nec sodales neque gravida. Nam malesuada risus nisi, quis vestibulum orci varius a. Vestibulum ultrices magna vitae ipsum maximus, vel dapibus dolor imperdiet. Nam in consequat justo. Integer quis urna diam. Sed vitae nunc odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut ornare turpis et enim blandit, imperdiet feugiat nulla tempus. Phasellus luctus finibus ornare.\nPraesent iaculis quam magna, sed consequat sapien eleifend eu. Pellentesque tellus arcu, pretium sit amet sapien ut, laoreet convallis ipsum. Aliquam vitae sapien ullamcorper, mattis turpis eget, vulputate enim. In hac habitasse platea dictumst. Donec scelerisque augue sed viverra ultricies. Integer blandit tempus felis varius sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras eget fringilla elit. Cras pharetra euismod massa in maximus. Proin eu ante sed nunc sodales porta. Maecenas eu tortor quis ex tincidunt sodales eu id quam. Morbi erat lorem, sodales vel egestas vitae, blandit ut sem. In tempus porttitor tortor, a rutrum massa varius ac.\nPraesent quis ipsum massa. Curabitur nec nunc augue. Vestibulum nec nunc sem. Nunc rhoncus ligula nec nisl euismod, quis bibendum velit condimentum. Donec cursus diam purus, congue commodo odio tristique vel. Fusce commodo, sem et imperdiet volutpat, justo nunc tempor urna, quis tincidunt turpis mi id urna. Ut fringilla, dui quis ullamcorper euismod, purus lectus tincidunt ipsum, nec bibendum urna tortor sed velit. Sed lobortis, nisi in pellentesque lacinia, tellus libero auctor mi, gravida dignissim erat urna id magna. Mauris dignissim lectus et odio dictum, auctor faucibus orci commodo. Vivamus vel luctus felis. Sed ultrices lacus lorem, eleifend efficitur tellus mattis ut. Nam pellentesque at arcu id interdum. Pellentesque convallis purus lacus, vel mattis leo aliquet eget. Morbi vel orci vel lacus porttitor rhoncus in in sem.",
         "userId": "AnnoyingGuy",
-        "show": true
+        "id": "qwer",
+        "day": "11/11",
+        "title": "A Long Post",
+        "show": true,
+        "year": "2016",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac odio ac mauris pretium sagittis. Donec sit amet nisl blandit mi consectetur ultricies porttitor a eros. Quisque id lorem odio. In fermentum lorem a orci rhoncus rhoncus. Nulla sed sem feugiat, tempus nisl at, sodales erat. Proin varius nibh libero, et aliquam nulla porta pulvinar. Ut malesuada sit amet lorem nec suscipit. Aliquam scelerisque pulvinar erat quis consequat. Aliquam a pulvinar neque, non dictum magna. Nam congue diam magna, ac tempus elit tempus quis. Fusce varius tortor nec tellus porttitor, sed iaculis nibh commodo. Nam a risus sem. Ut sagittis elementum sapien. Praesent odio felis, tempor et elit eu, aliquam tristique metus. Pellentesque a commodo mauris, nec congue ante. Vestibulum nec urna orci.\n\nMorbi auctor nec orci a porttitor. Curabitur nisi sapien, tempor sit amet libero at, aliquet ultricies erat. Phasellus nisi dui, commodo eget tellus non, pharetra fringilla quam. Duis quis vestibulum nisi. Ut non enim sem. Nulla sit amet eleifend tortor. Nam maximus lectus quam, eu posuere libero placerat in. Ut vitae nisl vel enim faucibus cursus vitae et enim.\n\nDonec cursus euismod accumsan. Donec tincidunt tortor vel tortor venenatis, nec sodales neque gravida. Nam malesuada risus nisi, quis vestibulum orci varius a. Vestibulum ultrices magna vitae ipsum maximus, vel dapibus dolor imperdiet. Nam in consequat justo. Integer quis urna diam. Sed vitae nunc odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut ornare turpis et enim blandit, imperdiet feugiat nulla tempus. Phasellus luctus finibus ornare.\n\nPraesent iaculis quam magna, sed consequat sapien eleifend eu. Pellentesque tellus arcu, pretium sit amet sapien ut, laoreet convallis ipsum. Aliquam vitae sapien ullamcorper, mattis turpis eget, vulputate enim. In hac habitasse platea dictumst. Donec scelerisque augue sed viverra ultricies. Integer blandit tempus felis varius sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras eget fringilla elit. Cras pharetra euismod massa in maximus. Proin eu ante sed nunc sodales porta. Maecenas eu tortor quis ex tincidunt sodales eu id quam. Morbi erat lorem, sodales vel egestas vitae, blandit ut sem. In tempus porttitor tortor, a rutrum massa varius ac.\n\nPraesent quis ipsum massa. Curabitur nec nunc augue. Vestibulum nec nunc sem. Nunc rhoncus ligula nec nisl euismod, quis bibendum velit condimentum. Donec cursus diam purus, congue commodo odio tristique vel. Fusce commodo, sem et imperdiet volutpat, justo nunc tempor urna, quis tincidunt turpis mi id urna. Ut fringilla, dui quis ullamcorper euismod, purus lectus tincidunt ipsum, nec bibendum urna tortor sed velit. Sed lobortis, nisi in pellentesque lacinia, tellus libero auctor mi, gravida dignissim erat urna id magna. Mauris dignissim lectus et odio dictum, auctor faucibus orci commodo. Vivamus vel luctus felis. Sed ultrices lacus lorem, eleifend efficitur tellus mattis ut. Nam pellentesque at arcu id interdum. Pellentesque convallis purus lacus, vel mattis leo aliquet eget. Morbi vel orci vel lacus porttitor rhoncus in in sem."
+      }
+    },
+    "vbnm": {
+      "content": {
+        "userId": "FutureGuy",
+        "id": "vbnm",
+        "day": "12/03",
+        "title": "Spooky",
+        "show": true,
+        "year": "2052",
+        "body": "Oooooooh! I am from the future.\n\n- [x] [fa-home] FontAwesome works!\n\n- [x] Codeblocks are coloured!\n\n```python\n\nimport random\n\ntest = random.randint(0, 10)\n\nprint(test)\n\n```"
+      }
+    },
+    "ghjk": {
+      "content": {
+        "userId": "Zach",
+        "id": "ghjk",
+        "day": "14/04",
+        "title": "More Filler",
+        "show": true,
+        "year": "2013",
+        "body": "Don't you just love filler content? It's really quite amazing."
       }
     }
   },
   "users": {
-    "Zach": {
+    "FutureGuy": {
       "posts": {
-        "asdf" : {
+        "vbnm": {
           "content": {
-            "id": "asdf",
-            "title": "Hey World",
-            "day": "04/03",
-            "year": "1999",
-            "body": "I was born blah blah.......",
-            "userId": "Zach",
-            "show": true
-          }
-        },
-        "ghjk" : {
-          "content": {
-            "id": "ghjk",
-            "title": "More Filler",
-            "day": "14/04",
-            "year": "2013",
-            "body": "Don't you just love filler content? It's really quite amazing.",
-            "userId": "Zach",
-            "show": true
-          }
-        },
-        "lzxc" : {
-          "content": {
-            "id": "lzxc",
-            "title": "Studying",
-            "day": "06/11",
-            "year": "2016",
-            "body": "I really shouldn't be messing with this right now... I have exams...",
-            "userId": "Zach",
-            "show": true
+            "userId": "FutureGuy",
+            "id": "vbnm",
+            "day": "12/03",
+            "title": "Spooky",
+            "show": true,
+            "year": "2052",
+            "body": "Oooooooh! I am from the future.\n\n- [x] [fa-home] FontAwesome works!\n\n- [x] Codeblocks are coloured!\n\n```python\n\nimport random\n\ntest = random.randint(0, 10)\n\nprint(test)\n\n```"
           }
         }
       }
     },
-    "FutureGuy": {
+    "Zach": {
       "posts": {
-        "vbnm" : {
+        "lzxc": {
           "content": {
-            "id": "vbnm",
-            "title": "Spooky",
-            "day": "12/03",
-            "year": "2052",
-            "body": "OOooooooh! I am from the future.",
-            "userId": "FutureGuy",
-            "show": true
+            "userId": "Zach",
+            "id": "lzxc",
+            "day": "06/11",
+            "title": "Studying",
+            "show": true,
+            "year": "2016",
+            "body": "I really shouldn't be messing with this right now...\n\nI have exams..."
+          }
+        },
+        "asdf": {
+          "content": {
+            "userId": "Zach",
+            "id": "asdf",
+            "day": "04/03",
+            "title": "Hey World",
+            "show": true,
+            "year": "1999",
+            "body": "I was born blah blah......."
+          }
+        },
+        "tyui": {
+          "content": {
+            "userId": "Zach",
+            "id": "tyui",
+            "day": "12/11",
+            "title": "Todo",
+            "show": true,
+            "year": "2016",
+            "body": "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [ ] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords\n\n"
+          }
+        },
+        "ghjk": {
+          "content": {
+            "userId": "Zach",
+            "id": "ghjk",
+            "day": "14/04",
+            "title": "More Filler",
+            "show": true,
+            "year": "2013",
+            "body": "Don't you just love filler content? It's really quite amazing."
           }
         }
       }
@@ -113,17 +136,16 @@
       "posts": {
         "qwer": {
           "content": {
-            "id": "qwer",
-            "title": "A Long Post",
-            "day": "11/11",
-            "year": "2016",
-            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac odio ac mauris pretium sagittis. Donec sit amet nisl blandit mi consectetur ultricies porttitor a eros. Quisque id lorem odio. In fermentum lorem a orci rhoncus rhoncus. Nulla sed sem feugiat, tempus nisl at, sodales erat. Proin varius nibh libero, et aliquam nulla porta pulvinar. Ut malesuada sit amet lorem nec suscipit. Aliquam scelerisque pulvinar erat quis consequat. Aliquam a pulvinar neque, non dictum magna. Nam congue diam magna, ac tempus elit tempus quis. Fusce varius tortor nec tellus porttitor, sed iaculis nibh commodo. Nam a risus sem. Ut sagittis elementum sapien. Praesent odio felis, tempor et elit eu, aliquam tristique metus. Pellentesque a commodo mauris, nec congue ante. Vestibulum nec urna orci.\nMorbi auctor nec orci a porttitor. Curabitur nisi sapien, tempor sit amet libero at, aliquet ultricies erat. Phasellus nisi dui, commodo eget tellus non, pharetra fringilla quam. Duis quis vestibulum nisi. Ut non enim sem. Nulla sit amet eleifend tortor. Nam maximus lectus quam, eu posuere libero placerat in. Ut vitae nisl vel enim faucibus cursus vitae et enim.\nDonec cursus euismod accumsan. Donec tincidunt tortor vel tortor venenatis, nec sodales neque gravida. Nam malesuada risus nisi, quis vestibulum orci varius a. Vestibulum ultrices magna vitae ipsum maximus, vel dapibus dolor imperdiet. Nam in consequat justo. Integer quis urna diam. Sed vitae nunc odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut ornare turpis et enim blandit, imperdiet feugiat nulla tempus. Phasellus luctus finibus ornare.\nPraesent iaculis quam magna, sed consequat sapien eleifend eu. Pellentesque tellus arcu, pretium sit amet sapien ut, laoreet convallis ipsum. Aliquam vitae sapien ullamcorper, mattis turpis eget, vulputate enim. In hac habitasse platea dictumst. Donec scelerisque augue sed viverra ultricies. Integer blandit tempus felis varius sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras eget fringilla elit. Cras pharetra euismod massa in maximus. Proin eu ante sed nunc sodales porta. Maecenas eu tortor quis ex tincidunt sodales eu id quam. Morbi erat lorem, sodales vel egestas vitae, blandit ut sem. In tempus porttitor tortor, a rutrum massa varius ac.\nPraesent quis ipsum massa. Curabitur nec nunc augue. Vestibulum nec nunc sem. Nunc rhoncus ligula nec nisl euismod, quis bibendum velit condimentum. Donec cursus diam purus, congue commodo odio tristique vel. Fusce commodo, sem et imperdiet volutpat, justo nunc tempor urna, quis tincidunt turpis mi id urna. Ut fringilla, dui quis ullamcorper euismod, purus lectus tincidunt ipsum, nec bibendum urna tortor sed velit. Sed lobortis, nisi in pellentesque lacinia, tellus libero auctor mi, gravida dignissim erat urna id magna. Mauris dignissim lectus et odio dictum, auctor faucibus orci commodo. Vivamus vel luctus felis. Sed ultrices lacus lorem, eleifend efficitur tellus mattis ut. Nam pellentesque at arcu id interdum. Pellentesque convallis purus lacus, vel mattis leo aliquet eget. Morbi vel orci vel lacus porttitor rhoncus in in sem.",
             "userId": "AnnoyingGuy",
-            "show": true
+            "id": "qwer",
+            "day": "11/11",
+            "title": "A Long Post",
+            "show": true,
+            "year": "2016",
+            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ac odio ac mauris pretium sagittis. Donec sit amet nisl blandit mi consectetur ultricies porttitor a eros. Quisque id lorem odio. In fermentum lorem a orci rhoncus rhoncus. Nulla sed sem feugiat, tempus nisl at, sodales erat. Proin varius nibh libero, et aliquam nulla porta pulvinar. Ut malesuada sit amet lorem nec suscipit. Aliquam scelerisque pulvinar erat quis consequat. Aliquam a pulvinar neque, non dictum magna. Nam congue diam magna, ac tempus elit tempus quis. Fusce varius tortor nec tellus porttitor, sed iaculis nibh commodo. Nam a risus sem. Ut sagittis elementum sapien. Praesent odio felis, tempor et elit eu, aliquam tristique metus. Pellentesque a commodo mauris, nec congue ante. Vestibulum nec urna orci.\n\nMorbi auctor nec orci a porttitor. Curabitur nisi sapien, tempor sit amet libero at, aliquet ultricies erat. Phasellus nisi dui, commodo eget tellus non, pharetra fringilla quam. Duis quis vestibulum nisi. Ut non enim sem. Nulla sit amet eleifend tortor. Nam maximus lectus quam, eu posuere libero placerat in. Ut vitae nisl vel enim faucibus cursus vitae et enim.\n\nDonec cursus euismod accumsan. Donec tincidunt tortor vel tortor venenatis, nec sodales neque gravida. Nam malesuada risus nisi, quis vestibulum orci varius a. Vestibulum ultrices magna vitae ipsum maximus, vel dapibus dolor imperdiet. Nam in consequat justo. Integer quis urna diam. Sed vitae nunc odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut ornare turpis et enim blandit, imperdiet feugiat nulla tempus. Phasellus luctus finibus ornare.\n\nPraesent iaculis quam magna, sed consequat sapien eleifend eu. Pellentesque tellus arcu, pretium sit amet sapien ut, laoreet convallis ipsum. Aliquam vitae sapien ullamcorper, mattis turpis eget, vulputate enim. In hac habitasse platea dictumst. Donec scelerisque augue sed viverra ultricies. Integer blandit tempus felis varius sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras eget fringilla elit. Cras pharetra euismod massa in maximus. Proin eu ante sed nunc sodales porta. Maecenas eu tortor quis ex tincidunt sodales eu id quam. Morbi erat lorem, sodales vel egestas vitae, blandit ut sem. In tempus porttitor tortor, a rutrum massa varius ac.\n\nPraesent quis ipsum massa. Curabitur nec nunc augue. Vestibulum nec nunc sem. Nunc rhoncus ligula nec nisl euismod, quis bibendum velit condimentum. Donec cursus diam purus, congue commodo odio tristique vel. Fusce commodo, sem et imperdiet volutpat, justo nunc tempor urna, quis tincidunt turpis mi id urna. Ut fringilla, dui quis ullamcorper euismod, purus lectus tincidunt ipsum, nec bibendum urna tortor sed velit. Sed lobortis, nisi in pellentesque lacinia, tellus libero auctor mi, gravida dignissim erat urna id magna. Mauris dignissim lectus et odio dictum, auctor faucibus orci commodo. Vivamus vel luctus felis. Sed ultrices lacus lorem, eleifend efficitur tellus mattis ut. Nam pellentesque at arcu id interdum. Pellentesque convallis purus lacus, vel mattis leo aliquet eget. Morbi vel orci vel lacus porttitor rhoncus in in sem."
           }
         }
       }
     }
-  },
-  "notification": ""
+  }
 }
