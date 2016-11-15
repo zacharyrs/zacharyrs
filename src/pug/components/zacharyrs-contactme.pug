@@ -1,4 +1,5 @@
 link(rel="import", href="styles/zacharyrs-app.html")
+link(rel="import", href="../bower/neon-animation/neon-animation.html")
 
 dom-module#zacharyrs-contactme
   template
@@ -9,9 +10,36 @@ dom-module#zacharyrs-contactme
       'use strict';
 
       class ContactPage {
+          get behaviors() {
+              return [Polymer.NeonAnimationRunnerBehavior];
+          }
+
           beforeRegister() {
               this.is = 'zacharyrs-contactme';
-              this.properties = {};
+              this.properties = {
+                  visible: {
+                      type: Boolean,
+                      value: false
+                  },
+                  animationConfig: {
+                      value: function() {
+                          return {
+                              'entry': [
+                                  {
+                                      name: 'fade-in-animation',
+                                      node: this
+                                  }
+                              ],
+                              'exit': [
+                                  {
+                                      name: 'fade-out-animation',
+                                      node: this
+                                  }
+                              ]
+                          }
+                      }
+                  }
+              };
           }
           created() {}
           ready() {}

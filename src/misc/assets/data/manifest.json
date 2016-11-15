@@ -4,17 +4,16 @@
   "description": "My blog, portfolio, and miscellaneous site.",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "any",
-  "theme_color": "#5386C5",
-  "background_color": "#F5F7FA",
+  "orientation": "portrait",
+  "theme_color": "#3F6697",
   "icons": [
     {
-      "src": "../icons/android-chrome-192x192.png",
+      "src": "../icons/android-chrome-192x192.png?v=9BangRkAd4",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "../icons/android-chrome-512x512.png",
+      "src": "../icons/android-chrome-512x512.png?v=9BangRkAd4",
       "sizes": "512x512",
       "type": "image/png"
     }

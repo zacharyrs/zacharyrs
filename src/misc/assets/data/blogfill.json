@@ -1,5 +1,9 @@
 {
-  "notification": "",
+  "notifications": {
+    "showdown": {
+      "content": "**Showdown Support!**"
+    }
+  },
   "blog": {
     "lzxc": {
       "content": {
@@ -31,7 +35,7 @@
         "title": "Todo",
         "show": true,
         "year": "2016",
-        "body": "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [ ] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords\n\n"
+        "body": "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [ ] Write Showdown extension to 'polymerize'. It will convert checkboxes to `paper-checkbox`.\n\n- [ ] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords"
       }
     },
     "qwer": {
@@ -53,7 +57,7 @@
         "title": "Spooky",
         "show": true,
         "year": "2052",
-        "body": "Oooooooh! I am from the future.\n\n- [x] [fa-home] FontAwesome works!\n\n- [x] Codeblocks are coloured!\n\n```python\n\nimport random\n\ntest = random.randint(0, 10)\n\nprint(test)\n\n```"
+        "body": "Oooooooh! I am from the future.\n\n- [x] [fa-home] FontAwesome works!\n\n- [x] Codeblocks are coloured!\n\n```python\nimport random\ntest = random.randint(0, 10)\nprint(test)\n```"
       }
     },
     "ghjk": {
@@ -79,7 +83,7 @@
             "title": "Spooky",
             "show": true,
             "year": "2052",
-            "body": "Oooooooh! I am from the future.\n\n- [x] [fa-home] FontAwesome works!\n\n- [x] Codeblocks are coloured!\n\n```python\n\nimport random\n\ntest = random.randint(0, 10)\n\nprint(test)\n\n```"
+            "body": "Oooooooh! I am from the future.\n\n- [x] [fa-home] FontAwesome works!\n\n- [x] Codeblocks are coloured!\n\n```python\nimport random\ntest = random.randint(0, 10)\nprint(test)\n```"
           }
         }
       }
@@ -116,7 +120,7 @@
             "title": "Todo",
             "show": true,
             "year": "2016",
-            "body": "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [ ] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords\n\n"
+            "body": "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [ ] Write Showdown extension to 'polymerize'. It will convert checkboxes to `paper-checkbox`.\n\n- [ ] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords"
           }
         },
         "ghjk": {

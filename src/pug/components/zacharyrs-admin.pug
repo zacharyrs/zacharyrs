@@ -1,4 +1,5 @@
 link(rel="import", href="../bower/polymerfire/firebase-auth.html")
+link(rel="import", href="../bower/neon-animation/neon-animation.html")
 
 link(rel="import", href="zacharyrs-login.html")
 
@@ -26,6 +27,10 @@ dom-module#zacharyrs-admin
       'use strict';
 
       class AdminPage {
+          get behaviors() {
+              return [Polymer.NeonAnimationRunnerBehavior];
+          }
+
           beforeRegister() {
               this.is = 'zacharyrs-admin';
               this.properties = {
@@ -33,6 +38,28 @@ dom-module#zacharyrs-admin
                       type: Boolean,
                       reflectToAttribute: true,
                       value: false
+                  },
+                  visible: {
+                      type: Boolean,
+                      value: false
+                  },
+                  animationConfig: {
+                      value: function() {
+                          return {
+                              'entry': [
+                                  {
+                                      name: 'fade-in-animation',
+                                      node: this
+                                  }
+                              ],
+                              'exit': [
+                                  {
+                                      name: 'fade-out-animation',
+                                      node: this
+                                  }
+                              ]
+                          }
+                      }
                   }
               };
           }

@@ -1,0 +1,34 @@
+script(type="text/javascript").
+    var polymerize = function() {
+      return [
+        {
+          type: 'output',
+          filter: function (text, converter, options) {
+            // use new shodown's regexp engine to conditionally parse codeblocks
+            var left  = '<pre><code\\b[^>]*>',
+                right = '</code></pre>',
+                flags = 'g',
+                replacement = function (wholeMatch, match, left, right) {
+                  // unescape match to prevent double escaping
+                  match = match.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                  return left.replace('class="', 'class="hljs ') + hljs.highlightAuto(match).value + right;
+                };
+            return showdown.helper.replaceRecursiveRegExp(text, replacement, left, right, flags);
+          }
+        },
+        {
+          type: 'lang',
+          regex: /\[fa-([A-Za-z-]+) *([A-Za-z]*)\]/g,
+          replace: function(match, icon, size) {
+            if(size) {
+              return icon === '\\' ? match : '<i class="fa fa-' + icon + ' fa-' + size + '">' + '</i>'
+            }
+            else {
+              return icon === '\\' ? match : '<i class="fa fa-' + icon + '">' + '</i>'
+            }
+          }
+        }
+      ];
+    };
+
+    showdown.extension('polymerize', polymerize);

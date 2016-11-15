@@ -1,5 +1,5 @@
 link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html")
-link(rel="import", href="../bower/iron-ajax/iron-ajax.html")
+link(rel="import", href="../bower/neon-animation/neon-animation.html")
 link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
@@ -47,20 +47,51 @@ dom-module#zacharyrs-blog
     section.container
       template(is="dom-repeat", items="[[blog-data]]", as="post")
         template(is="dom-if", if="[[post.content.show]]")
-          zacharyrs-blogbox.mini(post="[[post.content]]")
+          zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
   script(type="text/javascript").
       'use strict';
 
       class BlogPage {
+          get behaviors() {
+              return [Polymer.NeonAnimationRunnerBehavior];
+          }
+
           beforeRegister() {
               this.is = 'zacharyrs-blog';
-              this.properties = {};
+              this.properties = {
+                  visible: {
+                      type: Boolean,
+                      value: false
+                  },
+                  animationConfig: {
+                      value: function() {
+                          return {
+                              'entry': [
+                                  {
+                                      name: 'fade-in-animation',
+                                      node: this
+                                  }
+                              ],
+                              'exit': [
+                                  {
+                                      name: 'fade-out-animation',
+                                      node: this
+                                  }
+                              ]
+                          }
+                      }
+                  }
+              };
           }
           created() {}
           ready() {}
           attached() {}
           detached() {}
           attributeChanged() {}
+
+          _openPost(e) {
+              this.fire('open-post', {link: e.detail.link}, { bubbles: false });
+          }
       }
 
       Polymer(BlogPage);

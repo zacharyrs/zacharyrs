@@ -43,20 +43,54 @@ html
           background: url('/assets/img/crystal.jpg');
           background-size: cover;
           transition: transform 0.4s ease-in;
-          transition-delay: 0.3s;
+          transition-delay: 8s;
           will-change: opacity;
           z-index: 10;
           transform: translate3d(0, -100vh, 0);
         }
-        #splash::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: url('/assets/img/svg/logo.svg') 50% 30% no-repeat;
-          background-size: 80vh;
+        #splash svg#logoimg {
+          position: relative;
+          width: 50vw;
+          top: 8vh;
+          left: 25vw;
+          right: 25vw;
+        }
+        #splash svg#logoimg path {
+          stroke: #F5F7FA;
+          fill: none;
+          stroke-width: 3;
+        }
+        #splash svg#logoimg path#large {
+          stroke-dasharray: 1475;
+          animation: offsetlarge 3s ease-out infinite;
+          animation-delay: 2s;
+        }
+        #splash svg#logoimg path#small {
+          stroke-dasharray: 254;
+          animation: offsetsmall 3s ease-out infinite;
+          animation-delay: 2s;
+        }
+        @keyframes offsetlarge {
+          0% {
+            stroke-dashoffset: -1475;
+          }
+          75% {
+            stroke-dashoffset: 0;
+          }
+          100% {
+            stroke-dashoffset: 1475;
+          }
+        }
+        @keyframes offsetsmall {
+          0% {
+            stroke-dashoffset: 254;
+          }
+          75% {
+            stroke-dashoffset: 0;
+          }
+          100% {
+            stroke-dashoffset: -254;
+          }
         }
         #splash h1 {
           font-family: 'quicksand';
@@ -64,9 +98,9 @@ html
           text-align: center;
           width:  100vw;
           position: absolute;
-          bottom: 20vh;
+          bottom: 16vh;
           font-size: 10vh;
-          font-weight: 400;
+          font-weight: 300;
           letter-spacing: -0.005em;
           line-height: 56px;
         }
@@ -74,32 +108,38 @@ html
           transform: translate3d(0, 0, 0);
         }
         @media handheld, only screen and (max-width: 1080px) {
-          #splash::before {
-            background-size: 80%;
+          #splash svg#logoimg {
+            width: 80vw;
+            left: 10vw;
+            right: 10vw;
           }
         }
 
     //- Data
-    link(rel="manifest", href="/assets/data/manifest.json")
-
-    //- Fonts
-    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700|EB+Garamond", media="none", onload="if(media!='all')media='all'")
-    link(rel="stylesheet", href="https://use.fontawesome.com/719774c3f8.css", media="none", onload="if(media!='all')media='all'")
+    link(rel="manifest", href="/assets/data/manifest.json?v=9BangRkAd4")
+    meta(name="msapplication-config", content="/assets/data/browserconfig.xml?v=9BangRkAd4")
+    meta(name="apple-mobile-web-app-title", content="zacharyrs")
+    meta(name="application-name", content="zacharyrs")
+    meta(name="theme-color", content="#3f6697")
 
     //- Bower imports
     link(rel="stylesheet", type="text/css", href="bower/smooth-scrollbar/dist/smooth-scrollbar.css")
     link(rel="stylesheet", type="text/css", href="bower/highlightjs/styles/dracula.css")
-    <!-- webcomponents:html -->
-    <!-- endinject -->
     script(type="text/javascript", src="bower/clientjs/dist/client.min.js")
     script(type="text/javascript", src="bower/smooth-scrollbar/dist/smooth-scrollbar.js")
     script(type="text/javascript", src="bower/highlightjs/highlight.pack.js")
+    script(type="text/javascript", src="bower/vivus/dist/vivus.min.js")
     link(rel="import", href="bower/polymer/polymer.html")
 
+    //- Fonts
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand:300")
+
     //- Icons
-    link(rel="shortcut icon", href="/assets/icons/favicon.ico")
-    link(rel="icon", type="image/png", href="/assets/icons/favicon-32x32.png", sizes="32x32")
-    link(rel="icon", type="image/png", href="/assets/icons/favicon-16x16.png", sizes="16x16")
+    link(rel="apple-touch-icon", sizes="180x180", href="/assets/icons/apple-touch-icon.png?v=9BangRkAd4")
+    link(rel="icon", type="image/png", href="/assets/icons/favicon-32x32.png?v=9BangRkAd4", sizes="32x32")
+    link(rel="icon", type="image/png", href="/assets/icons/favicon-16x16.png?v=9BangRkAd4", sizes="16x16")
+    link(rel="mask-icon", href="/assets/icons/safari-pinned-tab.svg?v=9BangRkAd4", color="#3f6697")
+    link(rel="shortcut icon", href="/assets/icons/favicon.ico?v=9BangRkAd4")
 
     //- My assets
     link(rel="import", id="app" href="components/zacharyrs-app.html")
@@ -108,6 +148,11 @@ html
     link(rel="prefetch", href="/assets/img/hexagon.png")
   body.loading
     div#splash
+      svg(id="logoimg", version="1.1", xmlns="http://www.w3.org/2000/svg", x="0px", y="0px", viewBox="0 0 370 260")
+        path(id="small" d="M331.3,71.9H114.8c-5.2,0-9.5,4.3-9.5,9.5v21.9")
+        path(id="large" d="M139.3,218.8v-106c0-5.3-4.2-9.5-9.5-9.5H58.3c-5.2,0-9.5,4.3-9.5,9.5v132.6c0,5.2,4.3,9.5,9.5,9.5h71.6c5.2,0,9.5-4.3,9.5-9.5v-5.3c0-3.8,1.9-7.3,4.8-9.4c1.9-1.5,4.4-2.4,7.1-2.4h9.5h194.6c5.2,0,9.5-4.3,9.5-9.5V81.4c0-5.2-4.2-9.5-9.5-9.5h-2.7c-3.9,0-7.3-1.8-9.5-4.7c-1.5-2-2.4-4.4-2.4-7.1v-9.5V14.5c0-5.2-4.2-9.5-9.5-9.5H14.5C9.3,5,5,9.3,5,14.5V204c0,5.2,4.2,9.5,9.5,9.5h20")
       h1.
         zacharyrs
+    <!-- webcomponents:html -->
+    <!-- endinject -->
     zacharyrs-app

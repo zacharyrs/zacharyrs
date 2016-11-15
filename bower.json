@@ -27,6 +27,8 @@
     "smooth-scrollbar": "idiotWu/smooth-scrollbar#^7.2.8",
     "clientjs": "jackspirou/clientjs",
     "showdown-element": "^0.3.0",
-    "highlightjs": "components/highlightjs#^9.8.0"
+    "highlightjs": "components/highlightjs#^9.8.0",
+    "neon-animation": "PolymerElements/neon-animation#^1.2.4",
+    "paper-behaviors": "PolymerElements/paper-behaviors#^1.0.12"
   }
 }

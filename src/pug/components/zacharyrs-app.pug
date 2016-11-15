@@ -2,11 +2,11 @@ link(rel="import", href="../bower/iron-resizable-behavior/iron-resizable-behavio
 link(rel="import", href="../bower/app-layout/app-header/app-header.html")
 link(rel="import", href="../bower/app-layout/app-toolbar/app-toolbar.html")
 link(rel="import", href="../bower/paper-tabs/paper-tabs.html")
-link(rel="import", href="../bower/iron-pages/iron-pages.html")
 link(rel="import", href="../bower/app-route/app-location.html")
 link(rel="import", href="../bower/app-route/app-route.html")
+link(rel="import", href="../bower/neon-animation/neon-animation.html")
 link(rel="import", href="../bower/polymerfire/polymerfire.html")
-link(rel="import", href="../bower/polymerfire/firebase-document.html")
+link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
 link(rel="import", href="zacharyrs-admin.html")
 link(rel="import", href="zacharyrs-mobile-menu.html")
@@ -16,6 +16,8 @@ link(rel="import", href="zacharyrs-404.html")
 link(rel="import", href="zacharyrs-blog.html")
 link(rel="import", href="zacharyrs-blogpost.html")
 link(rel="import", href="zacharyrs-user.html")
+link(rel="import", href="zacharyrs-notice.html")
+//- link(rel="import", href="zacharyrs-showdown.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
 
@@ -45,13 +47,11 @@ dom-module#zacharyrs-app
         margin: 0 30px;
         width: 20vw;
         font-size: 24px;
+        --paper-tab-ink: var(--theme-grey-medium);
         --paper-tab-content-unselected: {
           opacity: 0.54 !important;
           font-weight: 400 !important;
         };
-      }
-
-      paper-tab:focus {
         --paper-tab-content: {
           font-weight: 400 !important;
         };
@@ -64,23 +64,16 @@ dom-module#zacharyrs-app
 
       div#notice {
         box-sizing: border-box;
-        max-height: 0;
         width: calc(96vw - 2 * 96vw / 3 * 0.05);
         margin: auto;
         border-radius: 8px;
-        background: url('/assets/img/crystal.png');
+        background: url('/assets/img/crystal.jpg');
         background-size: cover;
-        transition: max-height 0.3s;
-        overflow: hidden;
-        will-change: max-height;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-      }
-
-      div#notice p {
         padding: 8px;
         text-align: center;
         color: var(--theme-grey-light);
-        font-weight: bold !important;
+        font-weight: 700 !important;
         font-size: 20px !important;
       }
 
@@ -189,11 +182,11 @@ dom-module#zacharyrs-app
       tail="{{userRoute}}"
     )
 
-    firebase-document(
+    firebase-query(
       id="query",
       app-name="zacharyrs",
-      path="/notification",
-      data="{{notification}}"
+      path="/notifications",
+      data="{{notifications}}"
     )
 
     app-header
@@ -202,8 +195,7 @@ dom-module#zacharyrs-app
           zacharyrs
       paper-tabs(
         attr-for-selected="name",
-        selected="{{data.page}}",
-        noink
+        selected="{{data.page}}"
       )
         paper-tab(name="blog").
           blog
@@ -230,20 +222,20 @@ dom-module#zacharyrs-app
         h1.logo.
           zacharyrs
       div#header-pad
-      div#notice
-        p.
-          [[notification]]
-      iron-pages(
+      template(is="dom-repeat", items="[[notifications]]", as="notification")
+        zacharyrs-notice(notification="[[notification.content]]")
+      neon-animated-pages(
         selected="[[data.page]]",
         attr-for-selected="name",
         selected-attribute="visible",
-        fallback-selection="not-found"
+        fallback-selection="not-found",
+        exit-animation="[[animation.out]]"
       )
-        zacharyrs-blog(name="blog")
+        zacharyrs-blog(name="blog", on-open-post="_openPost")
         zacharyrs-blogpost(name="post", route="{{postRoute}}")
-        zacharyrs-user(name="user", route="{{userRoute}}")
+        zacharyrs-user(name="user", route="{{userRoute}}", on-open-post="_openPost")
         //- div(name="portfolio").
-        //-   PORTFOLIO APP HERE
+          PORTFOLIO APP HERE
         zacharyrs-aboutme(name="about")
         zacharyrs-contactme(name="contact")
         zacharyrs-404(name="not-found")
@@ -254,15 +246,21 @@ dom-module#zacharyrs-app
 
       class HomePage {
           get behaviors() {
-              return [Polymer.IronResizableBehavior];
+              return [Polymer.IronResizableBehavior, Polymer.NeonAnimationRunnerBehavior];
           }
 
           beforeRegister() {
               this.is = 'zacharyrs-app';
-              this.properties = {};
+              this.properties = {
+                  animation: {
+                      value: {
+                          in: 'fade-in-animation',
+                          out: 'fade-out-animation'
+                      }
+                  }
+              };
               this.observers = [
-                  '_onRoutePathChanged(route.path)',
-                  '_showNotification(notification)'
+                  '_onRoutePathChanged(route.path)'
               ];
               this.listeners = {
                   'iron-resize': '_reRender'
@@ -293,14 +291,10 @@ dom-module#zacharyrs-app
               if (!path || path == '/') {
                   this.set('route.path', '/blog');
               };
-          };
+          }
 
-          _showNotification(notification) {
-              if((typeof notification === 'string' || notification instanceof String) && notification != "") {
-                  this.$.notice.style.maxHeight = '400px';
-              } else {
-                  this.$.notice.style.maxHeight = '0px';
-              }
+          _openPost(e) {
+              this.set('route.path', e.detail.link);
           }
       }
 

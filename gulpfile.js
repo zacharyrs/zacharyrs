@@ -170,7 +170,13 @@ gulp.task('vulcanize', ['all'], function () {
       minifyCSS: true,
       removeComments: true
     })))
-    .pipe(gulpif('*.html', replace('script src="index.js"></script><', 'script id="app" src="/index.js"></script><')))
+    .pipe(gulpif('*.js', minify({
+        ext:{
+            min:'.js'
+        },
+        noSource: true
+    })))
+    .pipe(gulpif('*.html', replace('<script src="index.js"></script>', '')))
     .pipe(plumber.stop())
     .pipe(gulp.dest('dist/vulcanized/'));
 });
@@ -200,6 +206,12 @@ gulp.task('serve:firebase', ['serve:bs'], shell.task([
 ]));
 
 gulp.task('serve:bs', ['all'], function () {
+  gulp.src(['dist/index.html'])
+    .pipe(inject(gulp.src('src/webcomponents.html'), {name: 'webcomponents', transform: function (filePath, file) {
+        return file.contents.toString('utf8')
+    }}))
+    .pipe(rename('fb.html'))
+    .pipe(gulp.dest('dist/'));
   browsersync({
     port: 8080,
     notify: true,
