@@ -19,7 +19,7 @@
             } else {
                 var app = document.createElement('script');
                 app.src = '/index.js';
-                document.head.appendChild(app);
+                document.body.appendChild(app);
                 app.onload = loadPage()
             }
         }

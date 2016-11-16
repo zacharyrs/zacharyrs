@@ -11,7 +11,6 @@ var newer = require('gulp-newer');
 var plumber = require('gulp-plumber');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
-var inject = require('gulp-inject');
 var merge = require('merge-stream')
 
 var sourcemaps = require('gulp-sourcemaps');
@@ -140,7 +139,11 @@ gulp.task('vulcanize', ['all'], function () {
     .pipe(gulp.dest('dist/vulcanized/assets/'))
   gulp.src(unvalc, {base: 'src/bower/'})
     .pipe(gulp.dest('dist/vulcanized/assets/bower/'))
-  return gulp.src(['dist/index.html'])
+  gulp.src([
+    'dist/index.html'
+  ])
+    .pipe(gulp.dest('dist/vulcanized/'))
+  return gulp.src(['dist/elements.html'])
     .pipe(plumber({
       errorHandler: function(error) {
         gutil.log(
@@ -161,9 +164,6 @@ gulp.task('vulcanize', ['all'], function () {
       scriptInHead: false,
       onlySplit: false
     }))
-    .pipe(inject(gulp.src('src/webcomponents.html'), {name: 'webcomponents', transform: function (filePath, file) {
-      return file.contents.toString('utf8')
-    }}))
     .pipe(gulpif('*.html', htmlmin({
       collapseWhitespace: true,
       conservativeCollapse: true,
@@ -176,7 +176,7 @@ gulp.task('vulcanize', ['all'], function () {
         },
         noSource: true
     })))
-    .pipe(gulpif('*.html', replace('<script src="index.js"></script>', '')))
+    .pipe(gulpif('*.html', replace('<script src="elements.js"></script>', '')))
     .pipe(plumber.stop())
     .pipe(gulp.dest('dist/vulcanized/'));
 });
@@ -206,12 +206,6 @@ gulp.task('serve:firebase', ['serve:bs'], shell.task([
 ]));
 
 gulp.task('serve:bs', ['all'], function () {
-  gulp.src(['dist/index.html'])
-    .pipe(inject(gulp.src('src/webcomponents.html'), {name: 'webcomponents', transform: function (filePath, file) {
-        return file.contents.toString('utf8')
-    }}))
-    .pipe(rename('fb.html'))
-    .pipe(gulp.dest('dist/'));
   browsersync({
     port: 8080,
     notify: true,

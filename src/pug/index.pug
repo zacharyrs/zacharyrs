@@ -8,7 +8,6 @@ html
     meta(property="og:type", content="website")
     meta(property="og:title", content="zacharyrs")
     meta(property="og:image", content="https://zacharyrs.me/assets/img/ogimage.jpg")
-
     style.
         html, body {
             min-height: 100% !important;
@@ -43,7 +42,7 @@ html
           background: url('/assets/img/crystal.jpg');
           background-size: cover;
           transition: transform 0.4s ease-in;
-          transition-delay: 8s;
+          transition-delay: 8s; /*To be removed later, on modification of main js.*/
           will-change: opacity;
           z-index: 10;
           transform: translate3d(0, -100vh, 0);
@@ -62,11 +61,13 @@ html
         }
         #splash svg#logoimg path#large {
           stroke-dasharray: 1475;
+          stroke-dashoffset: -1475;
           animation: offsetlarge 3s ease-out infinite;
           animation-delay: 2s;
         }
         #splash svg#logoimg path#small {
           stroke-dasharray: 254;
+          stroke-dashoffset: -254;
           animation: offsetsmall 3s ease-out infinite;
           animation-delay: 2s;
         }
@@ -122,15 +123,6 @@ html
     meta(name="application-name", content="zacharyrs")
     meta(name="theme-color", content="#3f6697")
 
-    //- Bower imports
-    link(rel="stylesheet", type="text/css", href="bower/smooth-scrollbar/dist/smooth-scrollbar.css")
-    link(rel="stylesheet", type="text/css", href="bower/highlightjs/styles/dracula.css")
-    script(type="text/javascript", src="bower/clientjs/dist/client.min.js")
-    script(type="text/javascript", src="bower/smooth-scrollbar/dist/smooth-scrollbar.js")
-    script(type="text/javascript", src="bower/highlightjs/highlight.pack.js")
-    script(type="text/javascript", src="bower/vivus/dist/vivus.min.js")
-    link(rel="import", href="bower/polymer/polymer.html")
-
     //- Fonts
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Quicksand:300")
 
@@ -142,7 +134,7 @@ html
     link(rel="shortcut icon", href="/assets/icons/favicon.ico?v=9BangRkAd4")
 
     //- My assets
-    link(rel="import", id="app" href="components/zacharyrs-app.html")
+    link(rel="import", id="app" href="elements.html")
     link(rel="prefetch", href="/assets/img/crystal.jpg")
     link(rel="prefetch", href="/assets/img/crystal-white.jpg")
     link(rel="prefetch", href="/assets/img/hexagon.png")
@@ -153,6 +145,50 @@ html
         path(id="large" d="M139.3,218.8v-106c0-5.3-4.2-9.5-9.5-9.5H58.3c-5.2,0-9.5,4.3-9.5,9.5v132.6c0,5.2,4.3,9.5,9.5,9.5h71.6c5.2,0,9.5-4.3,9.5-9.5v-5.3c0-3.8,1.9-7.3,4.8-9.4c1.9-1.5,4.4-2.4,7.1-2.4h9.5h194.6c5.2,0,9.5-4.3,9.5-9.5V81.4c0-5.2-4.2-9.5-9.5-9.5h-2.7c-3.9,0-7.3-1.8-9.5-4.7c-1.5-2-2.4-4.4-2.4-7.1v-9.5V14.5c0-5.2-4.2-9.5-9.5-9.5H14.5C9.3,5,5,9.3,5,14.5V204c0,5.2,4.2,9.5,9.5,9.5h20")
       h1.
         zacharyrs
-    <!-- webcomponents:html -->
-    <!-- endinject -->
+    script(type="text/javascript").
+        window.onload = function() {
+            if ('registerElement' in document
+                && 'import' in document.createElement('link')
+                && 'content' in document.createElement('template')) {
+                console.log('Components are supported!');
+                loadApp();
+            } else {
+                var wbcm = document.createElement('script');
+                wbcm.src = '/assets/bower/webcomponentsjs/webcomponents-lite.min.js';
+                document.head.appendChild(wbcm);
+                wbcm.onload = loadApp();
+            }
+
+            function loadApp() {
+                console.log('Webcomponents initialized (or native shadowdom supported)!');
+                var app = document.createElement('script');
+                app.src = '/elements.js';
+                document.body.appendChild(app);
+                app.onload = loadPage()
+            }
+
+            function loadPage() {
+                console.log('App initialized!');
+                var loadedPage = function() {
+                    var loadDeferredStyles = function() {
+                        var gfonts = document.createElement('link');
+                        var faweso = document.createElement('link');
+                        gfonts.href = 'https://fonts.googleapis.com/css?family=Quicksand:400,700|Raleway:400,400i,700,700i';
+                        faweso.href = 'https://use.fontawesome.com/719774c3f8.css';
+                        gfonts.rel = 'stylesheet';
+                        faweso.rel = 'stylesheet';
+                        document.body.appendChild(gfonts);
+                        document.body.appendChild(faweso);
+                    };
+
+                    var loadScreen = document.getElementById('splash');
+                    loadScreen.addEventListener('transitionend', loadScreen.remove);
+                    document.body.classList.remove('loading');
+
+                    loadDeferredStyles();
+                };
+
+                loadedPage();
+            }
+        };
     zacharyrs-app
