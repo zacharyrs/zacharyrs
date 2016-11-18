@@ -49,7 +49,8 @@ dom-module#zacharyrs-user
       id="postQuery",
       app-name="zacharyrs",
       path="/users/[[data.userId]]/posts",
-      order-by-child="content/time",
+      order-by-child="content/order",
+      limit-to-first="12",
       data="{{blog-data}}"
     )
     section.container

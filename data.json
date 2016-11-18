@@ -23,7 +23,8 @@
         "body" : "- [x] Rewrite marked-element to use showdownjs, create as a [new project](https://github.com/zacharyrs/showdown-element).\n\n- [x] Create custom syntax highlighting - base16-ashes\n\n- [ ] Write Showdown extension to 'polymerize'. It will convert checkboxes to `paper-checkbox`.\n\n- [x] Change posts to use timestamps\n\n- [ ] Redesign single post view\n\n- [ ] Fix FAB, swap to width and use vars (rewrite?)\n\n- [ ] Set up posts limits (eg load 20 at a time)\n\n- [ ] Set up caching database/content, and service worker\n\n- [ ] Configure algolia with indexing for title/keywords",
         "show" : true,
         "title" : "Todo",
-        "time": 1478967900000
+        "time": 1478967900000,
+        "order": false
       },
       {
         "body" : "```ruby\nrequire 'gem'\n\nstring = 'base16'\nsymbol = :base16\nfixnum = 0\nfloat  = 0.00\narray  = Array.new\narray  = ['chris', 85]\nhash   = {'test' => 'test'}\nregexp = /[abc]/\n\n# This is a comment\nclass Person\n\n  attr_accessor :name\n\n  def initialize(attributes = {})\n    @name = attributes[:name]\n  end\n\n  def self.greet\n    'hello'\n  end\nend\n\nperson1 = Person.new(:name => 'Chris')\nprint Person::greet, ' ', person1.name, '\\n'\nputs 'another #{Person::greet} #{person1.name}'\n```",

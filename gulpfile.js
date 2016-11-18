@@ -223,12 +223,14 @@ gulp.task('deploy:data', function () {
       console.log('Post: ' + currentPost.title);
       var post = posts.push();
       var postId = post.key;
+      var order = (typeof currentPost.order === 'undefined') ? currentPost.time * -1: currentPost.order;
       post.set({
         content: {
           body: currentPost.body,
           title: currentPost.title,
           time: currentPost.time,
           show: currentPost.show,
+          order: order,
           id: postId,
           userId: userId
         }
@@ -239,6 +241,7 @@ gulp.task('deploy:data', function () {
           title: currentPost.title,
           time: currentPost.time,
           show: currentPost.show,
+          order: order,
           id: postId,
           userId: userId
         }

@@ -26,11 +26,12 @@ dom-module#zacharyrs-app
   template
     style(is="custom-style", include="shared-styles").
       app-header {
-        width: 100vw;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
         height: 132px;
         color: #fff;
-        transform: none !important;
-        @apply(--layout-fixed-top);
         z-index: 1;
         background-color: rgba(255, 255, 255, 0.95);
         --app-header-shadow: {
@@ -180,7 +181,7 @@ dom-module#zacharyrs-app
       data="{{notifications}}"
     )
 
-    app-header
+    app-header(fixed)
       app-toolbar
         h1.logo.
           zacharyrs
@@ -258,7 +259,8 @@ dom-module#zacharyrs-app
                       i.classList.add('zacharyrs-app');
                   }
                   scrollbar.addListener((status) => {
-                      console.log(status.direction.y, status.offset.y === 0, status.offset.y === status.limit.y); //- Set up to add and remove header classes
+                      console.log(status.direction.y, status.offset.y === 0, status.offset.y === status.limit.y, status.offset.y);
+                      //- Set up to add and remove header classes
                   })
               }
           }
