@@ -1,3 +1,4 @@
+link(rel="import", href="../bower/polymer/polymer.html")
 link(rel="import", href="../bower/iron-menu-behavior/iron-menubar-behavior.html")
 
 link(rel="import", href="styles/zacharyrs-app.html")
@@ -19,7 +20,7 @@ dom-module#zacharyrs-mobile-menu
       .menu-blocker {
         position: fixed;
         will-change: transform;
-        transform: translate3d(-100vw, 0, 0);
+        transform: translate(-100vw, 0);
         transition: all 0.2s ease-in;
         top: 0;
         bottom: 0;
@@ -80,7 +81,7 @@ dom-module#zacharyrs-mobile-menu
       }
 
       .menu-blocker.active {
-        transform: translate3d(0, 0, 0);
+        transform: translate(0, 0);
         transition: all 0.2s ease-out;
         transition-delay: 0s;
       }
@@ -101,7 +102,7 @@ dom-module#zacharyrs-mobile-menu
         height: 3px;
         margin: 0 0 0.8vh 0;
         background: white;
-        transform: translate3d(0, 0, 0) rotate(0deg);
+        transform: translate(0, 0) rotate(0deg);
         transition: all 0.2s ease-out;
       }
 
@@ -119,11 +120,11 @@ dom-module#zacharyrs-mobile-menu
       }
 
       .menu-wrapper.active .hamburger .patty:nth-child(1) {
-        transform: translate3d(-1.5vh, 0.51vh, 0) rotate(-45deg) scale(0.56, 1);
+        transform: translate(-1.5vh, 0.51vh) rotate(-45deg) scale(0.56, 1);
       }
 
       .menu-wrapper.active .hamburger .patty:nth-child(3) {
-        transform: translate3d(-1.5vh, -0.51vh, 0) rotate(45deg) scale(0.56, 1);
+        transform: translate(-1.5vh, -0.51vh) rotate(45deg) scale(0.56, 1);
       }
 
       .menu-items {
@@ -134,14 +135,14 @@ dom-module#zacharyrs-mobile-menu
         text-align: right;
         z-index: 2;
         color: white;
-        transform: translate3d(56vw, 0, 0);
+        transform: translate(56vw, 0);
         transition: all 0.2s ease-out;
         transition-delay: 0s;
         will-change: transform;
       }
 
       .menu-wrapper.active .menu-items {
-        transform: translate3d(0, 0, 0);
+        transform: translate(0, 0);
         transition-delay: 0.4s;
       }
 

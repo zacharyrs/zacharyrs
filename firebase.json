@@ -7,7 +7,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/fb.html"
+        "destination": "/index.html"
       }
      ]
   }

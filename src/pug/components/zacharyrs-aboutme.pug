@@ -1,5 +1,6 @@
+link(rel="import", href="../bower/polymer/polymer.html")
+
 link(rel="import", href="styles/zacharyrs-app.html")
-link(rel="import", href="../bower/neon-animation/neon-animation.html")
 
 dom-module#zacharyrs-aboutme
   template
@@ -10,34 +11,12 @@ dom-module#zacharyrs-aboutme
       'use strict';
 
       class AboutPage {
-          get behaviors() {
-              return [Polymer.NeonAnimationRunnerBehavior];
-          }
-
           beforeRegister() {
               this.is = 'zacharyrs-aboutme';
               this.properties = {
                   visible: {
                       type: Boolean,
                       value: false
-                  },
-                  animationConfig: {
-                      value: function() {
-                          return {
-                              'entry': [
-                                  {
-                                      name: 'fade-in-animation',
-                                      node: this
-                                  }
-                              ],
-                              'exit': [
-                                  {
-                                      name: 'fade-out-animation',
-                                      node: this
-                                  }
-                              ]
-                          }
-                      }
                   }
               };
           }

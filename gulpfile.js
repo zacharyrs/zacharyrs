@@ -18,7 +18,6 @@ var cleancss = require('gulp-clean-css');
 var jslint = require('gulp-byo-jslint');
 var minify = require('gulp-minify');
 var htmlmin = require('gulp-htmlmin');
-var imagemin = require('gulp-imagemin');
 var pug = require('gulp-pug');
 var stylus = require('gulp-stylus');
 var crisper = require('gulp-crisper');
@@ -26,9 +25,20 @@ var babel = require('gulp-babel');
 var vulcanize = require('gulp-vulcanize');
 
 var surge = require('gulp-surge');
+var admin = require('firebase-admin');
+var data = require('./data.json')
 
 var compress = true;
 var unvalc = ['src/bower/webcomponentsjs/webcomponents-lite.min.js'];
+
+admin.initializeApp({
+  credential: admin.credential.cert("../../servicekey.json"),
+  databaseURL: "https://zacharyrs-me.firebaseio.com"
+});
+
+var db = admin.database();
+var posts = db.ref('blog');
+var users = db.ref('users');
 
 gulp.task('default', [
   'all',
@@ -51,13 +61,8 @@ gulp.task('copy:bower', function () {
 });
 
 gulp.task('copy:misc', function () {
-  return gulp.src(['src/misc/**/*'], {base: 'src/misc/'})
+  return gulp.src(['src/misc/**/*', '!src/misc/assets/img/unoptimised/**/*'], {base: 'src/misc/'})
     .pipe(newer('dist/'))
-    .pipe(gulpif(['*.png'], imagemin({
-        optimizationLevel: 5,
-        progressive: true,
-        interlaced: true
-    })))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -140,8 +145,13 @@ gulp.task('vulcanize', ['all'], function () {
   gulp.src(unvalc, {base: 'src/bower/'})
     .pipe(gulp.dest('dist/vulcanized/assets/bower/'))
   gulp.src([
-    'dist/index.html'
+    'dist/index.html',
+    'dist/index.js'
   ])
+    .pipe(gulpif('*.html', replace(
+      '<script src="index.js"></script>',
+      '<script src="/index.js"></script>'
+    )))
     .pipe(gulp.dest('dist/vulcanized/'))
   return gulp.src(['dist/elements.html'])
     .pipe(plumber({
@@ -199,6 +209,46 @@ gulp.task('deploy:beta', ['all'], function () {
     project: 'dist/',
     domain: 'beta.zacharyrs.me'
   })
+});
+
+gulp.task('deploy:data', function () {
+  for(var i in data) {
+    console.log('User: ' + i);
+    var user = users.push();
+    var userId = user.key;
+    var currentUser = {};
+    var currentPosts = data[i].posts;
+    for(var p in currentPosts) {
+      currentPost = currentPosts[p];
+      console.log('Post: ' + currentPost.title);
+      var post = posts.push();
+      var postId = post.key;
+      post.set({
+        content: {
+          body: currentPost.body,
+          title: currentPost.title,
+          time: currentPost.time,
+          show: currentPost.show,
+          id: postId,
+          userId: userId
+        }
+      });
+      currentUser[postId] = {
+        content:{
+          body: currentPost.body,
+          title: currentPost.title,
+          time: currentPost.time,
+          show: currentPost.show,
+          id: postId,
+          userId: userId
+        }
+      };
+    }
+    user.set({
+      name: i,
+      posts: currentUser
+    });
+  };
 });
 
 gulp.task('serve:firebase', ['serve:bs'], shell.task([

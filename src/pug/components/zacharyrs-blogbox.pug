@@ -1,9 +1,11 @@
+link(rel="import", href="../bower/polymer/polymer.html")
 link(rel="import", href="../bower/showdown-element/showdown-element.html")
 link(rel="import", href="../bower/neon-animation/neon-animation.html")
 link(rel="import", href="../bower/paper-ripple/paper-ripple.html")
 
-link(rel="import", href="styles/zacharyrs-app.html")
+link(rel="import", href="moment-import.html")
 
+link(rel="import", href="styles/zacharyrs-app.html")
 
 dom-module#zacharyrs-blogbox
   template
@@ -129,6 +131,10 @@ dom-module#zacharyrs-blogbox
         height: calc(var(--width) * 0.03 * 0.90 * 5);
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--theme-grey-light) 80%, var(--theme-grey-light)) 100%;
       }
+
+      .contentbox showdown-element {
+        width: 100%;
+      }
     div.wrapper
       div.titlebox
         div.titleripple
@@ -138,9 +144,9 @@ dom-module#zacharyrs-blogbox
       div.mainbox
         div.datebox
           div.day.
-            [[post.day]]
+            [[_date]]
           div.year.
-            [[post.year]]
+            [[_year]]
         div.contentbox
           showdown-element(markdown="[[post.body]]", supportextra, highlightjs, fontawesome)
             div.markdown-html
@@ -165,7 +171,15 @@ dom-module#zacharyrs-blogbox
                   post: {
                       type: Object
                   },
-                  postLink: {
+                  _date: {
+                      type: String,
+                      computed: '_moment(post.time, "DD/MM")'
+                  },
+                  _year: {
+                      type: String,
+                      computed: '_moment(post.time, "YYYY")'
+                  },
+                  _postLink: {
                       type: String,
                       computed: '_linkify(post.id, post.title)'
                   },
@@ -211,8 +225,12 @@ dom-module#zacharyrs-blogbox
               return '/post/' + id + '/' + title.toLowerCase().split(' ').join('-');
           }
 
+          _moment(timestamp, filter) {
+              return moment(timestamp).format(filter);
+          }
+
           _openPost(e) {
-              this.fire('open-post', {link: this.get('postLink')}, { bubbles: false });
+              this.fire('open-post', {link: this.get('_postLink')}, { bubbles: false });
           }
 
           _animateNow(visible) {

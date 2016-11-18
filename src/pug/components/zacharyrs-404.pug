@@ -1,5 +1,6 @@
+link(rel="import", href="../bower/polymer/polymer.html")
+
 link(rel="import", href="styles/zacharyrs-app.html")
-link(rel="import", href="../bower/neon-animation/neon-animation.html")
 
 dom-module#zacharyrs-404
   template
@@ -9,35 +10,12 @@ dom-module#zacharyrs-404
   script(type="text/javascript").
       'use strict';
 
-      class NotFoundPage {
-          get behaviors() {
-              return [Polymer.NeonAnimationRunnerBehavior];
-          }
-
-          beforeRegister() {
+      class NotFoundPage {beforeRegister() {
               this.is = 'zacharyrs-404';
               this.properties = {
                   visible: {
                       type: Boolean,
                       value: false
-                  },
-                  animationConfig: {
-                      value: function() {
-                          return {
-                              'entry': [
-                                  {
-                                      name: 'fade-in-animation',
-                                      node: this
-                                  }
-                              ],
-                              'exit': [
-                                  {
-                                      name: 'fade-out-animation',
-                                      node: this
-                                  }
-                              ]
-                          }
-                      }
                   }
               };
           }

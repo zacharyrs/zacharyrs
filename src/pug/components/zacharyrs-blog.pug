@@ -1,9 +1,10 @@
+link(rel="import", href="../bower/polymer/polymer.html")
 link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html")
-link(rel="import", href="../bower/neon-animation/neon-animation.html")
 link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
-link(rel="import", href="styles/zacharyrs-app.html")
 link(rel="import", href="zacharyrs-blogbox.html")
+
+link(rel="import", href="styles/zacharyrs-app.html")
 
 dom-module#zacharyrs-blog
   template
@@ -42,6 +43,7 @@ dom-module#zacharyrs-blog
       id="blogQuery",
       app-name="zacharyrs",
       path="/blog",
+      order-by-child="content/time",
       data="{{blog-data}}"
     )
     section.container
@@ -52,34 +54,12 @@ dom-module#zacharyrs-blog
       'use strict';
 
       class BlogPage {
-          get behaviors() {
-              return [Polymer.NeonAnimationRunnerBehavior];
-          }
-
           beforeRegister() {
               this.is = 'zacharyrs-blog';
               this.properties = {
                   visible: {
                       type: Boolean,
                       value: false
-                  },
-                  animationConfig: {
-                      value: function() {
-                          return {
-                              'entry': [
-                                  {
-                                      name: 'fade-in-animation',
-                                      node: this
-                                  }
-                              ],
-                              'exit': [
-                                  {
-                                      name: 'fade-out-animation',
-                                      node: this
-                                  }
-                              ]
-                          }
-                      }
                   }
               };
           }
