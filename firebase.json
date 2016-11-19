@@ -1,7 +1,4 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
   "hosting": {
     "public": "dist",
     "rewrites": [
@@ -9,6 +6,6 @@
         "source": "**",
         "destination": "/index.html"
       }
-     ]
+    ]
   }
 }

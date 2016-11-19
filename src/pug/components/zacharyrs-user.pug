@@ -46,7 +46,14 @@ dom-module#zacharyrs-user
       data="{{data}}"
     )
     firebase-query(
-      id="postQuery",
+      id="userPinned",
+      app-name="zacharyrs",
+      path="/users/[[data.userId]]/pinned",
+      order-by-child="content/order",
+      data="{{pinned-data}}"
+    )
+    firebase-query(
+      id="userAll",
       app-name="zacharyrs",
       path="/users/[[data.userId]]/posts",
       order-by-child="content/order",
@@ -54,9 +61,13 @@ dom-module#zacharyrs-user
       data="{{blog-data}}"
     )
     section.container
-      template(is="dom-repeat", items="[[blog-data]]", as="post")
+      template(is="dom-repeat", items="[[pinned-data]]", as="post")
         template(is="dom-if", if="[[post.content.show]]")
           zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
+      template(is="dom-repeat", items="[[blog-data]]", as="post")
+        template(is="dom-if", if="[[post.content.show]]")
+          template(is="dom-if", if="[[!post.content.pinned]]")
+            zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
   script(type="text/javascript").
       'use strict';
 
@@ -83,8 +94,10 @@ dom-module#zacharyrs-user
           attributeChanged() {}
 
           _changedPage(userId) {
-              this.$.postQuery.path = null;
-              this.$.postQuery.path = '/users/' + this.data.userId + '/posts';
+              this.$.userAll.path = null;
+              this.$.userPinned.path = null;
+              this.$.userAll.path = '/users/' + this.data.userId + '/posts';
+              this.$.userPinned.path = '/users/' + this.data.userId + '/pinned';
           }
 
           _openPost(e) {

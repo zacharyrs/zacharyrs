@@ -38,6 +38,7 @@ admin.initializeApp({
 
 var db = admin.database();
 var posts = db.ref('blog');
+var pinned = db.ref('pinned');
 var users = db.ref('users');
 
 gulp.task('default', [
@@ -217,20 +218,21 @@ gulp.task('deploy:data', function () {
     var user = users.push();
     var userId = user.key;
     var currentUser = {};
+    var pinnedPosts = {};
     var currentPosts = data[i].posts;
     for(var p in currentPosts) {
       currentPost = currentPosts[p];
       console.log('Post: ' + currentPost.title);
       var post = posts.push();
       var postId = post.key;
-      var order = (typeof currentPost.order === 'undefined') ? currentPost.time * -1: currentPost.order;
       post.set({
         content: {
           body: currentPost.body,
           title: currentPost.title,
           time: currentPost.time,
           show: currentPost.show,
-          order: order,
+          order: currentPost.time * -1,
+          pinned: currentPost.pinned,
           id: postId,
           userId: userId
         }
@@ -241,16 +243,33 @@ gulp.task('deploy:data', function () {
           title: currentPost.title,
           time: currentPost.time,
           show: currentPost.show,
-          order: order,
+          order: currentPost.time * -1,
+          pinned: currentPost.pinned,
           id: postId,
           userId: userId
         }
       };
+      if(currentPost.pinned) {
+        pinnedPosts[postId] = {
+          content:{
+            body: currentPost.body,
+            title: currentPost.title,
+            time: currentPost.time,
+            show: currentPost.show,
+            order: currentPost.time * -1,
+            pinned: currentPost.pinned,
+            id: postId,
+            userId: userId
+          }
+        };
+      }
     }
     user.set({
       name: i,
-      posts: currentUser
+      posts: currentUser,
+      pinned: pinnedPosts
     });
+    pinned.update(pinnedPosts);
   };
 });
 

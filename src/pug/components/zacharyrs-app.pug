@@ -64,30 +64,15 @@ dom-module#zacharyrs-app
         position: relative;
       }
 
-      div#notice {
-        box-sizing: border-box;
-        width: calc(96vw - 2 * 96vw / 3 * 0.05);
-        margin: auto;
-        border-radius: 8px;
-        background: url('/assets/img/crystal.jpg');
-        background-size: cover;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-        padding: 8px;
-        text-align: center;
-        color: var(--theme-grey-light);
-        font-weight: 700 !important;
-        font-size: 20px !important;
-      }
-
       div#header-pad {
         display: block;
-        height: calc(142px + 96vw / 3 * 0.05);
+        height: calc(132px);
         width: 100vw;
       }
 
       div#footer-pad {
         display: block;
-        height: calc(calc(142px + 96vw / 3 * 0.05) / 2);
+        height: calc(132px / 2);
         width: 100vw;
       }
 
@@ -123,29 +108,21 @@ dom-module#zacharyrs-app
         }
 
         div#header-pad {
-          height: calc(0px + 96vw / 2 * 0.05);
+          height: calc(96vw / 2 * 0.05);
         }
 
         div#footer-pad {
-          height: calc(calc(0px + 96vw / 2 * 0.05) / 2);
-        }
-
-        div#notice {
-          width: calc(96vw - 2 * 96vw / 2 * 0.05);
+          height: calc(calc(96vw / 2 * 0.05) / 2);
         }
       }
 
       @media handheld, only screen and (max-width: 640px) {
         div#header-pad {
-          height: calc(0px + 96vw / 1 * 0.05);
+          height: calc(96vw / 1 * 0.05);
         }
 
         div#footer-pad {
-          height: calc(calc(0px + 96vw / 1 * 0.05) / 2);
-        }
-
-        div#notice {
-          width: calc(96vw - 2 * 96vw / 1 * 0.05);
+          height: calc(calc(96vw / 1 * 0.05) / 2);
         }
       }
 

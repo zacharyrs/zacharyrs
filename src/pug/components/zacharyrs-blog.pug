@@ -40,7 +40,14 @@ dom-module#zacharyrs-blog
       }
 
     firebase-query(
-      id="blogQuery",
+      id="blogPinned",
+      app-name="zacharyrs",
+      path="/pinned",
+      order-by-child="content/order",
+      data="{{pinned-data}}"
+    )
+    firebase-query(
+      id="blogAll",
       app-name="zacharyrs",
       path="/blog",
       order-by-child="content/order",
@@ -48,9 +55,13 @@ dom-module#zacharyrs-blog
       data="{{blog-data}}"
     )
     section.container
+      template(is="dom-repeat", items="[[pinned-data]]", as="post")
+        template(is="dom-if", if="[[post.content.show]]")
+          zacharyrs-blogbox.mini.pinned(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
       template(is="dom-repeat", items="[[blog-data]]", as="post")
         template(is="dom-if", if="[[post.content.show]]")
-          zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
+          template(is="dom-if", if="[[!post.content.pinned]]")
+            zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
   script(type="text/javascript").
       'use strict';
 
