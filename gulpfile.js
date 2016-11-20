@@ -192,7 +192,7 @@ gulp.task('vulcanize', ['all'], function () {
     .pipe(gulp.dest('dist/vulcanized/'));
 });
 
-gulp.task('deploy:final', ['vulcanize'], function () {
+gulp.task('deploy:final', ['vulcanize', 'deploy:data'], function () {
   gulp.src(['dist/vulcanized/index.html'])
     .pipe(rename('200.html'))
     .pipe(gulp.dest('dist/vulcanized/'));
@@ -213,6 +213,9 @@ gulp.task('deploy:beta', ['all'], function () {
 });
 
 gulp.task('deploy:data', function () {
+  users.set({});
+  posts.set({});
+  pinned.set({});
   for(var i in data) {
     console.log('User: ' + i);
     var user = users.push();
@@ -225,43 +228,22 @@ gulp.task('deploy:data', function () {
       console.log('Post: ' + currentPost.title);
       var post = posts.push();
       var postId = post.key;
-      post.set({
+      item = {
         content: {
           body: currentPost.body,
           title: currentPost.title,
           time: currentPost.time,
           show: currentPost.show,
           order: currentPost.time * -1,
-          pinned: currentPost.pinned,
           id: postId,
           userId: userId
         }
-      });
-      currentUser[postId] = {
-        content:{
-          body: currentPost.body,
-          title: currentPost.title,
-          time: currentPost.time,
-          show: currentPost.show,
-          order: currentPost.time * -1,
-          pinned: currentPost.pinned,
-          id: postId,
-          userId: userId
-        }
-      };
+      }
       if(currentPost.pinned) {
-        pinnedPosts[postId] = {
-          content:{
-            body: currentPost.body,
-            title: currentPost.title,
-            time: currentPost.time,
-            show: currentPost.show,
-            order: currentPost.time * -1,
-            pinned: currentPost.pinned,
-            id: postId,
-            userId: userId
-          }
-        };
+        pinnedPosts[postId] = item;
+      } else {
+        post.set(item);
+        currentUser[postId] = item;
       }
     }
     user.set({

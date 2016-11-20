@@ -66,8 +66,7 @@ dom-module#zacharyrs-user
           zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
       template(is="dom-repeat", items="[[blog-data]]", as="post")
         template(is="dom-if", if="[[post.content.show]]")
-          template(is="dom-if", if="[[!post.content.pinned]]")
-            zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
+          zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
   script(type="text/javascript").
       'use strict';
 

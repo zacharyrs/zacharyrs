@@ -31,8 +31,16 @@ dom-module#zacharyrs-blogpost
       path="/blog/[[data.postId]]",
       data="{{blog-data}}"
     )
+    firebase-query(
+      id="pinnedQuery",
+      app-name="zacharyrs",
+      path="/pinned/[[data.postId]]",
+      data="{{pinned-data}}"
+    )
     section.container
       template(is="dom-repeat", items="[[blog-data]]", as="post")
+        zacharyrs-blogbox(post="[[post]]", visible="[[visible]]")
+      template(is="dom-repeat", items="[[pinned-data]]", as="post")
         zacharyrs-blogbox(post="[[post]]", visible="[[visible]]")
   script(type="text/javascript").
       'use strict';
@@ -61,7 +69,9 @@ dom-module#zacharyrs-blogpost
 
           _changedPage(postId) {
               this.$.postQuery.path = null;
+              this.$.pinnedQuery.path = null;
               this.$.postQuery.path = '/blog/' + this.data.postId;
+              this.$.pinnedQuery.path = '/pinned/' + this.data.postId;
           }
       }
 

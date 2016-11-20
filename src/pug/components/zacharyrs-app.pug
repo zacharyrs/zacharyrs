@@ -9,7 +9,6 @@ link(rel="import", href="../bower/iron-pages/iron-pages.html")
 link(rel="import", href="../bower/polymerfire/polymerfire.html")
 link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
-link(rel="import", href="zacharyrs-admin.html")
 link(rel="import", href="zacharyrs-mobile-menu.html")
 link(rel="import", href="zacharyrs-contactme.html")
 link(rel="import", href="zacharyrs-aboutme.html")
@@ -174,14 +173,11 @@ dom-module#zacharyrs-app
           about me
         paper-tab(name="contact").
           contact me
-    zacharyrs-mobile-menu(
-      attr-for-selected="name",
-      selected="{{data.page}}"
-    )
+    //- zacharyrs-mobile-menu(attr-for-selected="name", selected="{{data.page}}")
       div(name="blog").
         blog
       //- div(name="portfolio").
-      //-   portfolio
+        portfolio
       div(name="about").
         about me
       div(name="contact").
@@ -207,7 +203,6 @@ dom-module#zacharyrs-app
         zacharyrs-aboutme(name="about")
         zacharyrs-contactme(name="contact")
         zacharyrs-404(name="not-found")
-        zacharyrs-admin(name="admin", signed-in="[[signedIn]]")
       div#footer-pad
   script(type="text/javascript").
       'use strict';
