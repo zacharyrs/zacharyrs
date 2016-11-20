@@ -39,5 +39,8 @@
     "run-sequence": "^1.2.2",
     "stylus": "*",
     "surge": "^0.18.0"
+  },
+  "scripts": {
+    "postinstall": "bower install"
   }
 }
