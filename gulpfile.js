@@ -15,7 +15,6 @@ var merge = require('merge-stream')
 
 var sourcemaps = require('gulp-sourcemaps');
 var cleancss = require('gulp-clean-css');
-var jslint = require('gulp-byo-jslint');
 var minify = require('gulp-minify');
 var htmlmin = require('gulp-htmlmin');
 var pug = require('gulp-pug');
@@ -91,9 +90,6 @@ gulp.task('compile:pug', function () {
       conservativeCollapse: true
     })))
     .pipe(plumber.stop())
-    // .pipe(gulpif('*.js', jslint({
-    //   jslint: './submodules/JSLint/jslint.js'
-    // })))
     .pipe(gulp.dest('dist/'));
 });
 
@@ -125,9 +121,6 @@ gulp.task('compile:babel', function () {
       presets: ['es2015']
     }))
     .pipe(plumber.stop())
-    // .pipe(jslint({
-    //   jslint: './submodules/JSLint/jslint.js'
-    // }))
     .pipe(gulpif(compress, minify()))
     .pipe(gulp.dest('dist/'));
 });

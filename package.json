@@ -16,7 +16,6 @@
     "firebase-admin": "^4.0.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-byo-jslint": "^1.1.1",
     "gulp-clean-css": "^2.0.13",
     "gulp-crisper": "^1.1.0",
     "gulp-htmlmin": "^3.0.0",
@@ -40,8 +39,5 @@
     "run-sequence": "^1.2.2",
     "stylus": "*",
     "surge": "^0.18.0"
-  },
-  "scripts": {
-    "postinstall": "bower install"
   }
 }
