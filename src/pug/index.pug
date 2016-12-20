@@ -147,5 +147,64 @@ html
         path(id="large" d="M139.3,218.8v-106c0-5.3-4.2-9.5-9.5-9.5H58.3c-5.2,0-9.5,4.3-9.5,9.5v132.6c0,5.2,4.3,9.5,9.5,9.5h71.6c5.2,0,9.5-4.3,9.5-9.5v-5.3c0-3.8,1.9-7.3,4.8-9.4c1.9-1.5,4.4-2.4,7.1-2.4h9.5h194.6c5.2,0,9.5-4.3,9.5-9.5V81.4c0-5.2-4.2-9.5-9.5-9.5h-2.7c-3.9,0-7.3-1.8-9.5-4.7c-1.5-2-2.4-4.4-2.4-7.1v-9.5V14.5c0-5.2-4.2-9.5-9.5-9.5H14.5C9.3,5,5,9.3,5,14.5V204c0,5.2,4.2,9.5,9.5,9.5h20")
       h1.
         zacharyrs
-    script(type="text/javascript", src="/index.js")
+    script(type="text/javascript").
+      function load() {
+          if ('registerElement' in document
+              && 'import' in document.createElement('link')
+              && 'content' in document.createElement('template')) {
+              console.log('Components are supported!');
+              loadApp();
+          } else {
+              var wbcm = document.createElement('script');
+              wbcm.src = '/assets/bower/webcomponentsjs/webcomponents-lite.min.js';
+              document.head.appendChild(wbcm);
+              wbcm.onload = loadApp();
+          }
+
+          function loadApp() {
+              console.log('Webcomponents initialized (or native shadowdom supported)!');
+              if (location.hostname === "localhost") {
+                  loadPage()
+              } else {
+                  var app = document.createElement('script');
+                  app.dataset.cfasync = 'false';
+                  app.src = '/elements.js';
+                  document.body.appendChild(app);
+                  app.onload = loadPage()
+              }
+          }
+
+          function loadPage() {
+              var link = document.querySelector('#app');
+              if (link.import && link.import.readyState === 'complete') {
+                  loadedPage();
+              } else {
+                  link.addEventListener('load', loadedPage);
+              }
+          }
+
+          function loadedPage() {
+              var loadScreen = document.getElementById('splash');
+              loadScreen.addEventListener('transitionend', loadScreen.remove);
+              document.body.classList.remove('loading');
+              loadDeferredStyles();
+          };
+
+          function loadDeferredStyles() {
+              var gfonts = document.createElement('link');
+              var faweso = document.createElement('link');
+              gfonts.href = 'https://fonts.googleapis.com/css?family=Quicksand:400,700|Raleway:400,400i,700,700i|Source+Code+Pro:700';
+              faweso.href = 'https://use.fontawesome.com/719774c3f8.css';
+              gfonts.rel = 'stylesheet';
+              faweso.rel = 'stylesheet';
+              document.body.appendChild(gfonts);
+              document.body.appendChild(faweso);
+          };
+      };
+
+      if (document.readyState === 'complete') {
+          load();
+      } else {
+          window.onload = load;
+      }
     zacharyrs-app
