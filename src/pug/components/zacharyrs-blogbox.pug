@@ -85,8 +85,17 @@ dom-module#zacharyrs-blogbox
         text-align: right;
         color: var(--theme-dark);
         height: calc(var(--width) * 0.2 * 0.90);
-        padding: calc(var(--width) * 0.04 * 0.90) calc(var(--width) * 0.04 * 0.90) 0 0;
         overflow: none;
+      }
+
+      :host.mini .wrapper .mainbox .datebox:hover {
+        cursor: pointer;
+      }
+
+      .dateripple {
+        position: relative;
+        width: 100%;
+        height: 100%;
       }
 
       .datebox::before {
@@ -102,12 +111,14 @@ dom-module#zacharyrs-blogbox
         opacity: 0.16;
       }
 
-      .datebox .year {
-        font-size: calc(var(--width) * 0.08 * 0.90);
-      }
-
       .datebox .day {
         font-size: calc(var(--width) * 0.06* 0.90);
+        padding: calc(var(--width) * 0.04 * 0.90) calc(var(--width) * 0.04 * 0.90) 0 0;
+      }
+
+      .datebox .year {
+        font-size: calc(var(--width) * 0.08 * 0.90);
+        padding: 0 calc(var(--width) * 0.04 * 0.90) 0 0;
       }
 
       .contentbox {
@@ -143,10 +154,12 @@ dom-module#zacharyrs-blogbox
             [[_split(post.title)]]
       div.mainbox
         div.datebox
-          div.day.
-            [[_date]]
-          div.year.
-            [[_year]]
+          div.dateripple
+            paper-ripple(on-transitionend="_openPost")
+            div.day(role="button").
+              [[_date]]
+            div.year(role="button").
+              [[_year]]
         div.contentbox
           showdown-element(markdown="[[post.body]]", supportextra, highlightjs, fontawesome)
             div.markdown-html

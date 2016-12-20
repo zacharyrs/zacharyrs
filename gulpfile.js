@@ -1,44 +1,32 @@
-var del = require('del');
-var gulp = require('gulp');
-var nib = require('nib');
-var browsersync = require('browser-sync');
-var opn = require('opn');
+'use strict';
 
-var shell = require('gulp-shell')
-var gulpif = require('gulp-if');
-var gutil = require('gulp-util');
-var newer = require('gulp-newer');
-var plumber = require('gulp-plumber');
-var replace = require('gulp-replace');
-var rename = require('gulp-rename');
-var merge = require('merge-stream')
+const del = require('del');
+const gulp = require('gulp');
+const runSequence = require('run-sequence');
+const merge = require('merge-stream')
 
-var sourcemaps = require('gulp-sourcemaps');
-var cleancss = require('gulp-clean-css');
-var minify = require('gulp-minify');
-var htmlmin = require('gulp-htmlmin');
-var pug = require('gulp-pug');
-var stylus = require('gulp-stylus');
-var crisper = require('gulp-crisper');
-var babel = require('gulp-babel');
-var vulcanize = require('gulp-vulcanize');
+const browsersync = require('browser-sync');
 
-var surge = require('gulp-surge');
-var admin = require('firebase-admin');
-var data = require('./data.json')
+const shell = require('gulp-shell')
+const gulpif = require('gulp-if');
+const newer = require('gulp-newer');
+const replace = require('gulp-replace');
+const rename = require('gulp-rename');
+
+const sourcemaps = require('gulp-sourcemaps');
+const pug = require('gulp-pug');
+const crisper = require('gulp-crisper');
+const babel = require('gulp-babel');
+const postcss = require('gulp-postcss');
+
+const minify = require('gulp-minify');
+const htmlmin = require('gulp-htmlmin');
+const vulcanize = require('gulp-vulcanize');
+
+const surge = require('gulp-surge');
 
 var compress = true;
 var unvalc = ['src/bower/webcomponentsjs/webcomponents-lite.min.js'];
-
-admin.initializeApp({
-  credential: admin.credential.cert("../../servicekey.json"),
-  databaseURL: "https://zacharyrs-me.firebaseio.com"
-});
-
-var db = admin.database();
-var posts = db.ref('blog');
-var pinned = db.ref('pinned');
-var users = db.ref('users');
 
 gulp.task('default', [
   'all',
@@ -47,89 +35,55 @@ gulp.task('default', [
 ])
 
 gulp.task('all', [
-  'copy:bower',
-  'copy:misc',
+  'copy:assets',
   'compile:pug',
   'compile:stylus',
   'compile:babel'
 ]);
 
-gulp.task('copy:bower', function () {
-  return gulp.src(['src/bower/**/*'], {base: 'src/bower/'})
+gulp.task('copy:assets', () => {
+  var bower = gulp.src(['src/bower/**/*'], {base: 'src/bower/'})
     .pipe(newer('dist/bower/'))
     .pipe(gulp.dest('dist/bower/'));
-});
 
-gulp.task('copy:misc', function () {
-  return gulp.src(['src/misc/**/*', '!src/misc/assets/img/unoptimised/**/*'], {base: 'src/misc/'})
+  var misc = gulp.src(['src/misc/**/*', '!src/misc/assets/img/unoptimised/**/*'], {base: 'src/misc/'})
     .pipe(newer('dist/'))
     .pipe(gulp.dest('dist/'));
+
+  return merge(bower, misc);
 });
 
-gulp.task('compile:pug', function () {
+gulp.task('compile:pug', () => {
   return gulp.src(['src/pug/**/*.pug'], {base: 'src/pug/'})
-    .pipe(plumber({
-      errorHandler: function(error) {
-        gutil.log(
-          gutil.colors.cyan('Plumber') + gutil.colors.red(' found unhandled error:\n'),
-          error.toString()
-        );
-        this.emit('end');
-      }
-    }))
-    .pipe(pug({pretty: true}))
+    .pipe(pug())
     .pipe(crisper({
       scriptInHead: false,
       onlySplit: false
     }))
-    .pipe(gulpif('*.js', babel({
-      presets: ['es2015']
-    })))
-    .pipe(gulpif('*.html', htmlmin({
-      collapseWhitespace: true,
-      conservativeCollapse: true
-    })))
-    .pipe(plumber.stop())
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('compile:stylus', function () {
+gulp.task('compile:stylus', () => {
   return gulp.src(['src/stylus/**/*.styl'], {base: 'src/stylus/'})
-    .pipe(plumber({
-      errorHandler: function(error) {
-        gutil.log(
-          gutil.colors.cyan('Plumber') + gutil.colors.red(' found unhandled error:\n'),
-          error.toString()
-        );
-        this.emit('end');
-      }
-    }))
     .pipe(stylus({ use: [nib()], import: ['nib']}))
     .pipe(gulpif(compress, cleancss()))
-    .pipe(plumber.stop())
     .pipe(gulp.dest('dist/assets/css/'));
 });
 
-gulp.task('compile:babel', function () {
+gulp.task('compile:babel', () => {
   return gulp.src(['src/babel/**/*.js'], {base: 'src/babel/'})
-    .pipe(plumber({
-      errorHandler: function() {
-        this.emit('end');
-      }
-    }))
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(plumber.stop())
     .pipe(gulpif(compress, minify()))
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', () => {
   return del(['dist/**/*', '.publish/**/*']);
 });
 
-gulp.task('vulcanize', ['all'], function () {
+gulp.task('vulcanize', ['all'], () => {
   gulp.src([
     'dist/assets/**/*',
     '!dist/assets/css/**/*',
@@ -148,15 +102,6 @@ gulp.task('vulcanize', ['all'], function () {
     )))
     .pipe(gulp.dest('dist/vulcanized/'))
   return gulp.src(['dist/elements.html'])
-    .pipe(plumber({
-      errorHandler: function(error) {
-        gutil.log(
-          gutil.colors.cyan('Plumber') + gutil.colors.red(' found unhandled error:\n'),
-          error.toString()
-        );
-        this.emit('end');
-      }
-    }))
     .pipe(vulcanize({
       abspath: '',
       excludes: [],
@@ -181,11 +126,10 @@ gulp.task('vulcanize', ['all'], function () {
         noSource: true
     })))
     .pipe(gulpif('*.html', replace('<script src="elements.js"></script>', '')))
-    .pipe(plumber.stop())
     .pipe(gulp.dest('dist/vulcanized/'));
 });
 
-gulp.task('deploy:final', ['vulcanize', 'deploy:data'], function () {
+gulp.task('deploy:final', ['vulcanize', 'deploy:data'], () => {
   gulp.src(['dist/vulcanized/index.html'])
     .pipe(rename('200.html'))
     .pipe(gulp.dest('dist/vulcanized/'));
@@ -195,7 +139,7 @@ gulp.task('deploy:final', ['vulcanize', 'deploy:data'], function () {
   })
 });
 
-gulp.task('deploy:beta', ['all'], function () {
+gulp.task('deploy:beta', ['all'], () => {
   gulp.src(['dist/index.html'])
     .pipe(rename('200.html'))
     .pipe(gulp.dest('dist/'));
@@ -205,54 +149,11 @@ gulp.task('deploy:beta', ['all'], function () {
   })
 });
 
-gulp.task('deploy:data', function () {
-  users.set({});
-  posts.set({});
-  pinned.set({});
-  for(var i in data) {
-    console.log('User: ' + i);
-    var user = users.push();
-    var userId = user.key;
-    var currentUser = {};
-    var pinnedPosts = {};
-    var currentPosts = data[i].posts;
-    for(var p in currentPosts) {
-      currentPost = currentPosts[p];
-      console.log('Post: ' + currentPost.title);
-      var post = posts.push();
-      var postId = post.key;
-      item = {
-        content: {
-          body: currentPost.body,
-          title: currentPost.title,
-          time: currentPost.time,
-          show: currentPost.show,
-          order: currentPost.time * -1,
-          id: postId,
-          userId: userId
-        }
-      }
-      if(currentPost.pinned) {
-        pinnedPosts[postId] = item;
-      } else {
-        post.set(item);
-        currentUser[postId] = item;
-      }
-    }
-    user.set({
-      name: i,
-      posts: currentUser,
-      pinned: pinnedPosts
-    });
-    pinned.update(pinnedPosts);
-  };
-});
-
 gulp.task('serve:firebase', ['serve:bs'], shell.task([
   'firebase serve'
 ]));
 
-gulp.task('serve:bs', ['all'], function () {
+gulp.task('serve:bs', ['all'], () => {
   browsersync({
     port: 8080,
     notify: true,
@@ -263,7 +164,7 @@ gulp.task('serve:bs', ['all'], function () {
   });
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', () => {
   gulp.watch(['src/bower/**/*'], ['copy:bower']);
   gulp.watch(['src/misc/**/*'], ['copy:misc']);
   gulp.watch(['src/pug/**/*.pug'], ['compile:pug']);
