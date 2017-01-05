@@ -182,7 +182,12 @@ dom-module#zacharyrs-blogbox
                       value: false
                   },
                   post: {
-                      type: Object
+                      type: Object,
+                      value: false
+                  },
+                  pinned: {
+                      type: Boolean,
+                      value: false
                   },
                   _date: {
                       type: String,
@@ -194,7 +199,7 @@ dom-module#zacharyrs-blogbox
                   },
                   _postLink: {
                       type: String,
-                      computed: '_linkify(post.id, post.title)'
+                      computed: '_linkify(post.id, post.title, pinned)'
                   },
                   animationConfig: {
                       value: function() {
@@ -234,8 +239,9 @@ dom-module#zacharyrs-blogbox
               return title.toLowerCase().split('').join('\n');
           }
 
-          _linkify(id, title) {
-              return '/post/' + id + '/' + title.toLowerCase().split(' ').join('-');
+          _linkify(id, title, pinned) {
+              var pin = pinned ? 'pinned/': 'unpinned/'
+              return '/post/' + pin + id + '/' + title.toLowerCase().split(' ').join('-');
           }
 
           _moment(timestamp, filter) {

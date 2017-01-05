@@ -22,26 +22,27 @@ dom-module#zacharyrs-blogpost
       }
     app-route(
       route="{{route}}",
-      pattern="/:postId",
+      pattern="/:section/:postId",
       data="{{data}}"
     )
-    firebase-query(
-      id="postQuery",
-      app-name="zacharyrs",
-      path="/blog/[[data.postId]]",
-      data="{{blog-data}}"
-    )
-    firebase-query(
-      id="pinnedQuery",
-      app-name="zacharyrs",
-      path="/pinned/[[data.postId]]",
-      data="{{pinned-data}}"
-    )
-    section.container
-      template(is="dom-repeat", items="[[blog-data]]", as="post")
-        zacharyrs-blogbox(post="[[post]]", visible="[[visible]]")
-      template(is="dom-repeat", items="[[pinned-data]]", as="post")
-        zacharyrs-blogbox(post="[[post]]", visible="[[visible]]")
+    template(is="dom-if", if="[[!_pinned]]")
+      p.
+        UNPINNED
+      firebase-query(
+        id="postQuery",
+        app-name="zacharyrs",
+        path="/blog/[[data.postId]]/content",
+        data="{{blog-data}}"
+      )
+    template(is="dom-if", if="[[_pinned]]")
+      p.
+        PINNED
+      firebase-query(
+        id="pinnedQuery",
+        app-name="zacharyrs",
+        path="/pinned/[[data.postId]]/content",
+        data="{{pinned-data}}"
+      )
   script(type="text/javascript").
       'use strict';
 
@@ -55,6 +56,10 @@ dom-module#zacharyrs-blogpost
                   },
                   data: {
                       type: Object,
+                  },
+                  _pinned: {
+                      type: Boolean,
+                      computed: '_checkPinned(data.section)'
                   }
               };
               this.observers = [
@@ -67,11 +72,18 @@ dom-module#zacharyrs-blogpost
           detached() {}
           attributeChanged() {}
 
+          _checkPinned(section) {
+              return section === 'pinned';
+          }
+
           _changedPage(postId) {
-              this.$.postQuery.path = null;
-              this.$.pinnedQuery.path = null;
-              this.$.postQuery.path = '/blog/' + this.data.postId;
-              this.$.pinnedQuery.path = '/pinned/' + this.data.postId;
+              if(this.$.postQuery){
+                  this.$.postQuery.path = null;
+                  this.$.postQuery.path = '/blog/' + this.data.postId + '/content';
+              } else if(this.$.pinnedQuery){
+                  this.$.pinnedQuery.path = null;
+                  this.$.pinnedQuery.path = '/pinned/' + this.data.postId + '/content';
+              }
           }
       }
 

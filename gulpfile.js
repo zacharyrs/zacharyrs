@@ -163,7 +163,7 @@ gulp.task('deploy:final', () => {
     .pipe(gulp.dest('.publish/'));
   surge({
     project: '.publish/',
-    domain: 'beta.zacharyrs.me'
+    domain: 'zacharyrs.me'
   })
 });
 

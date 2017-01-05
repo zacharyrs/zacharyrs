@@ -64,7 +64,7 @@ dom-module#zacharyrs-blog
     section.container
       template(is="dom-repeat", items="[[pinned-data]]", as="post")
         template(is="dom-if", if="[[post.content.show]]")
-          zacharyrs-blogbox.mini.pinned(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
+          zacharyrs-blogbox.mini.pinned(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]", pinned)
       template(is="dom-repeat", items="[[blog-data]]", as="post")
         template(is="dom-if", if="[[post.content.show]]")
           zacharyrs-blogbox.mini(post="[[post.content]]", on-open-post="_openPost", visible="[[visible]]")
