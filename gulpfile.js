@@ -19,8 +19,9 @@ const crisper = require('gulp-crisper');
 const babel = require('gulp-babel');
 const postcss = require('gulp-postcss');
 
-const cssnext = require('gulp-postcss');
+const cssnext = require('postcss-cssnext');
 const cssnano = require('cssnano');
+const sugarss = require('sugarss');
 
 const minify = require('gulp-minify');
 const htmlmin = require('gulp-htmlmin');
@@ -28,20 +29,25 @@ const vulcanize = require('gulp-vulcanize');
 
 const surge = require('gulp-surge');
 
-var unvalc = ['src/bower/webcomponentsjs/webcomponents-lite.min.js'];
+var unvulc = ['src/bower/webcomponentsjs/webcomponents-lite.min.js'];
 
-gulp.task('default', [
-  'all',
-  'watch',
-  'serve:firebase'
-])
-
-gulp.task('all', [
-  'copy:assets',
-  'compile:pug',
-  'compile:babel',
-  'compile:postcss'
-]);
+gulp.task('default', () => {
+  return runSequence(
+    'clean',
+    [
+      'copy:assets',
+      'compile:pug',
+      'compile:postcss'
+    ],
+    // [
+    //   'compile:babel'
+    // ],
+    [
+      'watch',
+      'serve:firebase'
+    ]
+  );
+});
 
 gulp.task('copy:assets', () => {
   var bower = gulp.src(['src/bower/**/*'], {base: 'src/bower/'})
@@ -58,104 +64,142 @@ gulp.task('copy:assets', () => {
 gulp.task('compile:pug', () => {
   return gulp.src(['src/pug/**/*.pug'], {base: 'src/pug/'})
     .pipe(pug())
-    .pipe(gulp.dest('dist/'));
+    .pipe(crisper({
+      scriptInHead: false,
+      onlySplit: false
+    }))
+    .pipe(gulp.dest('dist/'))
+    .pipe(gulpif('*.js', gulp.dest('.tmp/babel/')));
 });
 
 gulp.task('compile:babel', () => {
-  return gulp.src(['src/babel/**/*.js'], {base: 'src/babel/'})
+  var js = gulp.src(['src/babel/**/*.js'], {base: 'src/babel/'})
     .pipe(babel({
       presets: ['es2015']
     }))
     .pipe(gulp.dest('dist/'));
+
+  var html = gulp.src(['.tmp/babel/**/*.js'], {base: '.tmp/babel/'})
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('dist/'));
+
+  return merge(js, html);
 });
 
 gulp.task('compile:postcss', () => {
-  var processors = [
-    cssnext(),
-    cssnano()
-  ];
-  return gulp.src(['src/css/**/*.css'], {base: 'src/css/'})
-    .pipe(postcss(processors))
+  return gulp.src(['src/css/**/*.sss'], {base: 'src/css/'})
+    .pipe(postcss([cssnext(), cssnano({ autoprefixer: false })], {parser: sugarss}))
+    .pipe(rename({ extname: '.css' }))
     .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('clean', () => {
-  return del(['dist/**/*', '.publish/**/*']);
+  return del(['dist/**/*', '.publish/**/*', '.tmp/**/*']);
 });
 
-// gulp.task('vulcanize', ['all'], () => {
-//   gulp.src([
-//     'dist/assets/**/*',
-//     '!dist/assets/css/**/*',
-//     '!dist/assets/js/**/*'
-//   ])
-//     .pipe(gulp.dest('dist/vulcanized/assets/'))
-//   gulp.src(unvalc, {base: 'src/bower/'})
-//     .pipe(gulp.dest('dist/vulcanized/assets/bower/'))
-//   gulp.src([
-//     'dist/index.html',
-//     'dist/index.js'
-//   ])
-//     .pipe(gulpif('*.html', replace(
-//       '<script src="index.js"></script>',
-//       '<script src="/index.js"></script>'
-//     )))
-//     .pipe(gulp.dest('dist/vulcanized/'))
-//   return gulp.src(['dist/elements.html'])
-//     .pipe(vulcanize({
-//       abspath: '',
-//       excludes: [],
-//       stripExcludes: false,
-//       inlineCss: true,
-//       inlineScripts: true
-//     }))
-//     .pipe(crisper({
-//       scriptInHead: false,
-//       onlySplit: false
-//     }))
-//     .pipe(gulpif('*.html', htmlmin({
-//       collapseWhitespace: true,
-//       conservativeCollapse: true,
-//       minifyCSS: true,
-//       removeComments: true
-//     })))
-//     .pipe(gulpif('*.js', minify({
-//         ext:{
-//             min:'.js'
-//         },
-//         noSource: true
-//     })))
-//     .pipe(gulpif('*.html', replace('<script src="elements.js"></script>', '')))
-//     .pipe(gulp.dest('dist/vulcanized/'));
-// });
+gulp.task('vulcanize', () => {
+  return runSequence(
+    'clean',
+    [
+      'copy:assets',
+      'compile:pug',
+      'compile:postcss'
+    ],
+    'compile:babel',
+    () => {
+      var assets = gulp.src(['dist/assets/**/*'])
+        .pipe(gulp.dest('.publish/assets/'))
 
-// gulp.task('deploy:final', ['vulcanize', 'deploy:data'], () => {
-//   gulp.src(['dist/vulcanized/index.html'])
-//     .pipe(rename('200.html'))
-//     .pipe(gulp.dest('dist/vulcanized/'));
-//   surge({
-//     project: 'dist/vulcanized/',
-//     domain: 'zacharyrs.me'
-//   })
-// });
+      var bower = gulp.src(unvulc, {base: 'src/bower/'})
+        .pipe(gulp.dest('.publish/assets/bower/'))
 
-// gulp.task('deploy:beta', ['all'], () => {
-//   gulp.src(['dist/index.html'])
-//     .pipe(rename('200.html'))
-//     .pipe(gulp.dest('dist/'));
-//   surge({
-//     project: 'dist/',
-//     domain: 'beta.zacharyrs.me'
-//   })
-// });
+      var index = gulp.src([
+        'dist/index.html',
+        'dist/index.js'
+      ])
+        .pipe(gulp.dest('.publish/'))
+
+      var elements = gulp.src(['dist/elements.html'])
+        .pipe(vulcanize({
+          abspath: '',
+          excludes: [],
+          stripExcludes: false,
+          inlineCss: true,
+          inlineScripts: true
+        }))
+        .pipe(crisper({
+          scriptInHead: false,
+          onlySplit: false
+        }))
+        .pipe(gulpif('*.html', htmlmin({
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          minifyCSS: true,
+          removeComments: true
+        })))
+        .pipe(gulpif('*.js', minify({
+            ext:{
+                min:'.js'
+            },
+            noSource: true
+        })))
+        .pipe(gulpif('*.html', replace('<script src="elements.js"></script>', '')))
+        .pipe(gulp.dest('.publish/'));
+
+      return merge(assets, bower, index, elements);
+    }
+  )
+});
+
+gulp.task('deploy:final', () => {
+  gulp.src(['.publish/index.html'])
+    .pipe(replace(
+      '<script src="index.js"></script>',
+      '<script src="/index.js"></script>'
+    ))
+    .pipe(rename('200.html'))
+    .pipe(gulp.dest('.publish/'));
+  surge({
+    project: '.publish/',
+    domain: 'beta.zacharyrs.me'
+  })
+});
+
+gulp.task('deploy:beta', () => {
+  runSequence(
+    'clean',
+    [
+      'copy:assets',
+      'compile:pug',
+      'compile:postcss'
+    ],
+    'compile:babel',
+    () => {
+      gulp.src(['dist/index.html'])
+        .pipe(replace(
+          '<script src="index.js"></script>',
+          '<script src="/index.js"></script>'
+        ))
+        .pipe(rename('200.html'))
+        .pipe(gulp.dest('dist/'));
+
+      surge({
+        project: 'dist/',
+        domain: 'beta.zacharyrs.me'
+      })
+    }
+  )
+});
 
 gulp.task('serve:firebase', ['serve:bs'], shell.task([
   'firebase serve'
 ]));
 
-gulp.task('serve:bs', ['all'], () => {
+gulp.task('serve:bs', () => {
   browsersync({
-    port: 5001,
+    port: 8080,
     notify: true,
     logPrefix: 'bs:',
     proxy: 'localhost:5000',
@@ -167,6 +211,6 @@ gulp.task('serve:bs', ['all'], () => {
 gulp.task('watch', () => {
   gulp.watch(['src/bower/**/*', 'src/misc/**/*'], ['copy:assets']);
   gulp.watch(['src/pug/**/*.pug'], ['compile:pug']);
-  gulp.watch(['src/babel/**/*.js'], ['compile:babel']);
-  gulp.watch(['src/stylus/**/*.styl'], ['compile:stylus']);
+  gulp.watch(['src/babel/**/*.js', '.tmp/babel/**/*.js'], ['compile:babel']);
+  gulp.watch(['src/css/**/*.sss'], ['compile:postcss']);
 });

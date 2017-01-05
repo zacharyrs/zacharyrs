@@ -16,11 +16,18 @@ dom-module#zacharyrs-blog
       }
 
       zacharyrs-blogbox {
-        --width: calc(96vw / 3);
-        --height: calc(96vw / 3);
+        --width: calc(96vw / 4);
+        --height: calc(96vw / 4);
       }
 
-      @media handheld, only screen and (max-width: 1080px) {
+      @media handheld, only screen and (max-width: 1440px) {
+        zacharyrs-blogbox {
+          --width: calc(96vw / 3);
+          --height: calc(96vw / 3);
+        }
+      }
+
+      @media handheld, only screen and (max-width: 960px) {
         zacharyrs-blogbox {
           --width: calc(96vw / 2);
           --height: calc(96vw / 2);

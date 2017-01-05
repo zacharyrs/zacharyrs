@@ -18,6 +18,7 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-crisper": "^1.1.0",
+    "gulp-html-postcss": "^6.0.1",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.1",
     "gulp-minify": "0.0.14",
@@ -36,6 +37,7 @@
     "postcss-cssnext": "^2.9.0",
     "pug": "2.0.0-alpha6",
     "run-sequence": "^1.2.2",
+    "sugarss": "^0.2.0",
     "surge": "^0.18.0"
   },
   "scripts": {

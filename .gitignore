@@ -62,3 +62,5 @@ jspm_packages
 dist
 bower
 *.idea
+.publish
+.tmp

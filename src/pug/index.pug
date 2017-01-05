@@ -1,7 +1,7 @@
 html
   head
     title.
-        zacharyrs
+      zacharyrs
     meta(charset="utf-8")
     meta(name="google-site-verification", content="3NTwLqUUduH4MyIsmw0Z3bC9nol4ZMskGxeO7Pa02Jo")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -10,114 +10,114 @@ html
     meta(property="og:title", content="zacharyrs")
     meta(property="og:image", content="https://zacharyrs.me/assets/img/ogimage.jpg")
     style.
-        html, body {
-            min-height: 100% !important;
-            line-height: 1;
-            -webkit-text-size-adjust: 100% !important;
-            -ms-text-size-adjust: 100% !important;
-            -webkit-font-smoothing: antialiased !important;
-            -moz-osx-font-smoothing: grayscale !important;
-            -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
-            -webkit-touch-callout: none !important;
-        }
-        * {
-          border: 0;
-          margin: 0;
-          vertical-align: baseline;
-        }
-        body.loading {
-          position: fixed;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          overflow: hidden;
-        }
-        #splash {
-          display: block;
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: url('/assets/img/crystal.jpg');
-          background-size: cover;
-          transition: transform 0.4s ease-in;
-          transition-delay: 5.4s;
-          will-change: opacity;
-          z-index: 10;
-          transform: translate(0, -100vh);
-        }
-        #splash svg#logoimg {
-          position: relative;
-          width: 50vw;
-          top: 8vh;
-          left: 25vw;
-          right: 25vw;
-        }
-        #splash svg#logoimg path {
-          stroke: #F5F7FA;
-          fill: none;
-          stroke-width: 3;
-          animation-delay: 2s;
-        }
-        #splash svg#logoimg path#large {
-          stroke-dasharray: 1475;
+      html, body {
+        min-height: 100% !important;
+        line-height: 1;
+        -webkit-text-size-adjust: 100% !important;
+        -ms-text-size-adjust: 100% !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+        -webkit-touch-callout: none !important;
+      }
+      * {
+        border: 0;
+        margin: 0;
+        vertical-align: baseline;
+      }
+      body.loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: hidden;
+      }
+      #splash {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: url('/assets/img/crystal.jpg');
+        background-size: cover;
+        transition: transform 0.4s ease-in;
+        transition-delay: 5.4s;
+        will-change: opacity;
+        z-index: 10;
+        transform: translate(0, -100vh);
+      }
+      #splash svg#logoimg {
+        position: relative;
+        width: 50vw;
+        top: 8vh;
+        left: 25vw;
+        right: 25vw;
+      }
+      #splash svg#logoimg path {
+        stroke: #F5F7FA;
+        fill: none;
+        stroke-width: 3;
+        animation-delay: 2s;
+      }
+      #splash svg#logoimg path#large {
+        stroke-dasharray: 1475;
+        stroke-dashoffset: -1475;
+        animation: offsetlarge 3.4s ease-out infinite;
+      }
+      #splash svg#logoimg path#small {
+        stroke-dasharray: 254;
+        stroke-dashoffset: -254;
+        animation: offsetsmall 3.4s ease-out infinite;
+      }
+      @keyframes offsetlarge {
+        0% {
           stroke-dashoffset: -1475;
-          animation: offsetlarge 3.4s ease-out infinite;
         }
-        #splash svg#logoimg path#small {
-          stroke-dasharray: 254;
+        75% {
+          stroke-dashoffset: 0;
+        }
+        100% {
+          stroke-dashoffset: 1475;
+        }
+      }
+      @keyframes offsetsmall {
+        0% {
+          stroke-dashoffset: 254;
+        }
+        75% {
+          stroke-dashoffset: 0;
+        }
+        100% {
           stroke-dashoffset: -254;
-          animation: offsetsmall 3.4s ease-out infinite;
         }
-        @keyframes offsetlarge {
-          0% {
-            stroke-dashoffset: -1475;
-          }
-          75% {
-            stroke-dashoffset: 0;
-          }
-          100% {
-            stroke-dashoffset: 1475;
-          }
+      }
+      #splash h1 {
+        font-family: 'quicksand';
+        color: white;
+        text-align: center;
+        width:  100vw;
+        position: absolute;
+        bottom: 16vh;
+        font-size: 10vh;
+        font-weight: 300;
+        letter-spacing: -0.005em;
+        line-height: 56px;
+      }
+      body.loading #splash {
+        transform: translate(0, 0);
+      }
+      body.loading zacharyrs-app {
+        display: none;
+      }
+      @media handheld, only screen and (max-width: 1080px) {
+        #splash svg#logoimg {
+          width: 80vw;
+          left: 10vw;
+          right: 10vw;
         }
-        @keyframes offsetsmall {
-          0% {
-            stroke-dashoffset: 254;
-          }
-          75% {
-            stroke-dashoffset: 0;
-          }
-          100% {
-            stroke-dashoffset: -254;
-          }
-        }
-        #splash h1 {
-          font-family: 'quicksand';
-          color: white;
-          text-align: center;
-          width:  100vw;
-          position: absolute;
-          bottom: 16vh;
-          font-size: 10vh;
-          font-weight: 300;
-          letter-spacing: -0.005em;
-          line-height: 56px;
-        }
-        body.loading #splash {
-          transform: translate(0, 0);
-        }
-        body.loading zacharyrs-app {
-          display: none;
-        }
-        @media handheld, only screen and (max-width: 1080px) {
-          #splash svg#logoimg {
-            width: 80vw;
-            left: 10vw;
-            right: 10vw;
-          }
-        }
+      }
     //- Data
     link(rel="manifest", href="/assets/data/manifest.json?v=9BangRkAd4")
     meta(name="msapplication-config", content="/assets/data/browserconfig.xml?v=9BangRkAd4")
@@ -136,7 +136,7 @@ html
     link(rel="shortcut icon", href="/assets/icons/favicon.ico?v=9BangRkAd4")
 
     //- My assets
-    link(rel="import", id="app" href="/elements.html")
+    //- link(rel="import", id="app" href="/elements.html")
     link(rel="prefetch", href="/assets/img/crystal.jpg")
     link(rel="prefetch", href="/assets/img/crystal-white.jpg")
     link(rel="prefetch", href="/assets/img/hexagon.png")
@@ -148,63 +148,62 @@ html
       h1.
         zacharyrs
     script(type="text/javascript").
-      function load() {
-          if ('registerElement' in document
-              && 'import' in document.createElement('link')
-              && 'content' in document.createElement('template')) {
-              console.log('Components are supported!');
-              loadApp();
-          } else {
-              var wbcm = document.createElement('script');
-              wbcm.src = '/assets/bower/webcomponentsjs/webcomponents-lite.min.js';
-              document.head.appendChild(wbcm);
-              wbcm.onload = loadApp();
-          }
+        function load() {
+            if ('registerElement' in document
+                && 'import' in document.createElement('link')
+                && 'content' in document.createElement('template')) {
+                console.log('Components are supported!');
+                loadElements();
+            } else {
+                var wbcm = document.createElement('script');
+                wbcm.src = '/assets/bower/webcomponentsjs/webcomponents-lite.min.js';
+                document.head.appendChild(wbcm);
+                wbcm.onload = loadElements();
+            }
 
-          function loadApp() {
-              console.log('Webcomponents initialized (or native shadowdom supported)!');
-              if (location.hostname === "localhost") {
-                  loadPage()
-              } else {
-                  var app = document.createElement('script');
-                  app.dataset.cfasync = 'false';
-                  app.src = '/elements.js';
-                  document.body.appendChild(app);
-                  app.onload = loadPage()
-              }
-          }
+            function loadElements() {
+                var link = document.createElement('link')
+                link.href = '/elements.html';
+                link.rel = 'import';
+                link.addEventListener('load', loadApp);
+                document.head.appendChild(link);
+            }
 
-          function loadPage() {
-              var link = document.querySelector('#app');
-              if (link.import && link.import.readyState === 'complete') {
-                  loadedPage();
-              } else {
-                  link.addEventListener('load', loadedPage);
-              }
-          }
+            function loadApp() {
+                console.log('Webcomponents initialized (or native shadowdom supported)!');
+                if (location.hostname === "localhost") {
+                    loadedApp()
+                } else {
+                    var app = document.createElement('script');
+                    app.dataset.cfasync = 'false';
+                    app.src = '/elements.js';
+                    document.body.appendChild(app);
+                    app.onload = loadedApp()
+                }
+            }
 
-          function loadedPage() {
-              var loadScreen = document.getElementById('splash');
-              loadScreen.addEventListener('transitionend', loadScreen.remove);
-              document.body.classList.remove('loading');
-              loadDeferredStyles();
-          };
+            function loadedApp() {
+                var loadScreen = document.getElementById('splash');
+                loadScreen.addEventListener('transitionend', loadScreen.remove);
+                document.body.classList.remove('loading');
+                loadDeferredStyles();
+            };
 
-          function loadDeferredStyles() {
-              var gfonts = document.createElement('link');
-              var faweso = document.createElement('link');
-              gfonts.href = 'https://fonts.googleapis.com/css?family=Quicksand:400,700|Raleway:400,400i,700,700i|Source+Code+Pro:700';
-              faweso.href = 'https://use.fontawesome.com/719774c3f8.css';
-              gfonts.rel = 'stylesheet';
-              faweso.rel = 'stylesheet';
-              document.body.appendChild(gfonts);
-              document.body.appendChild(faweso);
-          };
-      };
+            function loadDeferredStyles() {
+                var gfonts = document.createElement('link');
+                var faweso = document.createElement('link');
+                gfonts.href = 'https://fonts.googleapis.com/css?family=Quicksand:400,700|Raleway:400,400i,700,700i|Source+Code+Pro:700';
+                faweso.href = 'https://use.fontawesome.com/719774c3f8.css';
+                gfonts.rel = 'stylesheet';
+                faweso.rel = 'stylesheet';
+                document.body.appendChild(gfonts);
+                document.body.appendChild(faweso);
+            };
+        };
 
-      if (document.readyState === 'complete') {
-          load();
-      } else {
-          window.onload = load;
-      }
+        if (document.readyState === 'complete') {
+            load();
+        } else {
+            window.onload = load;
+        }
     zacharyrs-app
