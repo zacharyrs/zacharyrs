@@ -14,7 +14,7 @@ link(rel="import", href="zacharyrs-contactme.html")
 link(rel="import", href="zacharyrs-aboutme.html")
 link(rel="import", href="zacharyrs-404.html")
 link(rel="import", href="zacharyrs-blog.html")
-link(rel="import", href="zacharyrs-blogpost.html")
+link(rel="import", href="zacharyrs-post.html")
 link(rel="import", href="zacharyrs-user.html")
 link(rel="import", href="zacharyrs-notice.html")
 //- link(rel="import", href="zacharyrs-showdown.html")
@@ -196,7 +196,7 @@ dom-module#zacharyrs-app
         fallback-selection="not-found"
       )
         zacharyrs-blog(name="blog", on-open-post="_openPost")
-        zacharyrs-blogpost(name="post", route="{{postRoute}}")
+        zacharyrs-post(name="post", route="{{postRoute}}")
         zacharyrs-user(name="user", route="{{userRoute}}", on-open-post="_openPost")
         //- div(name="portfolio").
           PORTFOLIO APP HERE

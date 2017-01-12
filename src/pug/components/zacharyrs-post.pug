@@ -3,11 +3,9 @@ link(rel="import", href="../bower/iron-flex-layout/iron-flex-layout-classes.html
 link(rel="import", href="../bower/app-route/app-route.html")
 link(rel="import", href="../bower/polymerfire/firebase-query.html")
 
-link(rel="import", href="zacharyrs-blogbox.html")
-
 link(rel="import", href="styles/zacharyrs-app.html")
 
-dom-module#zacharyrs-blogpost
+dom-module#zacharyrs-post
   template
     style(is="custom-style", include="shared-styles iron-flex").
       .container {
@@ -46,9 +44,9 @@ dom-module#zacharyrs-blogpost
   script(type="text/javascript").
       'use strict';
 
-      class BlogPost {
+      class Post {
           beforeRegister() {
-              this.is = 'zacharyrs-blogpost';
+              this.is = 'zacharyrs-post';
               this.properties = {
                   visible: {
                       type: Boolean,
@@ -87,4 +85,4 @@ dom-module#zacharyrs-blogpost
           }
       }
 
-      Polymer(BlogPost);
+      Polymer(Post);
