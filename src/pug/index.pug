@@ -11,6 +11,9 @@ html
     meta(property="og:image", content="https://zacharyrs.me/assets/img/ogimage.jpg")
     style.
       html, body {
+        margin: 0;
+        padding: 0;
+        border: 0;
         min-height: 100% !important;
         line-height: 1;
         -webkit-text-size-adjust: 100% !important;
@@ -25,99 +28,14 @@ html
         margin: 0;
         vertical-align: baseline;
       }
-      body.loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        overflow: hidden;
-      }
-      #splash {
-        display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: url('/assets/img/crystal.jpg');
-        background-size: cover;
-        transition: transform 0.4s ease-in;
-        transition-delay: 5.4s;
-        will-change: opacity;
-        z-index: 10;
-        transform: translate(0, -100vh);
-      }
-      #splash svg#logoimg {
-        position: relative;
-        width: 50vw;
-        top: 8vh;
-        left: 25vw;
-        right: 25vw;
-      }
-      #splash svg#logoimg path {
-        stroke: #F5F7FA;
-        fill: none;
-        stroke-width: 3;
-        animation-delay: 2s;
-      }
-      #splash svg#logoimg path#large {
-        stroke-dasharray: 1475;
-        stroke-dashoffset: -1475;
-        animation: offsetlarge 3.4s ease-out infinite;
-      }
-      #splash svg#logoimg path#small {
-        stroke-dasharray: 254;
-        stroke-dashoffset: -254;
-        animation: offsetsmall 3.4s ease-out infinite;
-      }
-      @keyframes offsetlarge {
-        0% {
-          stroke-dashoffset: -1475;
-        }
-        75% {
-          stroke-dashoffset: 0;
-        }
-        100% {
-          stroke-dashoffset: 1475;
-        }
-      }
-      @keyframes offsetsmall {
-        0% {
-          stroke-dashoffset: 254;
-        }
-        75% {
-          stroke-dashoffset: 0;
-        }
-        100% {
-          stroke-dashoffset: -254;
-        }
-      }
-      #splash h1 {
-        font-family: 'quicksand';
-        color: white;
-        text-align: center;
-        width:  100vw;
-        position: absolute;
-        bottom: 16vh;
-        font-size: 10vh;
-        font-weight: 300;
-        letter-spacing: -0.005em;
-        line-height: 56px;
-      }
-      body.loading #splash {
-        transform: translate(0, 0);
-      }
-      body.loading zacharyrs-app {
-        display: none;
-      }
-      @media handheld, only screen and (max-width: 1080px) {
-        #splash svg#logoimg {
-          width: 80vw;
-          left: 10vw;
-          right: 10vw;
-        }
-      }
+      //- body.loading {
+      //-   position: fixed;
+      //-   top: 0;
+      //-   left: 0;
+      //-   bottom: 0;
+      //-   right: 0;
+      //-   overflow: hidden;
+      //- }
     //- Data
     link(rel="manifest", href="/assets/data/manifest.json?v=9BangRkAd4")
     meta(name="msapplication-config", content="/assets/data/browserconfig.xml?v=9BangRkAd4")
@@ -135,59 +53,41 @@ html
     link(rel="mask-icon", href="/assets/icons/safari-pinned-tab.svg?v=9BangRkAd4", color="#3f6697")
     link(rel="shortcut icon", href="/assets/icons/favicon.ico?v=9BangRkAd4")
 
-    //- My assets
-    //- link(rel="import", id="app" href="/elements.html")
-    link(rel="prefetch", href="/assets/img/crystal.jpg")
-    link(rel="prefetch", href="/assets/img/crystal-white.jpg")
-    link(rel="prefetch", href="/assets/img/hexagon.png")
-  body.loading
-    div#splash
-      svg(id="logoimg", version="1.1", xmlns="http://www.w3.org/2000/svg", x="0px", y="0px", viewBox="0 0 370 260")
-        path(id="small" d="M331.3,71.9H114.8c-5.2,0-9.5,4.3-9.5,9.5v21.9")
-        path(id="large" d="M139.3,218.8v-106c0-5.3-4.2-9.5-9.5-9.5H58.3c-5.2,0-9.5,4.3-9.5,9.5v132.6c0,5.2,4.3,9.5,9.5,9.5h71.6c5.2,0,9.5-4.3,9.5-9.5v-5.3c0-3.8,1.9-7.3,4.8-9.4c1.9-1.5,4.4-2.4,7.1-2.4h9.5h194.6c5.2,0,9.5-4.3,9.5-9.5V81.4c0-5.2-4.2-9.5-9.5-9.5h-2.7c-3.9,0-7.3-1.8-9.5-4.7c-1.5-2-2.4-4.4-2.4-7.1v-9.5V14.5c0-5.2-4.2-9.5-9.5-9.5H14.5C9.3,5,5,9.3,5,14.5V204c0,5.2,4.2,9.5,9.5,9.5h20")
-      h1.
-        zacharyrs
+  body
     script(type="text/javascript").
         function load() {
             if ('registerElement' in document
                 && 'import' in document.createElement('link')
                 && 'content' in document.createElement('template')) {
                 console.log('Components are supported!');
-                loadElements();
+                loadLoader();
             } else {
                 var wbcm = document.createElement('script');
                 wbcm.src = '/assets/bower/webcomponentsjs/webcomponents-lite.min.js';
                 document.head.appendChild(wbcm);
-                wbcm.onload = loadElements();
+                wbcm.onload = loadLoader();
             }
 
-            function loadElements() {
+            function loadLoader() {
                 var link = document.createElement('link')
-                link.href = '/elements.html';
+                link.href = '/shell.html';
                 link.rel = 'import';
-                link.addEventListener('load', loadApp);
+                link.addEventListener('load', loadLoaderJS);
                 document.head.appendChild(link);
             }
 
-            function loadApp() {
+            function loadLoaderJS() {
                 console.log('Webcomponents initialized (or native shadowdom supported)!');
                 if (location.hostname === "localhost") {
-                    loadedApp()
+                    loadDeferredStyles()
                 } else {
                     var app = document.createElement('script');
                     app.dataset.cfasync = 'false';
-                    app.src = '/elements.js';
+                    app.src = '/shell.js';
                     document.body.appendChild(app);
-                    app.onload = loadedApp()
+                    app.onload = loadDeferredStyles()
                 }
             }
-
-            function loadedApp() {
-                var loadScreen = document.getElementById('splash');
-                loadScreen.addEventListener('transitionend', loadScreen.remove);
-                document.body.classList.remove('loading');
-                loadDeferredStyles();
-            };
 
             function loadDeferredStyles() {
                 var gfonts = document.createElement('link');
@@ -206,4 +106,4 @@ html
         } else {
             window.onload = load;
         }
-    zacharyrs-app
+    zacharyrs-app-shell

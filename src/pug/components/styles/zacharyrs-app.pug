@@ -4,21 +4,20 @@ dom-module#shared-styles
   template
     style.
       :host {
-        --theme-light: rgb(83, 134, 197);
-        --theme-medium: rgb(74, 118, 174);
-        --theme-dark: rgb(63, 102, 151);
-        //- --theme-grey-light: rgb(245, 247, 250);
-        --theme-grey-light: rgb(255, 255, 255);
-        --theme-grey-medium: rgb(170, 178, 189);
-        --theme-grey-dark: rgb(67, 74, 84);
+        --theme-highlight-light: rgb(83, 134, 197);
+        --theme-highlight-medium: rgb(74, 118, 174);
+        --theme-highlight-dark: rgb(63, 102, 151);
+        --theme-back-light: rgb(245, 247, 250);
+        --theme-back-medium: rgb(170, 178, 189);
+        --theme-back-dark: rgb(67, 74, 84);
       }
 
       ::selection {
-        background: rgba(63, 102, 151, 0.9);
-        color: rgb(245, 247, 250);
+        background: var(--theme-highlight-dark);
+        color: var(--theme-back-light);
       }
 
-      h1, h2, h3, h4, h5, h6, h7, paper-tab{
+      h1, h2, h3, h4, h5, h6, h7{
         font-family: 'Quicksand';
       }
 
@@ -134,19 +133,6 @@ dom-module#shared-styles
         opacity: 1;
       }
 
-      paper-tabs {
-        color: var(--theme-grey-dark);
-        --paper-tabs-selection-bar-color: var(--theme-light);
-      }
-
-      h1.logo {
-        color: var(--theme-dark);
-        text-align: center;
-        width:  100vw;
-        padding-top: 20px;
-        opacity: 1;
-      }
-
       .scrollbar-track, .scrollbar-track:hover {
         background: rgba(170, 178, 189, 0.4);
       }
@@ -157,16 +143,4 @@ dom-module#shared-styles
 
       .scrollbar-thumb {
         background: var(--theme-medium);
-      }
-
-      @media screen and (min-width: 960px) {
-        zacharyrs-mobile-menu {
-          display: none;
-        }
-      }
-
-      @media screen and (max-width: 960px) {
-        app-header {
-          display: none;
-        }
       }
