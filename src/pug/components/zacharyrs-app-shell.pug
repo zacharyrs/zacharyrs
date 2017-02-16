@@ -17,6 +17,10 @@ dom-module#zacharyrs-app-shell
         --waves-speed: 2;
       }
 
+      app-header {
+        height: 0px;
+      }
+
       .waves {
         width: 100vw;
         height: 50vh;
@@ -37,7 +41,7 @@ dom-module#zacharyrs-app-shell
       }
 
       .wave {
-        background: #3D6698;
+        background: var(--theme-highlight-dark);
         opacity: .4;
         position: absolute;
         width: 400vw;
@@ -56,7 +60,7 @@ dom-module#zacharyrs-app-shell
 
       .wave.-two {
         animation: drift calc(5000ms * var(--waves-speed)) infinite linear;
-        background: #00aaff;
+        background: var(--theme-highlight-dark);
         opacity: 0.1;
       }
 
@@ -81,6 +85,176 @@ dom-module#zacharyrs-app-shell
         from { transform: rotate(360deg); }
       }
 
+      .mouse {
+        background: var(--theme-highlight-dark) linear-gradient(transparent 0%, transparent 50%, #ffffff 50%, #ffffff 100%);
+        position: fixed;
+        bottom: 4vh;
+        left: 50%;
+        margin-left: -26px;
+        width: 52px;
+        height: 88px;
+        background-size: 100% 100%;
+        border-radius: 100px;
+        background-size: 225%;
+        animation: colorSlide 5s linear infinite, nudgeMouse 5s ease-out infinite;
+      }
+
+      .mouse:before, .mouse:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+      }
+
+      .mouse:before {
+        width: 46px;
+        height: 82px;
+        background-color: #FFFFFF;
+        border-radius: 100px;
+      }
+
+      .mouse:after {
+        background-color: var(--theme-highlight-dark);
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        animation: trackBallSlide 5s linear infinite;
+      }
+
+      @keyframes colorSlide {
+        0% {
+          background-position: 0% 100%;
+        }
+        20% {
+          background-position: 0% 0%;
+        }
+        21% {
+          background-color: var(--theme-highlight-dark);
+        }
+        29.99% {
+          background-color: #ffffff;
+          background-position: 0% 0%;
+        }
+        30% {
+          background-color: var(--theme-highlight-dark);
+          background-position: 0% 100%;
+        }
+        50% {
+          background-position: 0% 0%;
+        }
+        51% {
+          background-color: var(--theme-highlight-dark);
+        }
+        59.99% {
+          background-color: #ffffff;
+          background-position: 0% 0%;
+        }
+        60% {
+          background-color: var(--theme-highlight-dark);
+          background-position: 0% 100%;
+        }
+        80% {
+          background-position: 0% 0%;
+        }
+        81% {
+          background-color: var(--theme-highlight-dark);
+        }
+        89.99%, 100% {
+          background-color: #ffffff;
+        }
+      }
+
+      @keyframes trackBallSlide {
+        0% {
+          opacity: 1;
+          transform: scale(1) translateY(-20px);
+        }
+        6% {
+          opacity: 1;
+          transform: scale(0.9) translateY(5px);
+        }
+        14% {
+          opacity: 0;
+          transform: scale(0.4) translateY(40px);
+        }
+        15%, 19% {
+          opacity: 0;
+          transform: scale(0.4) translateY(-20px);
+        }
+        28%, 29.99% {
+          opacity: 1;
+          transform: scale(1) translateY(-20px);
+        }
+        30% {
+          opacity: 1;
+          transform: scale(1) translateY(-20px);
+        }
+        36% {
+          opacity: 1;
+          transform: scale(0.9) translateY(5px);
+        }
+        44% {
+          opacity: 0;
+          transform: scale(0.4) translateY(40px);
+        }
+        45%, 49% {
+          opacity: 0;
+          transform: scale(0.4) translateY(-20px);
+        }
+        58%, 59.99% {
+          opacity: 1;
+          transform: scale(1) translateY(-20px);
+        }
+        60% {
+          opacity: 1;
+          transform: scale(1) translateY(-20px);
+        }
+        66% {
+          opacity: 1;
+          transform: scale(0.9) translateY(5px);
+        }
+        74% {
+          opacity: 0;
+          transform: scale(0.4) translateY(40px);
+        }
+        75%, 79% {
+          opacity: 0;
+          transform: scale(0.4) translateY(-20px);
+        }
+        88%, 100% {
+          opacity: 1;
+          transform: scale(1) translateY(-20px);
+        }
+      }
+
+      @keyframes nudgeMouse {
+        0% {
+          transform: translateY(0);
+        }
+        20% {
+          transform: translateY(8px);
+        }
+        30% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(8px);
+        }
+        60% {
+          transform: translateY(0);
+        }
+        80% {
+          transform: translateY(8px);
+        }
+        90% {
+          transform: translateY(0);
+        }
+      }
+
+
     //- Header for my site. (Will include 'waves' and navigation)
     div.waves
       div.wave.-one
@@ -90,7 +264,8 @@ dom-module#zacharyrs-app-shell
       app-toolbar
         h1.logo.
           zacharyrs
-      //- Navigation will be here. To be added.
+    .mouse
+    //- Navigation will be here. To be added.
     //- Wrapper to handle custom scrollbar.
     //- div#wrapper(data-scrollbar)
       //- Page notifications, to be added.
@@ -122,7 +297,7 @@ dom-module#zacharyrs-app-shell
               document.head.appendChild(link);
 
               function loadElementsJS() {
-                  console.log('Webcomponents initialized (or native shadowdom supported)!');
+                  console.log('Elements loaded, now loading the JS!');
                   if (location.hostname === "localhost") {
                       loadApp()
                   } else {
@@ -135,6 +310,7 @@ dom-module#zacharyrs-app-shell
               }
 
               function loadApp() {
+                  console.log('JS loaded, time to allow scrolling!');
               };
           };
       }

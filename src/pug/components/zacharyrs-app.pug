@@ -1,0 +1,39 @@
+//- Import bower requirements.
+link(rel="import", href="../bower/polymer/polymer.html")
+link(rel="import", href="../bower/app-layout/app-header/app-header.html")
+link(rel="import", href="../bower/app-layout/app-toolbar/app-toolbar.html")
+
+//- Import parts of my app.
+
+
+//- Import my general styling.
+link(rel="import", href="styles/zacharyrs-app.html")
+
+//- Define my base app.
+dom-module#zacharyrs-app
+  template
+    style(is="custom-style", include="shared-styles").
+      :host {}
+
+    div#wrapper(data-scrollbar)
+      //- Page notifications, to be added.
+      //- template(is="dom-repeat", items="[[notifications]]", as="notification")
+      //-   zacharyrs-notice(notification="[[notification.content]]")
+      //- Content to be added.
+  script(type="text/javascript").
+      'use strict';
+
+
+      class HomePage {
+          beforeRegister() {
+              this.is = 'zacharyrs-app';
+              this.properties = {};
+          }
+          created() {}
+          ready() {}
+          attached() {}
+          detached() {}
+          attributeChanged() {}
+      }
+
+      Polymer(HomePage);
