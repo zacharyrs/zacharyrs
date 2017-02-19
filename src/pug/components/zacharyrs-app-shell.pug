@@ -21,14 +21,19 @@ dom-module#zacharyrs-app-shell
         height: 0px;
       }
 
-      .waves {
+      #waves {
         width: 100vw;
-        height: 50vh;
+        height: 100vh;
         position: fixed;
         overflow: hidden;
+        z-index: 2;
       }
 
-      .waves:after {
+      #waves.minimised {
+        top: -80vh;
+      }
+
+      #waves:after {
         content: '';
         display: block;
         top: 0;
@@ -40,7 +45,7 @@ dom-module#zacharyrs-app-shell
         transform: translate3d(0, 0, 0);
       }
 
-      .wave {
+      #waves .wave {
         background: var(--theme-highlight-dark);
         opacity: .4;
         position: absolute;
@@ -48,7 +53,7 @@ dom-module#zacharyrs-app-shell
         height: 400vw;
         left: 50%;
         margin-left: -200vw;
-        margin-top: -380vw;   /*change this for different viewports*/
+        margin-top: -360vw;   /*change this for different viewports*/
         transform-origin: 50% 49%;
         border-radius: 48%;
       }
@@ -78,6 +83,7 @@ dom-module#zacharyrs-app-shell
         text-align: center;
         width: 100vw;
         padding-top: 18vh;
+        z-index: 3;
       }
 
       @keyframes drift {
@@ -85,7 +91,7 @@ dom-module#zacharyrs-app-shell
         from { transform: rotate(360deg); }
       }
 
-      .mouse {
+      #mouse {
         background: var(--theme-highlight-dark) linear-gradient(transparent 0%, transparent 50%, #ffffff 50%, #ffffff 100%);
         position: fixed;
         bottom: 4vh;
@@ -99,7 +105,7 @@ dom-module#zacharyrs-app-shell
         animation: colorSlide 5s linear infinite, nudgeMouse 5s ease-out infinite;
       }
 
-      .mouse:before, .mouse:after {
+      #mouse:before, #mouse:after {
         content: "";
         position: absolute;
         top: 0;
@@ -109,14 +115,14 @@ dom-module#zacharyrs-app-shell
         margin: auto;
       }
 
-      .mouse:before {
+      #mouse:before {
         width: 46px;
         height: 82px;
         background-color: #FFFFFF;
         border-radius: 100px;
       }
 
-      .mouse:after {
+      #mouse:after {
         background-color: var(--theme-highlight-dark);
         width: 10px;
         height: 10px;
@@ -254,9 +260,20 @@ dom-module#zacharyrs-app-shell
         }
       }
 
+      #content {
+        position: absolute;
+        top: calc(100vh - (4vh + 88px));
+        display: block;
+        height: 100vh;
+        width: 100vw;
+        z-index: 1;
+      }
 
-    //- Header for my site. (Will include 'waves' and navigation)
-    div.waves
+      .loading {
+        display: none;
+      }
+
+    #waves
       div.wave.-one
       div.wave.-two
       div.wave.-three
@@ -264,14 +281,15 @@ dom-module#zacharyrs-app-shell
       app-toolbar
         h1.logo.
           zacharyrs
-    .mouse
-    //- Navigation will be here. To be added.
-    //- Wrapper to handle custom scrollbar.
-    //- div#wrapper(data-scrollbar)
-      //- Page notifications, to be added.
-      //- template(is="dom-repeat", items="[[notifications]]", as="notification")
-      //-   zacharyrs-notice(notification="[[notification.content]]")
-      //- Content to be added.
+    #content.loading
+      #mouse
+      //- Navigation will be here. To be added.
+      //- Wrapper to handle custom scrollbar.
+      //- div#wrapper(data-scrollbar)
+        //- Page notifications, to be added.
+        //- template(is="dom-repeat", items="[[notifications]]", as="notification")
+        //-   zacharyrs-notice(notification="[[notification.content]]")
+        //- Content to be added.
   script(type="text/javascript").
       'use strict';
 
@@ -283,13 +301,9 @@ dom-module#zacharyrs-app-shell
           }
           created() {}
           ready() {
-              this._load();
-          }
-          attached() {}
-          detached() {}
-          attributeChanged() {}
+              var content = this.$.content;
+              var waves = this.$.waves;
 
-          _load() {
               var link = document.createElement('link')
               link.href = '/elements.html';
               link.rel = 'import';
@@ -311,8 +325,17 @@ dom-module#zacharyrs-app-shell
 
               function loadApp() {
                   console.log('JS loaded, time to allow scrolling!');
+                  setTimeout(() => {
+                      content.classList.remove('loading');
+                  }, 1000);
+                  setTimeout(() => {
+                      waves.classList.add('minimised');
+                  }, 5000);
               };
-          };
+          }
+          attached() {}
+          detached() {}
+          attributeChanged() {}
       }
 
       Polymer(HomePage);
