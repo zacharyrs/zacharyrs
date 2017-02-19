@@ -14,7 +14,8 @@ dom-module#zacharyrs-app-shell
   template
     style(is="custom-style", include="shared-styles").
       :host{
-        --waves-speed: 2;
+        --waves-speed: 4;
+        --waves-size: 800vw;
       }
 
       app-header {
@@ -27,35 +28,25 @@ dom-module#zacharyrs-app-shell
         position: fixed;
         overflow: hidden;
         z-index: 2;
-      }
-
-      #waves.minimised {
-        top: -80vh;
-      }
-
-      #waves:after {
-        content: '';
-        display: block;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to bottom, rgba(61, 102, 152, 0.6), rgba(61, 102, 152, 0) 60%, rgba(255, 255, 255, 0.5));
-        z-index: 11;
-        transform: translate3d(0, 0, 0);
+        transform: translate(0, 0);
+        transition: transform 6s ease-out;
       }
 
       #waves .wave {
         background: var(--theme-highlight-dark);
         opacity: .4;
         position: absolute;
-        width: 400vw;
-        height: 400vw;
+        width: var(--waves-size);
+        height: var(--waves-size);
         left: 50%;
-        margin-left: -200vw;
-        margin-top: -360vw;   /*change this for different viewports*/
+        margin-left: calc(var(--waves-size) * -0.5);
+        margin-top: calc(var(--waves-size) * -0.96);   /*change this for different viewports*/
         transform-origin: 50% 49%;
         border-radius: 48%;
+      }
+
+      #waves.minimised {
+        transform: translate(0, -100vh);
       }
 
       /*animation stuff*/
@@ -73,6 +64,11 @@ dom-module#zacharyrs-app-shell
         animation: drift calc(2500ms * var(--waves-speed)) infinite linear;
       }
 
+      #waves.minimised .wave {
+        background: none;
+        transition: background 2s ease-out;
+      }
+
       .logo {
         position: fixed;
         font-size: 112px;
@@ -82,8 +78,15 @@ dom-module#zacharyrs-app-shell
         color: var(--theme-back-light);
         text-align: center;
         width: 100vw;
-        padding-top: 18vh;
+        padding-top: 8vh;
         z-index: 3;
+        transition: font-size 1s ease-out, color 1s ease-out;
+      }
+
+      #header.minimised .logo {
+        font-size: 80px;
+        line-height: 80px;
+        color: var(--theme-highlight-dark);
       }
 
       @keyframes drift {
@@ -103,6 +106,7 @@ dom-module#zacharyrs-app-shell
         border-radius: 100px;
         background-size: 225%;
         animation: colorSlide 5s linear infinite, nudgeMouse 5s ease-out infinite;
+        transition: opacity 1s ease-out;
       }
 
       #mouse:before, #mouse:after {
@@ -113,6 +117,7 @@ dom-module#zacharyrs-app-shell
         bottom: 0;
         left: 0;
         margin: auto;
+        transition: opacity 1s ease-out;
       }
 
       #mouse:before {
@@ -262,27 +267,40 @@ dom-module#zacharyrs-app-shell
 
       #content {
         position: absolute;
-        top: calc(100vh - (4vh + 88px));
         display: block;
         height: 100vh;
         width: 100vw;
         z-index: 1;
       }
 
+      #padder {
+        height: calc(100vh - (4vh + 88px));
+        width: 100vw;
+        display: block;
+        transition: height 2s ease-out;
+      }
+
+      #padder.loaded {
+        height: 0;
+        width: 100vw;
+        display: block;
+      }
+
       .loading {
-        display: none;
+        opacity: 0;
       }
 
     #waves
       div.wave.-one
       div.wave.-two
       div.wave.-three
-    app-header(fixed)
+    app-header#header(fixed)
       app-toolbar
         h1.logo.
           zacharyrs
-    #content.loading
-      #mouse
+    #content
+      #padder
+      #mouse.loading
       //- Navigation will be here. To be added.
       //- Wrapper to handle custom scrollbar.
       //- div#wrapper(data-scrollbar)
@@ -302,7 +320,10 @@ dom-module#zacharyrs-app-shell
           created() {}
           ready() {
               var content = this.$.content;
+              var mouse = this.$.mouse;
+              var padder = this.$.padder;
               var waves = this.$.waves;
+              var header = this.$.header;
 
               var link = document.createElement('link')
               link.href = '/elements.html';
@@ -326,10 +347,18 @@ dom-module#zacharyrs-app-shell
               function loadApp() {
                   console.log('JS loaded, time to allow scrolling!');
                   setTimeout(() => {
-                      content.classList.remove('loading');
+                      mouse.classList.remove('loading');
                   }, 1000);
                   setTimeout(() => {
                       waves.classList.add('minimised');
+                      waves.addEventListener("transitionend", (e) => {
+                        waves.parentNode.removeChild(waves);
+                      }, false);
+                      header.classList.add('minimised');
+                      padder.classList.add('loaded');
+                      padder.addEventListener("transitionend", (e) => {
+                        padder.parentNode.removeChild(padder);
+                      }, false);
                   }, 5000);
               };
           }
