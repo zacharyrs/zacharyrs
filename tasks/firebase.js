@@ -51,5 +51,5 @@ gulp.task('deploy:data', function () {
       pinned: pinnedPosts
     });
     pinned.update(pinnedPosts);
-  };
+  }
 });
