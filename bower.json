@@ -29,6 +29,7 @@
     "polymer": "Polymer/polymer#^1.4.0",
     "polymerfire": "firebase/polymerfire#^0.10.0",
     "showdown-element": "^0.3.0",
-    "smooth-scrollbar": "idiotWu/smooth-scrollbar#^7.2.8"
+    "smooth-scrollbar": "idiotWu/smooth-scrollbar#^7.2.8",
+    "normalize-css": "^5.0.0"
   }
 }

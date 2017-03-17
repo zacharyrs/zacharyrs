@@ -273,12 +273,12 @@ dom-module#zacharyrs-app-shell
         z-index: 1;
       }
 
-      #padder {
-        height: calc(100vh - (4vh + 88px));
-        width: 100vw;
-        display: block;
-        transition: height 2s ease-out;
-      }
+      //- #padder {
+      //-   height: calc(100vh - (4vh + 88px));
+      //-   width: 100vw;
+      //-   display: block;
+      //-   transition: height 2s ease-out;
+      //- }
 
       #padder.loaded {
         height: 0;
@@ -299,7 +299,7 @@ dom-module#zacharyrs-app-shell
         h1.logo.
           zacharyrs
     #content
-      #padder
+      //- #padder
       #mouse.loading
       //- Navigation will be here. To be added.
       //- Wrapper to handle custom scrollbar.
@@ -310,7 +310,6 @@ dom-module#zacharyrs-app-shell
         //- Content to be added.
   script(type="text/javascript").
       'use strict';
-
 
       class HomePage {
           beforeRegister() {
@@ -346,20 +345,18 @@ dom-module#zacharyrs-app-shell
 
               function loadApp() {
                   console.log('JS loaded, time to allow scrolling!');
-                  setTimeout(() => {
-                      mouse.classList.remove('loading');
-                  }, 1000);
-                  setTimeout(() => {
+                  mouse.classList.remove('loading');
+                  window.onscroll = () => {
                       waves.classList.add('minimised');
                       waves.addEventListener("transitionend", (e) => {
                         waves.parentNode.removeChild(waves);
                       }, false);
                       header.classList.add('minimised');
-                      padder.classList.add('loaded');
-                      padder.addEventListener("transitionend", (e) => {
-                        padder.parentNode.removeChild(padder);
-                      }, false);
-                  }, 5000);
+                      //- padder.classList.add('loaded');
+                      //- padder.addEventListener("transitionend", (e) => {
+                      //-   padder.parentNode.removeChild(padder);
+                      //- }, false);
+                  };
               };
           }
           attached() {}
